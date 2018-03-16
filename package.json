@@ -1,0 +1,22 @@
+{
+  "name": "meantutorial",
+  "version": "1.0.0",
+  "description": "Mean Stack Authentication app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "*",
+    "cors": "*",
+    "express": "*",
+    "jsonwebtoken": "*",
+    "mysql": "*",
+    "passport": "*",
+    "passport-jwt": "*"
+  },
+  "author": "Neerav Jain",
+  "license": "ISC"
+}
