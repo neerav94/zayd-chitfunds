@@ -1,3 +1,53 @@
-<p>
-  admin-navbar works!
-</p>
+<style>
+  .nav {
+    position: relative;
+    padding: 24px 40px;
+    background: linear-gradient(rgba(0,0,0, .4), rgba(0,0,0,.4));
+  }
+
+  .nav ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav li {
+    padding: 0;
+    list-style: none;
+    display: inline-block;
+  }
+
+  .nav a {
+    padding: 3px 12px;
+    text-decoration: none;
+    color: #fff;
+    line-height: 100%;
+  }
+
+  .nav a:hover {
+    color: #158c6b;
+  }
+
+  .nav .current a {
+    color: #1ab188;
+    border-bottom: 2px solid #1ab188;
+    padding-bottom: 8px;
+  }
+
+</style>
+
+<nav class="nav links">
+  <ul>
+    <li id="homeView" class="current" (click)="homePageView">
+      <a routerLink="/v1/erpHome">Home</a>
+    </li>
+    <li id="userView">
+      <a routerLink="/v1/erpUser" (click)="userPageView">My Users</a>
+    </li>
+    <li id="groupView">
+      <a routerLink="/v1/erpGroup">My Groups</a>
+    </li>
+    <li id="profileView">
+      <a routerLink="/v1/erpProfile">My Profile</a>
+    </li>
+  </ul>
+</nav>

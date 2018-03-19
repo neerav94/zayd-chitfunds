@@ -13,14 +13,13 @@ import { AuthGuard } from './guards/auth.guard';
 
 import { UserNavbarComponent } from './components/user/user-navbar/user-navbar.component';
 import { AdminNavbarComponent } from './components/admin/admin-navbar/admin-navbar.component';
-// import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
     UserNavbarComponent,
-    AdminNavbarComponent,
+    AdminNavbarComponent
   ],
   imports: [
     BrowserModule,
