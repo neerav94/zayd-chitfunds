@@ -1,0 +1,58 @@
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    .error-container {
+      text-align: center;
+      color: white;
+      padding-top: 64px;
+    }
+    .error-container h6 {
+      padding: 32px;
+      color: grey;
+    }
+    a {
+      color: #1ab188;
+      text-decoration: none;
+    }
+    a:hover {
+      color: darken(#1ab188, 25%);
+    }
+  }
+  
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1124px) {
+    .error-container {
+      text-align: center;
+      color: white;
+      padding-top: 64px;
+    }
+    .error-container h6 {
+      padding: 32px;
+      color: grey;
+    }
+    a {
+      color: #1ab188;
+      text-decoration: none;
+    }
+    a:hover {
+      color: darken(#1ab188, 25%);
+    }
+  }
+  
+  /* Desktops and laptops ----------- */
+  @media only screen and (min-width: 1224px) {
+    .error-container {
+      text-align: center;
+      color: white;
+      padding-top: 64px;
+    }
+    .error-container h6 {
+      padding: 32px;
+      color: grey;
+    }
+    a {
+      color: #1ab188;
+      text-decoration: none;
+    }
+    a:hover {
+      color: darken(#1ab188, 25%);
+    }
+  }
+  

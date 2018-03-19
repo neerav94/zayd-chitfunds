@@ -1,0 +1,62 @@
+<div id="loginContainer">
+  <div class="left-child">
+    <div class="main-page-title">Zayd</div>
+    <div class="main-page-sub-title">Chit Funds Private Limited</div>
+    <div class="main-page-last-title" style="color: #b3b3b3;">Interest Free Savings & Credit</div>
+
+    <div>
+      <div class="icon-text-container">
+        <img src="../../../assets/icons/documents.svg" alt="Easy Documentation" />
+        <div class="text">Easy Documentation</div>
+      </div>
+      <div class="icon-text-container">
+        <img src="../../../assets/icons/governmentReg.svg" alt="Government Certified">
+        <div class="text">Government Certified</div>
+      </div>
+      <div class="icon-text-container">
+        <img src="../../../assets/icons/payments.svg" alt="Multiple Payments">
+        <div class="text">Multiple Payments</div>
+      </div>
+    </div>
+  </div>
+  <div class="right-child">
+    <div class="form-header-container">
+      <div [class.selected-header]="login" class="login-header main-page-last-title" (click)="showLogIn($event)">Log In</div>
+      <div [class.selected-header]="signup" class="login-header main-page-last-title" (click)="showSignUp($event)">Sign Up</div>
+    </div>
+    <div *ngIf="login">
+      <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm.value)">
+        <input type="number" class="text" placeholder="Enter number" name="number" ngModel>
+        <br>
+        <div *ngIf="numberEmpty" class="text error-message">Contact number cannot be empty.</div>
+        <input type="password" class="text" placeholder="Enter password" name="password" ngModel>
+        <br>
+        <div *ngIf="passwordEmpty" class="text error-message">Password cannot be empty.</div>
+        <button type="submit" class="text">Log Me In</button>
+      </form>
+    </div>
+    <div *ngIf="logInError" class="error-message text">{{logInErrorMessage}}</div>
+    <div *ngIf="signup">
+      <form #signUpForm="ngForm" (ngSubmit)="onSignUp(signUpForm.value)">
+        <input type="email" class="text" placeholder="Enter email" name="email" ngModel>
+        <br>
+        <div *ngIf="signUpEmailEmpty" class="text error-message">Email cannot be empty.</div>
+        <div *ngIf="signUpEmailValidation" class="text error-message">Please enter a valid email id.</div>
+
+        <input type="text" class="text" placeholder="Enter full name" name="name" ngModel>
+        <br>
+        <div *ngIf="signUpNameEmpty" class="text error-message">Name cannot be empty.</div>
+
+        <input type="number" class="text" placeholder="Enter registered mobile number" name="number" ngModel>
+        <br>
+        <div *ngIf="signUpNumberEmpty" class="text error-message">Contact number cannot be empty.</div>
+
+        <input type="password" class="text" placeholder="Enter password" name="password" ngModel>
+        <br>
+        <div *ngIf="signUpPasswordEmpty" class="text error-message">Password cannot be empty.</div>
+        <button type="submit" class="text">Sign Up</button>
+      </form>
+    </div>
+    <div *ngIf="signUpError" class="error-message text">{{signUpErrorMessage}}</div>
+  </div>
+</div>

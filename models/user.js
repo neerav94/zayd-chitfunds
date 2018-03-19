@@ -23,6 +23,18 @@ module.exports.checkUserExist = function (number) {
   });
 }
 
+module.exports.isSuperAdmin = function(number) {
+  return new Promise((resolve, reject) => {
+    database.connection.query('SELECT role FROM users WHERE number = ?', [number], function(error, results, fields) {
+      if(error) {
+        return reject(error);
+      } else {
+        return resolve(results);
+      }
+    })
+  });
+}
+
 module.exports.getUser = function(number, password, databasePassword) {
   return new Promise((resolve, reject) => {
     database.connection.query('SELECT * FROM users WHERE number = ?', [number], function(error, results, fields) {

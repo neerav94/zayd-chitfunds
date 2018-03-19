@@ -5,6 +5,8 @@ var cors = require('cors')
 var passport = require('passport')
 var mysql = require('mysql')
 
+var userPassport = require('./config/passport')
+
 var app = express()
 
 // var connection = require('./config/database');
@@ -26,9 +28,9 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-require('./config/passport')(passport);
+userPassport.user(passport);
 
-app.use('/users', users);
+app.use('/v1', users);
 
 app.get('/', (req, res) => {
     res.send('Invalid Endpoint')
