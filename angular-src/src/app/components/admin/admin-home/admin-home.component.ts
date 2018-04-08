@@ -15,5 +15,4 @@ export class AdminHomeComponent implements OnInit {
     document.getElementById("groupView").classList.remove("current");
     document.getElementById("profileView").classList.remove("current");
   }
-
 }

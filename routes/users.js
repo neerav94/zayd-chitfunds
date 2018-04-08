@@ -47,7 +47,6 @@ router.post('/users/register', (req, res, next) => {
       }
     })
     .catch(err => {
-      console.log(err)
       res.json({
         status: false, // error occured while registering
         message: 'Some error occurred. Please try again.'

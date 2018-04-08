@@ -12,6 +12,7 @@ var app = express()
 // var connection = require('./config/database');
 
 const users = require('./routes/users')
+const groups = require('./routes/groups')
 
 const port = 3000;
 
@@ -30,7 +31,8 @@ app.use(passport.session());
 
 userPassport.user(passport);
 
-app.use('/v1', users);
+app.use('/v1/login', users);
+app.use('/v1/group', groups);
 
 app.get('/', (req, res) => {
     res.send('Invalid Endpoint')

@@ -1,3 +1,5 @@
+// logic part
+
 var database = require('../config/database');
 var bcrypt = require('bcrypt');
 

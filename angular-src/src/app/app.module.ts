@@ -8,18 +8,23 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule, routingComponents } from './app.routes';
 
 import { ValidationService } from './services/validation.service';
+import { GroupService } from './services/group.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 
 import { UserNavbarComponent } from './components/user/user-navbar/user-navbar.component';
 import { AdminNavbarComponent } from './components/admin/admin-navbar/admin-navbar.component';
+import { LoadingComponent } from './components/loading/loading.component';
+import { GroupViewComponent } from './components/admin/admin-group/group-view/group-view.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
     UserNavbarComponent,
-    AdminNavbarComponent
+    AdminNavbarComponent,
+    LoadingComponent,
+    GroupViewComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +32,7 @@ import { AdminNavbarComponent } from './components/admin/admin-navbar/admin-navb
     FormsModule,
     HttpModule 
   ],
-  providers: [ValidationService, AuthService, AuthGuard],
+  providers: [ValidationService, AuthService, GroupService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

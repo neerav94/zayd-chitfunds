@@ -8,6 +8,7 @@ export class AuthService {
 
   authToken: any;
   user: any;
+  url: string = "http://localhost:3000"
 
   constructor( private http: Http ) { }
 
@@ -15,7 +16,7 @@ export class AuthService {
   registerUser(user) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/v1/users/register', user, {headers: headers})
+    return this.http.post(this.url + '/v1/login/users/register', user, {headers: headers})
     .map(res => res.json());
   }
 
@@ -23,7 +24,7 @@ export class AuthService {
   registerAdmin(admin) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/v1/admin/adminRegister', admin, {headers: headers})
+    return this.http.post(this.url + '/v1/login/admin/adminRegister', admin, {headers: headers})
     .map(res => res.json());
   }
 
@@ -31,7 +32,7 @@ export class AuthService {
   registerSuperAdmin(admin) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/v1/admin/superAdminRegister', admin, {headers: headers})
+    return this.http.post(this.url + '/v1/login/admin/superAdminRegister', admin, {headers: headers})
     .map(res => res.json());
   }
 
@@ -39,7 +40,7 @@ export class AuthService {
   login(user) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/v1/users/authenticate', user, {headers: headers})
+    return this.http.post(this.url + '/v1/login/users/authenticate', user, {headers: headers})
     .map(res => res.json());
   }
 
@@ -64,7 +65,7 @@ export class AuthService {
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:3000/v1/users/home', {headers: headers})
+    return this.http.get(this.url + '/v1/login/users/home', {headers: headers})
     .map(res => res.json());
   }
 

@@ -1,1 +1,88 @@
 <app-admin-navbar></app-admin-navbar>
+
+<div *ngIf="loading">
+  <app-loading></app-loading>
+</div>
+
+<div *ngIf="!loading">
+
+  <div class="groups-container">
+    <div *ngFor="let group of allGroups">
+      <div class="group-box">
+        <div class="upper-container">
+          <div class="display">
+            <img src="../../../../../../assets/icons/groupIcon.svg" alt="Group Icon">
+          </div>
+          <div class="display">
+            <p class="group-title"><a class="color-white title" [routerLink]="['/v1/erpGroup', group.grp_id]">{{group.grp_name}}</a></p>
+            <div class="color-white special-font">
+              <span>&#8377; {{group.chit_value/group.num_members}}</span> every month</div>
+          </div>
+        </div>
+        <div class="lower-container">
+          <div>
+            <div class="color-white text heading">Members</div>
+            <div class="color-white special-font sub-heading">{{group.num_members}}</div>
+          </div>
+          <div>
+            <div class="color-white text heading">Chit Value</div>
+            <div class="color-white special-font sub-heading">
+              <span>&#8377; {{group.chit_value}}</span>
+            </div>
+          </div>
+          <div>
+            <div class="color-white text heading">Current Month</div>
+            <div class="color-white special-font sub-heading">TODO</div>
+          </div>
+          <div>
+            <div class="color-white text heading">Remaining Months</div>
+            <div class="color-white special-font sub-heading">TODO</div>
+          </div>
+          <div>
+            <div class="color-white text heading">Auction Day</div>
+            <div class="color-white special-font sub-heading">Logic</div>
+          </div>
+          <div>
+            <div class="color-white text heading">End Day</div>
+            <div *ngIf="group.end_date" class="color-white special-font sub-heading">{{group.end_date}}</div>
+            <div *ngIf="!group.end_date" class="color-white special-font sub-heading">- -</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="add-icon-image" (click)="createGroup()">
+    <img src="../../../../../../assets/icons/addIcon.svg" alt="Add Icon">
+  </div>
+
+  <div class="form-container" *ngIf="createGroupStatus">
+    <h1 class="main-page-sub-title">Create Group</h1>
+    <form #createGroup="ngForm" (ngSubmit)="submitGroupInfo(createGroup.value)">
+      <input type="text" class="text" placeholder="Enter group name" name="name" ngModel>
+      <br>
+      <div *ngIf="groupName" class="text error-message">Group name cannot be empty.</div>
+
+      <input type="number" class="text" placeholder="Enter total chit value" name="chitValue" ngModel>
+      <br>
+      <div *ngIf="chitValue" class="text error-message">Chit value cannot be empty.</div>
+
+      <input type="number" class="text" placeholder="Enter number of months/users" name="months" ngModel>
+      <br>
+      <div *ngIf="numMonths" class="text error-message">Total number of months cannot be empty.</div>
+
+      <div>
+        <input id="checkBox" type="checkbox" value="lag" name="status" ngModel>
+        <label for="checkBox" class="text">Auction is 1 month later than the installment.</label>
+      </div>
+
+      <button type="submit" class="text">Create Group</button>
+      <div *ngIf="createGroupError" class="error-message text">{{createGroupErrorMessage}}</div>
+    </form>
+  </div>
+
+  <div id="notificationBox" *ngIf="showNotification">
+    <img src="../../../../assets/icons/successIcon.svg" alt="Success Icon">
+    <div class="text">You have successfully created a new group.</div>
+  </div>
+</div>
