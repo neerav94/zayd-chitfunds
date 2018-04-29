@@ -31,7 +31,13 @@ export class GroupViewComponent implements OnInit {
       if(data.status) {
         this.groupInfo = data.message
         if(this.groupInfo[0].start_date) {
-          this.activeView = true;
+          this.groupService.getAllSubscribers(this.groupInfo[0].grp_id).subscribe(data => {
+            if(data.message.length === this.groupInfo[0].num_members) {
+              this.activeView = true;
+            } else {
+              this.activeView = false;
+            }
+          })
         } else {
           this.activeView = false;
         }

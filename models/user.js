@@ -2,7 +2,7 @@ var database = require('../config/database');
 
 module.exports.getSubscribedGroups = function(number) {
     return new Promise((resolve, reject) => {
-        database.connection.query('SELECT group_name FROM subscribers WHERE number =?', [number], (error, results, fields) => {
+        database.connection.query('SELECT DISTINCT group_name FROM subscribers WHERE number =?', [number], (error, results, fields) => {
             var response = {}
             if(results.length > 0) {
                 var groupNames = ""
