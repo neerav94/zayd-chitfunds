@@ -1,3 +1,12 @@
-<p>
-  group-view works!
-</p>
+<div *ngIf="loading">
+  <app-loading></app-loading>
+</div>
+
+<div *ngIf="!loading">
+  <div *ngIf="activeView">
+    <app-active-group-view [groupInfo]="groupInfo"></app-active-group-view>
+  </div>
+  <div *ngIf="!activeView">
+    <app-future-group-view [groupInfo]="groupInfo"></app-future-group-view>
+  </div>
+</div>

@@ -37,11 +37,10 @@ export class AdminGroupComponent implements OnInit {
     this.groupService.getAllGroups().subscribe(data => {
       if(data.status) {
         this.allGroups = data.message;
-        this.loading = false;
       } else {
         alert(data.message)
-        this.loading = false;
       }
+      this.loading = false;
     })
   }
 

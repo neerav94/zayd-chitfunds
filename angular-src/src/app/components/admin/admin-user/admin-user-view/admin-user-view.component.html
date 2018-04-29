@@ -1,0 +1,9 @@
+<div *ngIf="loading">
+  <app-loading></app-loading>
+</div>
+
+<div *ngIf="!loading">
+  <div *ngIf="activeView">
+    <h1 class="main-page-sub-title user-name">{{userInfo[0].name}}</h1>
+  </div>
+</div>

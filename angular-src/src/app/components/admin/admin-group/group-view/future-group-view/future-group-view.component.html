@@ -1,0 +1,121 @@
+<div *ngIf="loading">
+  <app-loading></app-loading>
+</div>
+
+<div *ngIf="!loading">
+  <h1 class="main-page-sub-title group-title">{{groupInfo[0].grp_name}}</h1>
+  <h2 class="links color-white">
+    <span class="special-font monthly-collection">&#8377; {{groupInfo[0].chit_value/groupInfo[0].num_members}}</span> every month</h2>
+
+  <div class="group-info">
+    <div>
+      <div class="color-white text heading">Members</div>
+      <div class="color-white special-font sub-heading">{{groupInfo[0].num_members}}</div>
+    </div>
+    <div>
+      <div class="color-white text heading">Chit Value</div>
+      <div class="color-white special-font sub-heading">
+        <span>&#8377; {{groupInfo[0].chit_value}}</span>
+      </div>
+    </div>
+    <div>
+      <div class="color-white text heading">Current Month</div>
+      <div class="color-white special-font sub-heading">- -</div>
+    </div>
+    <div>
+      <div class="color-white text heading">Remaining Months</div>
+      <div class="color-white special-font sub-heading">- -</div>
+    </div>
+    <div>
+      <div class="color-white text heading">Auction Day</div>
+      <div class="color-white special-font sub-heading">- -</div>
+    </div>
+    <div>
+      <div class="color-white text heading">Start Day</div>
+      <div class="color-white special-font sub-heading">- -</div>
+    </div>
+  </div>
+
+  <div>
+    <div class="button text" (click)="startGroup()">Start Group</div>
+    <div class="button text" (click)="addMembers()">Add Members</div>
+  </div>
+
+  <div class="user-container">
+    <table class="table text" [mfData]="subscribedUsers" #mf="mfDataTable">
+      <thead>
+        <tr>
+          <th class="main-page-last-title">
+            <mfDefaultSorter by="name">Name</mfDefaultSorter>
+          </th>
+          <th class="main-page-last-title">
+            <mfDefaultSorter by="email">Contact</mfDefaultSorter>
+          </th>
+          <th class="main-page-last-title">
+            <mfDefaultSorter by="age">Token Number</mfDefaultSorter>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of mf.data">
+          <td class="links">{{item.name}}</td>
+          <td class="links">{{item.number}}</td>
+          <td class="links">{{item.token}}</td>
+        </tr>
+      </tbody>
+      <!-- <tfoot>
+        <tr>
+          <td colspan="4">
+            <mfBootstrapPaginator style="color: #000;" [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+          </td>
+        </tr>
+      </tfoot> -->
+    </table>
+  </div>
+
+  <div class="date-selection-div" *ngIf="openStartGroup">
+    <div class="main-page-last-title" style="margin-bottom: 16px;">
+      <div style="display: inline;">Select start and end date</div>
+      <div class="close-icon" (click)="closeStartGroup()">X</div>
+    </div>
+    <dl-date-time-picker on-change="(onStartDateSelect($event))"></dl-date-time-picker>
+  </div>
+
+  <div class="form-container" *ngIf="openAddMembers">
+    <div>
+      <h1 style="display: inline;" class="main-page-sub-title">Add Users</h1>
+      <div class="close-icon main-page-sub-title" style="float: right; color: white;" (click)="closeAddMembers()">X</div>
+    </div>
+    <div style="display: inline-block">
+      <form #subscribeUser="ngForm" (ngSubmit)="subscribeUsers(subscribeUser.value)">
+        <input type="text" class="text" placeholder="Enter user name" name="name" ngModel>
+        <br>
+        <div *ngIf="userName" class="text error-message">User name cannot be empty.</div>
+
+        <input type="number" class="text" placeholder="Enter contact number" name="contact" ngModel>
+        <br>
+        <div *ngIf="userContact" class="text error-message">Phone number cannot be empty.</div>
+
+        <input type="number" class="text" placeholder="Enter token number" name="token" ngModel>
+        <br>
+        <div *ngIf="userToken" class="text error-message">Token number cannot be empty.</div>
+
+        <button type="submit" class="text">Add User</button>
+        <div style="width: 240px;" *ngIf="subscribeUserError" class="error-message text">{{subscribeUserErrorMessage}}</div>
+      </form>
+    </div>
+    <div style="display:inline-block;" class="main-page-sub-title or-text">OR</div>
+    <div style="display: inline-block; vertical-align:top; width: 240px;">
+      <input type="file" name="photo" ng2FileSelect [uploader]="uploader" />
+      <button type="button" class="text" (click)="uploader.uploadAll()">
+        Upload
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="openStartGroup" class="overlay"></div>
+  <div id="notificationBox" *ngIf="showNotification">
+    <img src="../../../../../../assets/icons/successIcon.svg" alt="Success Icon">
+    <div class="text">{{notificationMessage}}</div>
+  </div>
+</div>

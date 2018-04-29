@@ -1,25 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { GroupService } from '../../../../services/group.service';
+import { UserService } from '../../../../services/user.service';
 
 @Component({
-  selector: 'app-group-view',
-  templateUrl: './group-view.component.html',
-  styleUrls: ['./group-view.component.css', '../../../../css/typography.css']
+  selector: 'app-admin-user-view',
+  templateUrl: './admin-user-view.component.html',
+  styleUrls: ['./admin-user-view.component.css', '../../../../css/typography.css']
 })
-export class GroupViewComponent implements OnInit {
+export class AdminUserViewComponent implements OnInit {
 
   loading: boolean = false;
-  activeView: boolean;
-
+  activeView: boolean = false;
   id: number;
 
-  groupInfo: any;
+  userInfo: any;
 
   constructor(
     private route: ActivatedRoute,
-    private groupService: GroupService
+    private userService: UserService
   ) { }
 
   ngOnInit() {
@@ -27,15 +26,12 @@ export class GroupViewComponent implements OnInit {
       this.id = +params['id']; // (+) converts string 'id' to a number.
     });
     this.loading = true;
-    this.groupService.getGroupById(this.id).subscribe(data => {
+    this.userService.getUserById(this.id).subscribe(data => {
       if(data.status) {
-        this.groupInfo = data.message
-        if(this.groupInfo[0].start_date) {
-          this.activeView = true;
-        } else {
-          this.activeView = false;
-        }
+        this.userInfo = data.message
+        this.activeView = true;
       } else {
+        this.activeView = false;
         alert("Some error occurred. Please try again.")
       }
       this.loading = false;

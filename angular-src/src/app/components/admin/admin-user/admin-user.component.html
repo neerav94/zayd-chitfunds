@@ -1,215 +1,89 @@
 <app-admin-navbar></app-admin-navbar>
 
-<style>
-  input {
-    color: #fff;
-    background: transparent;
-    outline: none;
-    border: 2px solid #1ab188;
-    padding: 16px;
-    margin: 8px 32px 0 32px;
-  }
-
-  .user-container {
-    height: calc(100vh - 150px);
-    width: calc(100vw - 32px);
-    margin: 8px 16px;
-    overflow-y: auto;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-evenly;
-    align-items: center;
-  }
-
-  .user-info {
-    background: linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, .8));
-    margin: 16px;
-  }
-
-  img {
-    height: 64px;
-    width: 64px;
-  }
-
-  .display {
-    display: inline-block;
-  }
-
-  .user-name {
-    color: #fff;
-    padding: 8px 8px 8px 0;
-  }
-
-  .user-group {
-    padding-bottom: 16px;
-    color: #da2c6e
-  }
-
-  .user-mobile {
-    padding-bottom: 4px;
-    color: #fff;
-  }
-
-</style>
-
-<div>
-  <input type="number" class="special-font" placeholder="Search by number">
+<div *ngIf="loading">
+  <app-loading></app-loading>
 </div>
 
-<div class="user-container">
-  <div class="user-info">
-    <div class="display">
-      <img src="../../../../assets/icons/userIcon.svg" alt="User Icon">
+<div *ngIf="!loading">
+  <!-- <div>
+  <input type="number" class="special-font" placeholder="Search by number">
+</div> -->
+
+  <div class="user-container">
+    <table class="table text" [mfData]="allUsers" #mf="mfDataTable">
+      <thead>
+        <tr>
+          <th class="main-page-last-title">
+            <mfDefaultSorter by="name">Name</mfDefaultSorter>
+          </th>
+          <th class="main-page-last-title">
+            <mfDefaultSorter by="email">Contact</mfDefaultSorter>
+          </th>
+          <th class="main-page-last-title">
+            <mfDefaultSorter by="age">Email</mfDefaultSorter>
+          </th>
+          <th class="main-page-last-title">
+            <mfDefaultSorter by="city">Groups</mfDefaultSorter>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of mf.data">
+          <td class="links">
+            <a [routerLink]="['/v1/erpUser', item.id]">{{item.name}}</a>
+          </td>
+          <td class="links">{{item.number}}</td>
+          <td class="links">{{item.email}}</td>
+          <td class="links">{{item.subscribedGroups}}</td>
+        </tr>
+      </tbody>
+      <!-- <tfoot>
+        <tr>
+          <td colspan="4">
+            <mfBootstrapPaginator style="color: #000;" [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+          </td>
+        </tr>
+      </tfoot> -->
+    </table>
+  </div>
+
+  <div class="form-container" *ngIf="addUserStatus">
+    <div>
+      <h1 class="main-page-sub-title">Add Users</h1>
+      <div class="close-icon main-page-sub-title" (click)="closeAddUsers()">X</div>
     </div>
-    <div class="display">
-      <div class="user-name title">Neerav Jain</div>
-      <div class="user-mobile special-font">9414071661</div>
-      <div class="user-group text">ZC-018i | ZC-019i</div>
+    <div style="display: inline-block">
+      <form #addUser="ngForm" (ngSubmit)="submitUserInfo(addUser.value)">
+        <input type="text" class="text" placeholder="Enter user name" name="name" ngModel>
+        <br>
+        <div *ngIf="userName" class="text error-message">User name cannot be empty.</div>
+
+        <input type="number" class="text" placeholder="Enter contact number" name="contact" ngModel>
+        <br>
+        <div *ngIf="usercontact" class="text error-message">Phone number cannot be empty.</div>
+
+        <input type="email" class="text" placeholder="Enter email of the user" name="email" ngModel>
+        <br>
+
+        <button type="submit" class="text">Add User</button>
+        <div *ngIf="addUserError" class="error-message text">{{addUserErrorMessage}}</div>
+      </form>
+    </div>
+    <div style="display:inline-block;" class="main-page-sub-title or-text">OR</div>
+    <div style="display: inline-block; vertical-align:top; width: 240px;">
+      <input type="file" name="photo" ng2FileSelect [uploader]="uploader" />
+      <button type="button" class="text" (click)="uploader.uploadAll()">
+        Upload
+      </button>
     </div>
   </div>
 
+  <div class="add-icon-image" (click)="addUser()">
+    <img src="../../../../assets/icons/addIcon.svg" alt="Add Icon">
+  </div>
 
-  <!-- ============================================== -->
-  <!-- ============================================== -->
-
-  <div class="user-info">
-    <div class="display">
-      <img src="../../../../assets/icons/userIcon.svg" alt="User Icon">
-    </div>
-    <div class="display">
-      <div class="user-name title">Neerav Jain</div>
-      <div class="user-mobile special-font">9414071661</div>
-      <div class="user-group text">ZC-018i | ZC-019i</div>
-    </div>
-  </div>
-  <div class="user-info">
-    <div class="display">
-      <img src="../../../../assets/icons/userIcon.svg" alt="User Icon">
-    </div>
-    <div class="display">
-      <div class="user-name title">Neerav Jain</div>
-      <div class="user-mobile special-font">9414071661</div>
-      <div class="user-group text">ZC-018i | ZC-019i</div>
-    </div>
-  </div>
-  <div class="user-info">
-    <div class="display">
-      <img src="../../../../assets/icons/userIcon.svg" alt="User Icon">
-    </div>
-    <div class="display">
-      <div class="user-name title">Neerav Jain</div>
-      <div class="user-mobile special-font">9414071661</div>
-      <div class="user-group text">ZC-018i | ZC-019i</div>
-    </div>
-  </div>
-  <div class="user-info">
-    <div class="display">
-      <img src="../../../../assets/icons/userIcon.svg" alt="User Icon">
-    </div>
-    <div class="display">
-      <div class="user-name title">Neerav Jain</div>
-      <div class="user-mobile special-font">9414071661</div>
-      <div class="user-group text">ZC-018i | ZC-019i</div>
-    </div>
-  </div>
-  <div class="user-info">
-    <div class="display">
-      <img src="../../../../assets/icons/userIcon.svg" alt="User Icon">
-    </div>
-    <div class="display">
-      <div class="user-name title">Neerav Jain</div>
-      <div class="user-mobile special-font">9414071661</div>
-      <div class="user-group text">ZC-018i | ZC-019i</div>
-    </div>
-  </div>
-  <div class="user-info">
-    <div class="display">
-      <img src="../../../../assets/icons/userIcon.svg" alt="User Icon">
-    </div>
-    <div class="display">
-      <div class="user-name title">Neerav Jain</div>
-      <div class="user-mobile special-font">9414071661</div>
-      <div class="user-group text">ZC-018i | ZC-019i</div>
-    </div>
-  </div>
-  <div class="user-info">
-    <div class="display">
-      <img src="../../../../assets/icons/userIcon.svg" alt="User Icon">
-    </div>
-    <div class="display">
-      <div class="user-name title">Neerav Jain</div>
-      <div class="user-mobile special-font">9414071661</div>
-      <div class="user-group text">ZC-018i | ZC-019i</div>
-    </div>
-  </div>
-  <div class="user-info">
-    <div class="display">
-      <img src="../../../../assets/icons/userIcon.svg" alt="User Icon">
-    </div>
-    <div class="display">
-      <div class="user-name title">Neerav Jain</div>
-      <div class="user-mobile special-font">9414071661</div>
-      <div class="user-group text">ZC-018i | ZC-019i</div>
-    </div>
-  </div>
-  <div class="user-info">
-    <div class="display">
-      <img src="../../../../assets/icons/userIcon.svg" alt="User Icon">
-    </div>
-    <div class="display">
-      <div class="user-name title">Neerav Jain</div>
-      <div class="user-mobile special-font">9414071661</div>
-      <div class="user-group text">ZC-018i | ZC-019i</div>
-    </div>
-  </div>
-  <div class="user-info">
-    <div class="display">
-      <img src="../../../../assets/icons/userIcon.svg" alt="User Icon">
-    </div>
-    <div class="display">
-      <div class="user-name title">Neerav Jain</div>
-      <div class="user-mobile special-font">9414071661</div>
-      <div class="user-group text">ZC-018i | ZC-019i</div>
-    </div>
-  </div>
-  <div class="user-info">
-    <div class="display">
-      <img src="../../../../assets/icons/userIcon.svg" alt="User Icon">
-    </div>
-    <div class="display">
-      <div class="user-name title">Neerav Jain</div>
-      <div class="user-mobile special-font">9414071661</div>
-      <div class="user-group text">ZC-018i | ZC-019i</div>
-    </div>
-  </div>
-  <div class="user-info">
-    <div class="display">
-      <img src="../../../../assets/icons/userIcon.svg" alt="User Icon">
-    </div>
-    <div class="display">
-      <div class="user-name title">Neerav Jain</div>
-      <div class="user-mobile special-font">9414071661</div>
-      <div class="user-group text">ZC-018i | ZC-019i</div>
-    </div>
-  </div>
-  <div class="user-info">
-    <div class="display">
-      <img src="../../../../assets/icons/userIcon.svg" alt="User Icon">
-    </div>
-    <div class="display">
-      <div class="user-name title">Neerav Jain</div>
-      <div class="user-mobile special-font">9414071661</div>
-      <div class="user-group text">ZC-018i | ZC-019i</div>
-    </div>
-  </div>
-  <div class="user-info">
-    <div class="display">
-      <img src="../../../../assets/icons/userIcon.svg" alt="User Icon">
-    </div>
-    <div class="display">
-      <div class="user-name title">Neerav Jain</div>
-      <div class="user-mobile special-font">9414071661</div>
-      <div class="user-group text">ZC-018i | ZC-019i</div>
-    </div>
+  <div id="notificationBox" *ngIf="showNotification">
+    <img src="../../../../assets/icons/successIcon.svg" alt="Success Icon">
+    <div class="text">{{notificationMessage}}</div>
   </div>
 </div>

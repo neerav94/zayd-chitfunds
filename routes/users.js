@@ -5,283 +5,215 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
 const user = require('../models/user')
+const login = require('../models/login')
 const config = require('../config/database')
 
-//Register User; role is set to 0, since user is registering
-router.post('/users/register', (req, res, next) => {
+//require multer for the file uploads
+var multer = require('multer');
+// require xlsx for file reading of type .xlsx
+var XLSX = require('xlsx')
+
+// set the directory for the uploads to the uploaded to
+var DIR = './uploads/';
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, DIR)
+  },
+  filename: function (req, file, cb) {
+    cb(null, "userInfo.xlsx")
+  }
+})
+//define the type of upload multer would be doing and pass in its destination, in our case, its a single file with the name photo
+var upload = multer({
+  storage: storage
+}).single('photo');
+
+addSubscribedGroups = function(item) {
+  return new Promise((resolve, reject) => {
+    user.getSubscribedGroups(item.number)
+    .then(response => {
+      item["subscribedGroups"] = response["name"];
+      resolve(response);
+    })
+  })
+}
+
+addMultipleUsers = function(item, index) {
+  login.checkUserExist(item["mobile"])
+  .then(response => {
+    if (response.status == 1) {
+      var today = new Date();
+      var email = ""
+      if(!item.hasOwnProperty('email')) {
+        email = ""
+      } else {
+        email = item["email"]
+      }
+      var user = {
+        "name": item["name"],
+        "email": email,
+        "number": item["mobile"],
+        "role": 0,
+        "password": "",
+        "created_at": today
+      }
+      login.addNewUser(user, (error, results, fields) => {
+        if (error) {
+          res.json({
+            status: false,
+            message: "Some error occurred. Please try again."
+          })
+        } else {
+          flag = true;
+        }
+      })
+    }
+  }) 
+  return true;
+}
+
+router.post('/addUser', passport.authenticate('jwt', {
+  session: false
+}), (req, res, next) => {
   var today = new Date();
 
-  var salt = bcrypt.genSaltSync(10);
-  var hashedPassword = bcrypt.hashSync(req.body.password, salt);
-
-  var users = {
+  var user = {
     "name": req.body.name,
     "email": req.body.email,
-    "number": req.body.number,
+    "number": req.body.contact,
     "role": 0,
-    "password": hashedPassword,
+    "password": "",
     "created_at": today
   }
 
-  user.checkUserExist(req.body.number)
+  login.checkUserExist(req.body.contact)
     .then(response => {
       if (response.status == 0) {
         res.json({
-          status: false, // error occured since user already exists
-          message: 'User with this contact number already exists.'
+          status: false,
+          message: 'User with this contact number already exist.'
         })
       } else if (response.status == 1) {
-        user.addNewUser(users, (error, results, fields) => {
+        login.addNewUser(user, (error, results, fields) => {
           if (error) {
             res.json({
-              status: false, // error occured while registering
-              message: 'Some error occurred. Please try again.'
+              status: false,
+              message: "Some error occurred. Please try again."
             })
           } else {
             res.json({
               status: true,
-              message: 'Successfully registered.'
+              message: 'Successfully added a new user.'
             })
           }
-        });
+        })
       }
     })
     .catch(err => {
       res.json({
-        status: false, // error occured while registering
+        status: false,
         message: 'Some error occurred. Please try again.'
       })
-    });
+    })
 })
 
-//Register Admin; role is set to 1, since admin is registering
-router.post('/admin/adminRegister', passport.authenticate('jwt', {
+router.get('/getAllUsers', passport.authenticate('jwt', {
   session: false
 }), (req, res, next) => {
-  var today = new Date();
-  var salt = bcrypt.genSaltSync(10);
-  var hashedPassword = bcrypt.hashSync(req.body.password, salt);
-
-  var users = {
-    "name": req.body.name,
-    "email": req.body.email,
-    "number": req.body.number,
-    "role": 1,
-    "password": hashedPassword,
-    "created_at": today
-  }
-
-  const number = req.user[0].number; //get admin's number from header
-  user.isSuperAdmin(number)
-    .then(response => {
-      // role = 0; normal user
-      // role = 1; admin
-      // role = 2; super user
-      if (response[0].role == 0) {
-        return res.json({
-          status: false, // error occured while registering
-          message: 'Permission Denied'
-        })
-      } else if (response[0].role == 1) {
-        return res.json({
-          status: false, // error occured while registering
-          message: 'Permission Denied'
-        })
-      } else if (response[0].role == 2) {
-        user.checkUserExist(req.body.number)
-          .then(response => {
-            if (response.status == 0) {
-              res.json({
-                status: false, // error occured since admin already exists
-                message: 'Admin with this contact number already exists.'
-              })
-            } else if (response.status == 1) {
-              user.addNewUser(users, (error, results, fields) => {
-                if (error) {
-                  res.json({
-                    status: false, // error occured while registering
-                    message: 'Some error occurred. Please try again.'
-                  })
-                } else {
-                  res.json({
-                    status: true,
-                    message: 'Successfully Registered.'
-                  })
-                }
-              });
-            }
-          })
-          .catch(err => {
-            console.log(err)
-            res.json({
-              status: false, // error occured while registering
-              message: 'Some error occurred. Please try again.'
-            })
-          });
-      }
-    })
-    .catch(err => {
-      console.log(err)
-      return res.json({
-        status: false, // error occured while registering
+  user.getAllUsers((error, results, fields) => {
+    if (error) {
+      res.json({
+        status: false,
         message: 'Some error occurred. Please try again.'
       })
-    })
+    } else {
+      return new Promise((resolve, reject) => {
+        var promises = []
+        for(var i=0; i<results.length; i++) {
+          promises.push(addSubscribedGroups(results[i]))
+        }
+        Promise.all(promises).then(response => {
+          resolve(results)
+        })
+      }).then(response => {
+        res.json({
+          status: true,
+          message: response
+        })
+      })
+    }
+  })
 })
 
-//Register Admin; role is set to 2, since admin is registering
-router.post('/admin/superAdminRegister', passport.authenticate('jwt', {
+router.get('/getUserById', passport.authenticate('jwt', {
   session: false
 }), (req, res, next) => {
-  var today = new Date();
-  var salt = bcrypt.genSaltSync(10);
-  var hashedPassword = bcrypt.hashSync(req.body.password, salt);
-
-  var users = {
-    "name": req.body.name,
-    "email": req.body.email,
-    "number": req.body.number,
-    "role": 2,
-    "password": hashedPassword,
-    "created_at": today
-  }
-
-  const number = req.user[0].number; //get admin's number from header
-  user.isSuperAdmin(number)
-    .then(response => {
-      // role = 0; normal user
-      // role = 1; admin
-      // role = 2; super user
-      if (response[0].role == 0) {
-        return res.json({
-          status: false, // error occured while registering
-          message: 'Permission Denied'
-        })
-      } else if (response[0].role == 1) {
-        return res.json({
-          success: false, // error occured while registering
-          message: 'Permission Denied'
-        })
-      } else if (response[0].role == 2) {
-        user.checkUserExist(req.body.number)
-          .then(response => {
-            if (response.status == 0) {
-              res.json({
-                status: false, // error occured since admin already exists
-                message: 'Admin with this contact number already exists.'
-              })
-            } else if (response.status == 1) {
-              user.addNewUser(users, (error, results, fields) => {
-                if (error) {
-                  res.json({
-                    status: false, // error occured while registering
-                    message: 'Some error occurred. Please try again.'
-                  })
-                } else {
-                  res.json({
-                    status: true,
-                    message: 'Successfully Registered.'
-                  })
-                }
-              });
-            }
-          })
-          .catch(err => {
-            console.log(err)
-            res.json({
-              status: false, // error occured while registering
-              message: 'Some error occurred. Please try again.'
-            })
-          });
-      }
-    })
-    .catch(err => {
-      console.log(err)
-      return res.json({
-        status: false, // error occured while registering
-        message: 'Some error occurred. Please try again.'
+  user.getUserById(req.query.id, (error, results, fields) => {
+    if (error) {
+      res.json({
+        "status": false,
+        "message": "Some error occurred. Please try again."
       })
-    })
+    } else {
+      res.json({
+        "status": true,
+        "message": results
+      })
+    }
+  })
 })
 
-//authenticate
-router.post('/users/authenticate', (req, res, next) => {
-  const number = req.body.number;
-  const password = req.body.password;
-
-  user.checkUserExist(number)
-    .then(response => {
-      if (response.status == 1) {
-        return res.json({
-          status: false,
-          message: 'User does not exist for this contact number.'
-        });
-      } else if (response.status == 0) {
-        user.getUser(number, password, response.user[0].password)
-          .then(loginStatus => {
-            if (loginStatus == 0) {
-              return res.json({
-                status: false,
-                message: 'Please enter correct password.'
-              });
-            } else if (loginStatus == 1) {
-              var temp = {}
-              temp["user"] = {}
-              temp["user"]["number"] = response.user[0].number
-              temp["user"]["email"] = response.user[0].email
-              temp["user"]["name"] = response.user[0].name
-              temp["user"]["role"] = response.user[0].role
-
-              const token = jwt.sign(temp, config.secret, {
-                expiresIn: 604800 // 1 week in seconds
-              });
-
-              res.json({
-                status: true,
-                token: 'Bearer ' + token,
-                user: {
-                  name: response.user[0].name,
-                  number: response.user[0].number,
-                  email: response.user[0].email,
-                  role: response.user[0].role
-                },
-                message: "Successfully Registered."
-              });
-            }
-          })
-          .catch(error => {
-            console.log(error)
-            return res.json({
-              status: false, // error occured while registering
-              message: 'Some error occurred. Please try again.'
-            })
-          })
-      }
-    })
-    .catch(err => {
-      console.log(err)
-      return res.json({
-        status: false, // error occured while registering
-        message: 'Some error occurred. Please try again.'
-      })
-    })
-})
-
-//profile
-router.get('/users/home', passport.authenticate('jwt', {
+router.post('/addMultipleUsers', passport.authenticate('jwt', {
   session: false
-}), (req, res, next) => {
-  if(req.user[0].role == 0) {
-    res.json({
-      status: true,
-      user: req.user
-    });
-  } else {
-    res.json({
-      status: false,
-      user: null
+}), function (req, res, next) {
+  return new Promise((resolve, reject) => {
+    upload(req, res, function (err) {
+      if (err) {
+        res.json({
+          "status": false,
+          "message": "Some error occurred. Please try again."
+        })
+        return reject({
+          "status": false
+        })
+      } else {
+        return resolve({
+          "status": true
+        })
+      }
     })
-  }
-})
+  })
+  .then(response => {
+    var workbook = XLSX.readFile('./uploads/userInfo.xlsx');
+    var sheet_name_list = workbook.SheetNames;
+    var xlData = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+    var flag = true;
 
+    for(var i in xlData) {
+      if(!xlData[i]["mobile"]) {
+        flag = false;
+      } else if(!xlData[i]["name"]) {
+        flag = false;
+      }
+    }
+    if(flag) {
+      if(!xlData.map(addMultipleUsers)) {
+        res.json({
+          "status": false,
+          "message": "Some error occurred. Please try again."
+        })
+      } else {
+        res.json({
+          "status": true,
+          "message": "All users successfully entered."
+        })
+      }
+    } else {
+      res.json({
+        "status": false,
+        "message": "Some entry for contact number or name is empty."
+      })
+    }
+  })
+});
 module.exports = router;

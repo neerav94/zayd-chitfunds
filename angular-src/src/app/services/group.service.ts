@@ -38,4 +38,42 @@ export class GroupService {
     return this.http.get(this.url + '/v1/group/getAllGroups', {headers: headers})
     .map(res => res.json());
   }
+
+  // get group by id
+  getGroupById(id) {
+    let headers = new Headers()
+    this.loadToken()
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(this.url + '/v1/group/getGroupById?id='+id, {headers: headers})
+    .map(res => res.json())
+  }
+
+  // Set dates to start the group
+  setStartDate(data) {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(this.url + '/v1/group/setDate', data, {headers: headers})
+    .map(res => res.json())
+  }
+
+  subscribeUser(data) {
+    let headers = new Headers()
+    this.loadToken()
+    headers.append('Authorization', this.authToken)
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(this.url + '/v1/group/subscribeUser', data, {headers: headers})
+    .map(res => res.json())
+  }
+
+  getAllSubscribers(groupId) {
+    let headers = new Headers()
+    this.loadToken()
+    headers.append('Authorization', this.authToken)
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(this.url + '/v1/group/getAllSubscribers?groupId=' + groupId, {headers: headers})
+    .map(res => res.json())
+  }
 }

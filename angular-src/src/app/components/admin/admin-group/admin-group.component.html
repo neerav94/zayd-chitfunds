@@ -5,7 +5,6 @@
 </div>
 
 <div *ngIf="!loading">
-
   <div class="groups-container">
     <div *ngFor="let group of allGroups">
       <div class="group-box">
@@ -31,21 +30,21 @@
             </div>
           </div>
           <div>
-            <div class="color-white text heading">Current Month</div>
-            <div class="color-white special-font sub-heading">TODO</div>
+            <div class="color-white text heading">Months over</div>
+            <div class="color-white special-font sub-heading">{{group.months}}</div>
           </div>
           <div>
             <div class="color-white text heading">Remaining Months</div>
-            <div class="color-white special-font sub-heading">TODO</div>
+            <div class="color-white special-font sub-heading">{{group.num_members - group.months}}</div>
           </div>
           <div>
             <div class="color-white text heading">Auction Day</div>
-            <div class="color-white special-font sub-heading">Logic</div>
+            <div class="color-white special-font sub-heading">{{group.auction}}</div>
           </div>
           <div>
-            <div class="color-white text heading">End Day</div>
-            <div *ngIf="group.end_date" class="color-white special-font sub-heading">{{group.end_date}}</div>
-            <div *ngIf="!group.end_date" class="color-white special-font sub-heading">- -</div>
+            <div class="color-white text heading">Start Day</div>
+            <div *ngIf="group.start_date" class="color-white special-font sub-heading">{{group.startDay}}</div>
+            <div *ngIf="!group.start_date" class="color-white special-font sub-heading">- -</div>
           </div>
         </div>
       </div>

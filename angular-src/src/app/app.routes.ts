@@ -10,6 +10,7 @@ import { AdminHomeComponent } from './components/admin/admin-home/admin-home.com
 import { AdminUserComponent } from './components/admin/admin-user/admin-user.component';
 import { AdminGroupComponent } from './components/admin/admin-group/admin-group.component';
 import { GroupViewComponent } from './components/admin/admin-group/group-view/group-view.component';
+import { AdminUserViewComponent } from './components/admin/admin-user/admin-user-view/admin-user-view.component';
 import { AdminProfileComponent } from './components/admin/admin-profile/admin-profile.component';
 
 export const routes: Routes = [
@@ -19,6 +20,7 @@ export const routes: Routes = [
     { path: 'v1/erpHome', component: AdminHomeComponent, canActivate: [AuthGuard] },
     { path: 'v1/erpGroup', component: AdminGroupComponent, canActivate: [AuthGuard] },
     { path: 'v1/erpGroup/:id', component: GroupViewComponent, canActivate: [AuthGuard] },
+    { path: 'v1/erpUser/:id', component: AdminUserViewComponent, canActivate: [AuthGuard]},
     { path: 'v1/erpUser', component: AdminUserComponent, canActivate: [AuthGuard] },
     { path: 'v1/erpProfile', component: AdminProfileComponent, canActivate: [AuthGuard] },
     { path: '**', component: ErrorComponent}

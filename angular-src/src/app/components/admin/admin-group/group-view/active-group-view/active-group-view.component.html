@@ -1,0 +1,35 @@
+<div *ngIf="loading">
+    <app-loading></app-loading>
+  </div>
+  
+  <div *ngIf="!loading">
+    <h1 class="main-page-sub-title group-title">{{groupInfo[0].grp_name}}</h1>
+    <h2 class="links color-white">
+      <span class="special-font monthly-collection">&#8377; {{groupInfo[0].chit_value/groupInfo[0].num_members}}</span> every month</h2>
+  </div>
+  
+  <div class="group-info">
+    <div>
+      <div class="color-white text heading">Members</div>
+      <div class="color-white special-font sub-heading">{{groupInfo[0].num_members}}</div>
+    </div>
+    <div>
+      <div class="color-white text heading">Chit Value</div>
+      <div class="color-white special-font sub-heading">
+        <span>&#8377; {{groupInfo[0].chit_value}}</span>
+      </div>
+    </div>
+    <div>
+      <div class="color-white text heading">Current Month</div>
+      <div class="color-white special-font sub-heading">{{groupInfo[0].months}}</div>
+    </div>
+    <div>
+      <div class="color-white text heading">Remaining Months</div>
+      <div class="color-white special-font sub-heading">{{groupInfo[0].num_members - groupInfo[0].months}}</div>
+    </div>
+    <div>
+      <div class="color-white text heading">Auction Day</div>
+      <div class="color-white special-font sub-heading">{{groupInfo[0].auction}}</div>
+    </div>
+  </div>
+  

@@ -13,9 +13,11 @@
     "cors": "*",
     "express": "*",
     "jsonwebtoken": "*",
+    "multer": "^1.3.0",
     "mysql": "*",
     "passport": "*",
-    "passport-jwt": "*"
+    "passport-jwt": "*",
+    "xlsx": "^0.12.9"
   },
   "author": "Neerav Jain",
   "license": "ISC"
