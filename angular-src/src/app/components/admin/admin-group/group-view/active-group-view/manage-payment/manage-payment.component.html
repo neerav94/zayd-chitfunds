@@ -1,0 +1,32 @@
+<div *ngIf="loading">
+    <app-loading></app-loading>
+  </div>
+  
+  <div *ngIf="!loading">
+    <h1 class="main-page-sub-title group-title">Manage Payment</h1>
+
+    <div class="data-container" *ngFor="let payment of managePayment; let i = index">
+      <div class="data-container-child">
+        <div>Token</div>
+        <input type="text" [(ngModel)]="payment.token" name="payment.token" readonly>
+      </div>
+      <div class="data-container-child">
+        <div>Amount</div>
+        <input type="number" [(ngModel)]="payment.amount" name="payment.amount">
+      </div>
+      <div class="data-container-child">
+        <div>Mode of payment</div>
+        <select [(ngModel)]="payment.payment_mode" name="payment.payment_mode">
+          <option value="Cash" selected>Cash</option>
+          <option value="Cheque">Cheque</option>
+          <option value="NEFT">NEFT</option>
+          <option value="NetBanking">NetBanking</option>
+        </select>
+      </div>
+      <div class="data-container-child">
+        <div>Comment/Reference</div>
+        <input type="text" [(ngModel)]="payment.payment_comment" name="payment.payment_comment">
+      </div>
+    </div>
+    <button type="button" (click)="saveData(managePayment)">Record Payment</button>
+  </div>

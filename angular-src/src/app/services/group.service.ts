@@ -76,4 +76,22 @@ export class GroupService {
     return this.http.get(this.url + '/v1/group/getAllSubscribers?groupId=' + groupId, {headers: headers})
     .map(res => res.json())
   }
+
+  recordPayment(paymentData) {
+    let headers = new Headers()
+    this.loadToken()
+    headers.append('Authorization', this.authToken)
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(this.url + '/v1/group/recordPayment', paymentData, {headers: headers})
+    .map(res => res.json())
+  }
+
+  recordPrizedSubscriber(data) {
+    let headers = new Headers()
+    this.loadToken()
+    headers.append('Authorization', this.authToken)
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(this.url + '/v1/group/recordPrizedSubscriber', data, {headers: headers})
+    .map(res => res.json())
+  }
 }

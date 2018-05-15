@@ -16,6 +16,7 @@ export class GroupViewComponent implements OnInit {
   id: number;
 
   groupInfo: any;
+  paymentData: any;
 
   constructor(
     private route: ActivatedRoute,

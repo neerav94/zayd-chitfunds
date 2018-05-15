@@ -24,6 +24,7 @@ import { GroupViewComponent } from './components/admin/admin-group/group-view/gr
 import { ActiveGroupViewComponent } from './components/admin/admin-group/group-view/active-group-view/active-group-view.component';
 import { FutureGroupViewComponent } from './components/admin/admin-group/group-view/future-group-view/future-group-view.component';
 import { AdminUserViewComponent } from './components/admin/admin-user/admin-user-view/admin-user-view.component';
+import { ManagePaymentComponent } from './components/admin/admin-group/group-view/active-group-view/manage-payment/manage-payment.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AdminUserViewComponent } from './components/admin/admin-user/admin-user
     ActiveGroupViewComponent,
     FutureGroupViewComponent,
     AdminUserViewComponent,
-    FileSelectDirective
+    FileSelectDirective,
+    ManagePaymentComponent
   ],
   imports: [
     BrowserModule,

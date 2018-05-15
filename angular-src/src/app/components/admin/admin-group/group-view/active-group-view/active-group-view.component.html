@@ -1,13 +1,41 @@
+<style>
+  .prize-customer {
+    padding: 32px;
+    position: absolute;
+    top: 25%;
+    left: 40%;
+    background: #333333;
+    text-align: center;
+  }
+
+  .prize-cutomer-title {
+    color: #fff;
+    padding: 4px;
+    float: right;
+    margin: 0px 16px;
+    border: 1px solid #fff;
+    cursor: pointer;
+  }
+
+  .button {
+    padding: 8px;
+    color: white;
+    background: #1ab188;
+    border: 1px solid #1ab188;
+    display: inline-block;
+    margin-right: 16px;
+  }
+
+</style>
+
 <div *ngIf="loading">
-    <app-loading></app-loading>
-  </div>
-  
-  <div *ngIf="!loading">
-    <h1 class="main-page-sub-title group-title">{{groupInfo[0].grp_name}}</h1>
-    <h2 class="links color-white">
-      <span class="special-font monthly-collection">&#8377; {{groupInfo[0].chit_value/groupInfo[0].num_members}}</span> every month</h2>
-  </div>
-  
+  <app-loading></app-loading>
+</div>
+
+<div *ngIf="!loading">
+  <h1 class="main-page-sub-title group-title">{{groupInfo[0].grp_name}}</h1>
+  <h2 class="links color-white">
+    <span class="special-font monthly-collection">&#8377; {{groupInfo[0].chit_value/groupInfo[0].num_members}}</span> every month</h2>
   <div class="group-info">
     <div>
       <div class="color-white text heading">Members</div>
@@ -20,7 +48,7 @@
       </div>
     </div>
     <div>
-      <div class="color-white text heading">Current Month</div>
+      <div class="color-white text heading">Months Over</div>
       <div class="color-white special-font sub-heading">{{groupInfo[0].months}}</div>
     </div>
     <div>
@@ -32,4 +60,38 @@
       <div class="color-white special-font sub-heading">{{groupInfo[0].auction}}</div>
     </div>
   </div>
-  
+
+  <div class="group-info">
+    <div style="padding-bottom: 16px;" class="main-page-last-title color-white">Amount Collected
+      <span class="special-font monthly-collection">&#8377; TODO</span>
+    </div>
+    <progress value="100000" max="100000"></progress>
+  </div>
+
+  <div *ngIf="prizeCustomerStatus" class="prize-customer">
+    <h1 class="main-page-last-title" style="color: #fff;">Prized Subscriber</h1>
+    <input id="tokenNumber" type="number" class="text" placeholder="Enter token number">
+    <br>
+    <select [(ngModel)]="selectedCycle" style="margin: 16px 0;" (change)="changeSelectedCycle($event.target)">
+      <option>Select Cycle</option>
+      <option *ngFor="let month of numMonths" [ngValue]="month">
+        {{ month }}
+      </option>
+    </select>
+    <div style="margin: 16px 0;">
+      <button class="button" (click)="selectPrizeCustomer()">Cancel</button>
+      <button class="button" (click)="submitSubscriberInfo()">Submit</button>
+    </div>
+  </div>
+
+  <div class="manage-payment">
+    <select [(ngModel)]="selectedMonth" (change)="changeSelectedMonth($event.target)">
+      <option>Manage Payment</option>
+      <option *ngFor="let month of numMonths" [ngValue]="month">
+        {{ month }}
+      </option>
+    </select>
+  </div>
+
+  <div class="prize-cutomer-title links" (click)="selectPrizeCustomer()">Prized Subscriber</div>
+</div>

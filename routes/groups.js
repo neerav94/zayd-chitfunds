@@ -170,7 +170,6 @@ router.post('/setDate', passport.authenticate('jwt', {
   session: false
 }), (req, res, next) => {
   group.setDateForGroup(req.body, (error, results, fields) => {
-    console.log(results)
     if (error) {
       console.log(error)
       res.json({
@@ -370,6 +369,45 @@ router.post('/subscribeUsers', passport.authenticate('jwt', {
     res.json({
       "status": false,
       "message": "Some error occurred. PlLease try again."
+    })
+  })
+})
+
+router.post('/recordPayment', passport.authenticate('jwt', {
+  "session": false
+}), (req, res, next) => {
+  var promises = []
+  for(var i=0; i<req.body.length; i++) {
+    promises.push(group.setPayment(req.body[i]))
+  }
+  Promise.all(promises).then(response => {
+    res.json({
+      "status": true,
+      "message": "Success"
+    })
+  })
+  .catch(err => {
+    console.log(err);
+    res.json({
+      "status": false,
+      "message": "Some error occurred."
+    })
+  })
+})
+
+router.post('/recordPrizedSubscriber', passport.authenticate('jwt', {
+  "session": false
+}), (req, res, next) => {
+  group.setPrizedSubscriber(req.body).then(data => {
+    res.json({
+      "status": true,
+      "message": "Success"
+    })
+  })
+  .catch(err => {
+    res.json({
+      "status": false,
+      "message": "Some error occurred."
     })
   })
 })

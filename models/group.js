@@ -152,3 +152,27 @@ module.exports.subscribeUser = function(data, callback) {
 module.exports.getGroupId = function(groupName, callback) {
   database.connection.query('SELECT grp_id FROM groupinfo WHERE grp_name = ?', [groupName], callback)
 }
+
+module.exports.setPayment = function(data) {
+  return new Promise((resolve, reject) => {
+    database.connection.query('INSERT INTO payments SET ?', data, function(error, results, fields) {
+      if(error) {
+        return reject(error);
+      } else {
+        return resolve(results);
+      }
+    })
+  })
+}
+
+module.exports.setPrizedSubscriber = function(data) {
+  return new Promise((resolve, reject) => {
+    database.connection.query('UPDATE subscribers SET prized_cycle=? WHERE token=? AND group_id=?', [data["cycle"], data["token"], data["group_id"]], function(error, results, fields) {
+      if(error) {
+        return reject(error);
+      } else {
+        return resolve(results);
+      }
+    })
+  })
+}

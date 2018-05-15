@@ -46,6 +46,9 @@
       <thead>
         <tr>
           <th class="main-page-last-title">
+            <mfDefaultSorter by="name">Sr. No.</mfDefaultSorter>
+          </th>
+          <th class="main-page-last-title">
             <mfDefaultSorter by="name">Name</mfDefaultSorter>
           </th>
           <th class="main-page-last-title">
@@ -57,7 +60,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of mf.data">
+        <tr *ngFor="let item of mf.data; let i = index;">
+          <td class="links">{{i + 1}}</td>
           <td class="links">{{item.name}}</td>
           <td class="links">{{item.number}}</td>
           <td class="links">{{item.token}}</td>

@@ -1,0 +1,43 @@
+.group-title {
+  color: #1ab188;
+  padding: 16px 40px 0;
+}
+
+.data-container {
+  color: #fff;
+  display: flex;
+  direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.data-container-child {
+  margin: 8px 0;
+}
+
+input {
+  color: #fff;
+  background: transparent;
+  outline: none;
+  border: 1px solid #fff;
+  padding: 4px
+}
+
+button {
+  float: right;
+  padding: 8px;
+  color: white;
+  background: #1ab188;
+  border: 1px solid #1ab188;
+  margin: 16px 60px;
+}
+
+select {
+  background: transparent;
+  color: #fff;
+  padding: 4px;
+}
+
+select option {
+  color: #000;
+}
