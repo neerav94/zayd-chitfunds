@@ -120,7 +120,6 @@ module.exports.checkTokenExist = function(tokenNumber) {
       } else {
         if(results.length > 0) {
           var response = {}
-          console.log("Hello")
           response["status"] = 1
           resolve(response)
         } else {
@@ -172,6 +171,55 @@ module.exports.setPrizedSubscriber = function(data) {
         return reject(error);
       } else {
         return resolve(results);
+      }
+    })
+  })
+}
+
+module.exports.getGroupPayment = function(groupId) {
+  return new Promise((resolve, reject) => {
+    database.connection.query('SELECT SUM(amount) as total FROM payments WHERE group_id=?', [groupId], function(error, results, fields) {
+      if(error) {
+        return reject(error);
+      } else {
+        return resolve(results[0]);
+      }
+    })
+  })
+}
+
+module.exports.getActiveSubscribers = function(groupId) {
+  return new Promise((resolve, reject) => {
+    database.connection.query('SELECT * FROM subscribers WHERE group_id=?',[groupId], function(error, results, fields) {
+      if(error) {
+        return reject(error)
+      } else {
+        return resolve(results);
+      }
+    })
+  })
+}
+
+module.exports.getMonthsOver = function(groupId) {
+  return new Promise((resolve, reject) => {
+    database.connection.query('SELECT * FROM groupinfo WHERE grp_id=?', [groupId], function (error, results, fields) {
+      if (error) {
+        return reject(error)
+      } else {
+        var groupData = setGroupData(results)
+        return resolve(groupData)
+      }
+    })
+  })
+}
+
+module.exports.getUserPayment = function(token, groupId) {
+  return new Promise((resolve, reject) => {
+    database.connection.query('SELECT SUM(amount) as total FROM payments WHERE token=? AND group_id=?', [[token], [groupId]], function(error, results, fields) {
+      if(error) {
+        return reject(error)
+      } else {
+        return resolve(results[0]);
       }
     })
   })

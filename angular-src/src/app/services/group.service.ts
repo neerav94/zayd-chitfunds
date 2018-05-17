@@ -94,4 +94,22 @@ export class GroupService {
     return this.http.post(this.url + '/v1/group/recordPrizedSubscriber', data, {headers: headers})
     .map(res => res.json())
   }
+
+  paymentCollected(groupId) {
+    let headers = new Headers()
+    this.loadToken()
+    headers.append('Authorization', this.authToken)
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(this.url + '/v1/group/getGroupPayment?groupId=' + groupId, {headers: headers})
+    .map(res => res.json())
+  }
+
+  getActiveSubscribers(groupId) {
+    let headers = new Headers()
+    this.loadToken()
+    headers.append('Authorization', this.authToken)
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(this.url + '/v1/group/getActiveSubscribers?groupId=' + groupId, {headers: headers})
+    .map(res => res.json())
+  }
 }

@@ -63,9 +63,9 @@
 
   <div class="group-info">
     <div style="padding-bottom: 16px;" class="main-page-last-title color-white">Amount Collected
-      <span class="special-font monthly-collection">&#8377; TODO</span>
+      <span class="special-font monthly-collection">&#8377; {{paymentCollected}}</span>
     </div>
-    <progress value="100000" max="100000"></progress>
+    <progress value="{{paymentCollected}}" max="{{groupInfo[0].chit_value}}"></progress>
   </div>
 
   <div *ngIf="prizeCustomerStatus" class="prize-customer">
@@ -94,4 +94,49 @@
   </div>
 
   <div class="prize-cutomer-title links" (click)="selectPrizeCustomer()">Prized Subscriber</div>
+
+  <div class="user-container">
+    <table class="table text" [mfData]="activeSubscribers" #mf="mfDataTable">
+      <thead>
+        <tr>
+          <th class="main-page-mid-title">
+            <mfDefaultSorter by="name">Sr. No.</mfDefaultSorter>
+          </th>
+          <th class="main-page-mid-title">
+            <mfDefaultSorter by="name">Token</mfDefaultSorter>
+          </th>
+          <th class="main-page-mid-title">
+            <mfDefaultSorter by="email">Name</mfDefaultSorter>
+          </th>
+          <th class="main-page-mid-title">
+            <mfDefaultSorter by="age">Amount Paid</mfDefaultSorter>
+          </th>
+          <th class="main-page-mid-title">
+            <mfDefaultSorter by="age">Advance Balance</mfDefaultSorter>
+          </th>
+          <th class="main-page-mid-title">
+            <mfDefaultSorter by="age">Balance Due</mfDefaultSorter>
+          </th>
+          <th class="main-page-mid-title">
+              <mfDefaultSorter by="age">Prized Cycle</mfDefaultSorter>
+            </th>
+            <th class="main-page-mid-title">
+                <mfDefaultSorter by="age">Transaction History</mfDefaultSorter>
+              </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of mf.data; let i = index;">
+          <td class="links">{{i + 1}}</td>
+          <td class="links">{{item.token}}</td>
+          <td class="links">{{item.name}}</td>
+          <td class="links">{{item.amount}}</td>
+          <td class="links">{{item.advance}}</td>
+          <td class="links" style="color: red;">{{item.pending}}</td>
+          <td class="links">{{item.prized_cycle}}</td>
+          <td class="links"><a [routerLink]="['/v1/erpUser', item.token]">View</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

@@ -72,6 +72,36 @@ subscribeMultipleUsers = function (item) {
   })
 }
 
+getUsersPayment = function(item, months, amountToPay) {
+  return new Promise((resolve, reject) => {
+    group.getUserPayment(item.token, item.group_id)
+    .then(res => {
+      var totalAmountToPay = amountToPay * months;
+      if(res.total) {
+        if(res.total < totalAmountToPay) {
+          item["pending"] = totalAmountToPay - res.total;
+          item["advance"] = 0;
+        } else if(res.total > totalAmountToPay) {
+          item["pending"] = 0;
+          item["advance"] = res.total - totalAmountToPay;
+        } else {
+          item["pending"] = 0;
+          item["advance"] = 0;
+        }
+        item["amount"] = res.total;
+      } else {
+        item["pending"] = totalAmountToPay;
+        item["amount"] = 0;
+        item["advance"] = 0;
+      }
+      return resolve(item);
+    })
+    .catch(err => {
+      return reject(err);
+    })
+  })
+}
+
 router.post('/createGroup', passport.authenticate('jwt', {
   session: false
 }), (req, res, next) => {
@@ -412,4 +442,56 @@ router.post('/recordPrizedSubscriber', passport.authenticate('jwt', {
   })
 })
 
+router.get('/getGroupPayment', passport.authenticate('jwt', {
+  "session": false
+}), (req, res, next) => {
+  group.getGroupPayment(req.query.groupId)
+  .then(response => {
+    res.json({
+      "status": true,
+      "message": response.total
+    })
+  })
+  .catch(err => {
+    res.json({
+      "status": false,
+      "message": "Error: " + err
+    })
+  })
+})
+
+router.get('/getActiveSubscribers', passport.authenticate('jwt', {
+  "session": false
+}), (req, res, next) => {
+  group.getMonthsOver(req.query.groupId)
+  .then(response => {
+    var months = response[0].months;
+    var amountToPay = response[0].chit_value / response[0].num_members;
+    group.getActiveSubscribers(req.query.groupId)
+    .then(response => {
+      var promises = []
+      for(var i=0; i<response.length; i++) {
+        promises.push(getUsersPayment(response[i], months, amountToPay));
+      }
+      Promise.all(promises).then(data => {
+        res.json({
+          "status": true,
+          "message": data
+        })
+      })
+    })
+    .catch(err => {
+      res.json({
+        "status": false,
+        "message": "Error: " + err
+      })
+    })
+  })
+  .catch(err => {
+    res.json({
+      "status": false,
+      "message": "Error: " + err
+    })
+  })
+})
 module.exports = router;
