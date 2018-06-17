@@ -47,7 +47,7 @@
     padding: 0 32px;
   }
   input {
-    width: calc(100% - 36px);
+    width: 100%;
     color: #fff;
     background: transparent;
     outline: none;
@@ -130,7 +130,7 @@
     padding: 0 32px;
   }
   input {
-    width: calc(100% - 36px);
+    width: 100%;
     color: #fff;
     background: transparent;
     outline: none;
@@ -213,7 +213,7 @@
     padding: 0 32px;
   }
   input {
-    width: calc(100% - 36px);
+    width: 100%;
     color: #fff;
     background: transparent;
     outline: none;
@@ -297,7 +297,7 @@
     padding: 0 32px;
   }
   input {
-    width: calc(100% - 36px);
+    width: 100%;
     color: #fff;
     background: transparent;
     outline: none;

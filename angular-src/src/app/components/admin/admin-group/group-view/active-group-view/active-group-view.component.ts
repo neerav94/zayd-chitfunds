@@ -1,15 +1,6 @@
-import {
-  Component,
-  OnInit,
-  Input
-} from '@angular/core';
-import {
-  Router,
-  ActivatedRoute
-} from '@angular/router';
-import {
-  GroupService
-} from '../../../../../services/group.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { GroupService } from '../../../../../services/group.service';
 
 @Component({
   selector: 'app-active-group-view',
@@ -75,7 +66,7 @@ export class ActiveGroupViewComponent implements OnInit {
   }
 
   submitSubscriberInfo() {
-    var tokenNumber = document.getElementById("tokenNumber").value;
+    var tokenNumber = (<HTMLInputElement>document.getElementById("tokenNumber")).value;
     if (this.prizedCycle == "") {
       alert("Please select cycle.");
     }

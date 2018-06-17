@@ -112,4 +112,13 @@ export class GroupService {
     return this.http.get(this.url + '/v1/group/getActiveSubscribers?groupId=' + groupId, {headers: headers})
     .map(res => res.json())
   }
+
+  getUserPaymentDetails(tokenId, groupId) {
+    let headers = new Headers()
+    this.loadToken()
+    headers.append('Authorization', this.authToken)
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(this.url + '/v1/group/getSubscriberPaymentDetails?groupId=' + groupId + '&tokenId=' + tokenId , {headers: headers})
+    .map(res => res.json())
+  }
 }

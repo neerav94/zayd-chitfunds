@@ -5,5 +5,86 @@
 <div *ngIf="!loading">
   <div *ngIf="activeView">
     <h1 class="main-page-sub-title user-name">{{userInfo[0].name}}</h1>
+    <form #formData="ngForm" (ngSubmit)="submitUserInfo(formData.value)">
+      <div class="pad-top form-div">
+        <label class="text">Father's/Husband's Name</label>
+        <input type="text" class="text" name="fatherName" [(ngModel)]="fatherName">
+      </div>
+      <div class="pad-top form-div">
+        <label class="text">Email</label>
+        <input type="email" class="text" name="email" [(ngModel)]="email">
+      </div>
+      <div class="pad-top form-div">
+        <label>DOB</label>
+        <input type="text" class="text" placeholder="DD/MM/YYYY" name="dob" [(ngModel)]="dob">
+        <div>
+          <label style="width: auto; margin-left: 120px;">Age</label>
+          <input type="text" class="text" style="width: 5vw; margin-left: 8px;" name="age" [(ngModel)]="age">
+        </div>
+      </div>
+      <div class="pad-top form-div">
+        <div style="display: flex; flex-direction: row; justify-content: space-evenly; width: 100%;">
+          <div *ngFor="let option of gender">
+            <input type="checkbox" style="width: 1vw;" name="gender" value="{{option.value}}" [(ngModel)]="option.checked" /> {{option.name}}
+          </div>
+        </div>
+      </div>
+      <div class="pad-top form-div">
+        <label class="text">Mobile</label>
+        <input type="text" class="special-font" name="number" readonly [(ngModel)]="number">
+      </div>
+      <div class="pad-top form-div">
+        <label class="text">Phone Off/ Res/ Other Mobile</label>
+        <input type="text" class="special-font" name="otherNumber" [(ngModel)]="otherNumber">
+      </div>
+      <div class="pad-top form-div">
+        <label class="text">Residential Address</label>
+        <input type="text" class="text" name="resAddress" [(ngModel)]="resAddress">
+      </div>
+      <div class="pad-top form-div">
+        <label class="text">PAN No.</label>
+        <input type="text" class="text" name="pan" [(ngModel)]="pan">
+      </div>
+      <div class="pad-top form-div">
+        <label class="text">Aadhar No.</label>
+        <input type="text" class="text" name="aadhar" [(ngModel)]="aadhar">
+      </div>
+      <div class="pad-top form-div">
+        <label class="text">Nominee</label>
+        <input type="text" class="text" name="nominee" [(ngModel)]="nominee">
+      </div>
+      <div class="pad-top form-div">
+        <label class="text">Dependents</label>
+        <input type="text" class="text" name="dependents" [(ngModel)]="dependents">
+      </div>
+      <div class="pad-top form-div">
+        <div style="display: flex; flex-direction: row; justify-content: space-evenly; width: 100%;">
+          <div *ngFor="let option of occupation">
+            <input type="checkbox" style="width: 1vw;" name="occupation" value="{{option.value}}" [(ngModel)]="option.checked" /> {{option.name}}
+          </div>
+        </div>
+      </div>
+      <div class="pad-top form-div">
+        <label class="text">Business/Employer Name</label>
+        <input type="text" class="text" name="business" [(ngModel)]="business">
+      </div>
+      <div class="pad-top form-div">
+        <label class="text">Office Address</label>
+        <input type="text" class="text" name="officeAddress" [(ngModel)]="officeAddress">
+      </div>
+      <div class="pad-top form-div">
+        <label class="text">Income</label>
+        <input type="text" class="text" name="income" [(ngModel)]="income">
+      </div>
+      <div class="pad-top form-div">
+        <label class="text">Reference Name 1</label>
+        <input type="text" class="text" name="firstReference" [(ngModel)]="firstReference">
+      </div>
+      <div class="pad-top form-div">
+        <label class="text">Reference Name 2</label>
+        <input type="text" class="text" name="secondReference" [(ngModel)]="secondReference">
+      </div>
+      <button type="submit" class="text">Save</button>
+    </form>
   </div>
 </div>

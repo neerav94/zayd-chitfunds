@@ -1,0 +1,68 @@
+.data-container {
+  background: linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, .8));
+  margin: 16px;
+  text-align: center;
+}
+
+form {
+  padding: 0 16px;
+}
+
+.admin-container {
+  padding: 16px 240px;
+  color: #fff;
+  vertical-align: top;
+}
+
+.admin-info {
+  margin: 16px 0;
+}
+
+.admin-info>div {
+  padding-top: 4px;
+}
+
+.admin-info>button {
+  background: #1ab188;
+  border: none;
+  width: 6vw;
+  color: #fff;
+  outline: none;
+  padding: 8px;
+  cursor: pointer;
+  margin: 8px 0;
+}
+
+input {
+  width: calc(25vw - 36px);
+  color: #fff;
+  background: transparent;
+  outline: none;
+  border: 2px solid #1ab188;
+  padding: 16px;
+  margin: 32px 0 0 0;
+}
+
+button {
+  background: #1ab188;
+  border: none;
+  width: 22.5vw;
+  color: #fff;
+  outline: none;
+  padding: 16px;
+  cursor: pointer;
+  margin: 32px 0;
+}
+
+button:hover {
+  background: #158c6b;
+}
+
+.error-message {
+  color: #d32f2f;
+  padding: 4px 0 0 32px;
+}
+
+.display {
+  display: inline-block;
+}

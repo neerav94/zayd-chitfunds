@@ -58,4 +58,13 @@ export class UserService {
     return this.http.post(this.url + '/v1/user/addMultipleUsers', formData, {headers: headers})
     .map(res => res.json());
   }
+
+  updateUserInfo(userData) {
+    let headers = new Headers()
+    this.loadToken()
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(this.url + '/v1/user/updateUserInfo', userData, {headers: headers})
+    .map(res => res.json());
+  }
 }

@@ -110,9 +110,9 @@ module.exports.checkGroupExist = function (groupName) {
   })
 }
 
-module.exports.checkTokenExist = function(tokenNumber) {
+module.exports.checkTokenExist = function(tokenNumber, groupId) {
   return new Promise((resolve, reject) => {
-    database.connection.query('SELECT * FROM subscribers WHERE token = ?', [tokenNumber], function(error, results, fields) {
+    database.connection.query('SELECT * FROM subscribers WHERE token = ? AND group_id = ?', [[tokenNumber], [groupId]], function(error, results, fields) {
       if(error) {
         var response = {}
         response["status"] = 0
@@ -220,6 +220,23 @@ module.exports.getUserPayment = function(token, groupId) {
         return reject(error)
       } else {
         return resolve(results[0]);
+      }
+    })
+  })
+}
+
+module.exports.getSubscriberPaymentDetails = function(groupId, tokenId) {
+  return new Promise((resolve, reject) => {
+    database.connection.query('SELECT * FROM payments WHERE token=? AND group_id=?', [[tokenId], [groupId]], function(error, results, fields) {
+      if(error) {
+        return reject(error)
+      } else {
+        for(var i=0; i<results.length; i++) {
+          paymentDate = new Date(results[i]["payment_date"]);
+          paymentDate = paymentDate.getDate() + "/" + (paymentDate.getMonth() + 1) + "/" + paymentDate.getFullYear() + " " + paymentDate.getHours() + ":" + paymentDate.getMinutes()
+          results[i]["payment_date"] = paymentDate
+        }
+        return resolve(results)
       }
     })
   })

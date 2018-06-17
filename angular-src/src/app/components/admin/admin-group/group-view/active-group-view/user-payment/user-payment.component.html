@@ -1,0 +1,40 @@
+<div *ngIf="loading">
+  <app-loading></app-loading>
+</div>
+
+<div *ngIf="!loading">
+  <h1 class="main-page-sub-title group-title">Token number: {{tokenId}}</h1>
+
+  <div class="user-container">
+    <table class="table text" [mfData]="userPaymentDetails" #mf="mfDataTable">
+      <thead>
+        <tr>
+          <th class="main-page-mid-title">
+            <mfDefaultSorter by="name">Index</mfDefaultSorter>
+          </th>
+          <th class="main-page-mid-title">
+            <mfDefaultSorter by="name">Amount</mfDefaultSorter>
+          </th>
+          <th class="main-page-mid-title">
+            <mfDefaultSorter by="name">Mode</mfDefaultSorter>
+          </th>
+          <th class="main-page-mid-title">
+            <mfDefaultSorter by="email">Comments</mfDefaultSorter>
+          </th>
+          <th class="main-page-mid-title">
+            <mfDefaultSorter by="age">Date</mfDefaultSorter>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of mf.data; let i = index;">
+          <td class="links">{{i + 1}}</td>
+          <td class="links">{{item.amount}}</td>
+          <td class="links">{{item.payment_mode}}</td>
+          <td class="links">{{item.payment_comment}}</td>
+          <td class="links">{{item.payment_date}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

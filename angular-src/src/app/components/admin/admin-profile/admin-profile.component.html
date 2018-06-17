@@ -1,1 +1,51 @@
 <app-admin-navbar></app-admin-navbar>
+
+<div *ngIf="loading">
+  <app-loading></app-loading>
+</div>
+
+<div *ngIf="!loading">
+  <div *ngIf="isSuperAdmin" class="data-container">
+    <form class="display" #createAdmin="ngForm" (ngSubmit)="submitAdminInfo(createAdmin.value)">
+      <input type="text" class="text" placeholder="Enter name" name="name" ngModel>
+      <br>
+      <div *ngIf="adminName" class="text error-message">Name cannot be empty.</div>
+
+      <input type="number" class="text" placeholder="Enter number" name="number" ngModel>
+      <br>
+      <div *ngIf="adminNumber" class="text error-message">Number cannot be empty.</div>
+
+      <input type="text" class="text" placeholder="Enter email" name="email" ngModel>
+      <br>
+      <div *ngIf="adminEmail" class="text error-message">Email cannot be empty.</div>
+
+      <input type="password" class="text" placeholder="Enter password" name="password" ngModel>
+      <br>
+      <div *ngIf="adminPassword" class="text error-message">Password cannot be empty.</div>
+
+      <button type="submit" class="text">Create Admin</button>
+      <div *ngIf="createAdminError" class="error-message text">{{createAdminErrorMessage}}</div>
+    </form>
+    <div class="display admin-container">
+      <div class="admin-info" *ngFor="let admin of currentAdmins">
+        <div class="links">{{admin.name}}</div>
+        <div class="special-font">{{admin.number}}</div>
+        <div class="test">{{admin.email}}</div>
+        <button class="text" on-click="deleteAdmin(admin.id)">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="data-container">
+    <form #updatePassword="ngForm" (ngSubmit)="updateAdminPassword(updatePassword.value)">
+      <input type="password" class="text" placeholder="Enter old password" name="oldPassword" ngModel>
+      <br>
+      <div *ngIf="adminOldPassword" class="text error-message">Password cannot be empty.</div>
+
+      <input type="password" class="text" placeholder="Enter new password" name="newPassword" ngModel>
+      <br>
+      <div *ngIf="adminNewPassword" class="text error-message">Password cannot be empty.</div>
+      <button type="submit" class="text">Update Password</button>
+    </form>
+  </div>
+</div>

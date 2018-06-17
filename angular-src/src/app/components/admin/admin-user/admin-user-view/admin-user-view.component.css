@@ -1,4 +1,57 @@
 .user-name {
-    color: #1ab188;
-    padding: 16px 40px 0;
-  }
+  color: #1ab188;
+  padding: 16px 40px 0;
+}
+
+form {
+  padding: 0 16px;
+  background: linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, .8));
+  margin: 16px;
+  color: #fff;
+}
+
+.form-div {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-between; */
+  margin: 0 100px;
+}
+
+label {
+  padding-bottom: 4px;
+  width: 25vw;
+}
+
+input {
+  width: 35vw;
+  color: #fff;
+  background: transparent;
+  outline: none;
+  border: 2px solid #1ab188;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+button {
+  background: #1ab188;
+  border: none;
+  width: 60vw;
+  color: #fff;
+  outline: none;
+  padding: 16px;
+  cursor: pointer;
+  margin: 32px 100px;
+}
+
+button:hover {
+  background: #158c6b;
+}
+
+.error-message {
+  color: #d32f2f;
+  padding: 4px 0 0 32px;
+}
+
+.pad-top {
+  padding-top: 16px;
+}

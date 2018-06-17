@@ -23,6 +23,8 @@ export class AuthService {
   // Register admin user
   registerAdmin(admin) {
     let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
     headers.append('Content-Type', 'application/json');
     return this.http.post(this.url + '/v1/login/admin/adminRegister', admin, {headers: headers})
     .map(res => res.json());
@@ -33,6 +35,33 @@ export class AuthService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post(this.url + '/v1/login/admin/superAdminRegister', admin, {headers: headers})
+    .map(res => res.json());
+  }
+
+  getAdmins() {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(this.url + '/v1/login/admin/getAdmins', {headers: headers})
+    .map(res => res.json());
+  }
+
+  updatePassword(passwordObj) {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(this.url + '/v1/login/admin/updatePassword', passwordObj, {headers: headers})
+    .map(res => res.json());
+  }
+
+  deleteAdmin(id) {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(this.url + '/v1/login/admin/deleteAdmin?id=' + id, {headers: headers})
     .map(res => res.json());
   }
 

@@ -129,6 +129,86 @@ router.post('/admin/adminRegister', passport.authenticate('jwt', {
     })
 })
 
+router.get('/admin/getAdmins', passport.authenticate('jwt', {
+  session: false
+}), (req, res, next) => {
+  user.getAdmin().then(response => {
+      return res.json({
+        status: true,
+        message: response
+      })
+    })
+    .catch(err => {
+      console.log(err);
+      return res.json({
+        status: false, // error occured while registering
+        message: 'Some error occurred. Please try again.' + err
+      })
+    })
+})
+
+router.get('/admin/deleteAdmin', passport.authenticate('jwt', {
+  session: false
+}), (req, res, next) => {
+  user.deleteAdmin(req.query.id).then(response => {
+      return res.json({
+        status: true,
+        message: response
+      })
+    })
+    .catch(err => {
+      console.log(err);
+      return res.json({
+        status: false,
+        message: "Some error occurred. Please try again." + err
+      })
+    })
+})
+
+router.post('/admin/updatePassword', passport.authenticate('jwt', {
+  session: false
+}), (req, res, next) => {
+
+  var salt = bcrypt.genSaltSync(10);
+  user.getPassword(req.body.number)
+    .then(response => {
+      if (response.status) {
+        var comparePassword = bcrypt.compareSync(req.body.oldPassword, response.data)
+        if (comparePassword) {
+          var hashedNewPassword = bcrypt.hashSync(req.body.newPassword, salt);
+          user.updatePassword(hashedNewPassword, req.body.number)
+            .then(response => {
+              if (response.status) {
+                return res.json({
+                  status: true,
+                  message: "Success"
+                })
+              }
+            })
+            .catch(err => {
+              console.log(err);
+              return res.json({
+                status: false,
+                message: "Some error occurred.Please try again. " + err
+              })
+            })
+        } else {
+          return res.json({
+            status: false,
+            message: "Please enter correct old password."
+          })
+        }
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      return res.json({
+        status: false,
+        message: "Some error occurred.Please try again. " + err
+      })
+    })
+})
+
 //Register Admin; role is set to 2, since admin is registering
 router.post('/admin/superAdminRegister', passport.authenticate('jwt', {
   session: false
@@ -271,7 +351,7 @@ router.post('/users/authenticate', (req, res, next) => {
 router.get('/users/home', passport.authenticate('jwt', {
   session: false
 }), (req, res, next) => {
-  if(req.user[0].role == 0) {
+  if (req.user[0].role == 0) {
     res.json({
       status: true,
       user: req.user

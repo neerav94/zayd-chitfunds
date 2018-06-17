@@ -100,3 +100,30 @@ a:hover {
   font-weight: bold;
   color: #06664c;
 }
+
+.prize-customer {
+  padding: 32px;
+  position: absolute;
+  top: 25%;
+  left: 40%;
+  background: #333333;
+  text-align: center;
+}
+
+.prize-cutomer-title {
+  color: #fff;
+  padding: 4px;
+  float: right;
+  margin: 0px 16px;
+  border: 1px solid #fff;
+  cursor: pointer;
+}
+
+.button {
+  padding: 8px;
+  color: white;
+  background: #1ab188;
+  border: 1px solid #1ab188;
+  display: inline-block;
+  margin-right: 16px;
+}

@@ -13,6 +13,7 @@ import { GroupViewComponent } from './components/admin/admin-group/group-view/gr
 import { AdminUserViewComponent } from './components/admin/admin-user/admin-user-view/admin-user-view.component';
 import { AdminProfileComponent } from './components/admin/admin-profile/admin-profile.component';
 import { ManagePaymentComponent } from './components/admin/admin-group/group-view/active-group-view/manage-payment/manage-payment.component';
+import { UserPaymentComponent } from './components/admin/admin-group/group-view/active-group-view/user-payment/user-payment.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'v1/login', pathMatch: 'full'},
@@ -25,6 +26,7 @@ export const routes: Routes = [
     { path: 'v1/erpUser', component: AdminUserComponent, canActivate: [AuthGuard] },
     { path: 'v1/erpProfile', component: AdminProfileComponent, canActivate: [AuthGuard] },
     { path: 'v1/erpGroup/:id/payments', component: ManagePaymentComponent, canActivate: [AuthGuard] },
+    { path: 'v1/erpGroup/:id1/:id', component: UserPaymentComponent, canActivate: [AuthGuard] },
     { path: '**', component: ErrorComponent}
 ]
 
@@ -38,4 +40,4 @@ export const routes: Routes = [
 })
 
 export class AppRoutingModule {}
-export const routingComponents = [LoginComponent, ErrorComponent, UserHomeComponent, AdminHomeComponent, AdminUserComponent, AdminGroupComponent, AdminProfileComponent, ManagePaymentComponent]
+export const routingComponents = [LoginComponent, ErrorComponent, UserHomeComponent, AdminHomeComponent, AdminUserComponent, AdminGroupComponent, AdminProfileComponent, ManagePaymentComponent, UserPaymentComponent]

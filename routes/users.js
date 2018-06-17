@@ -163,6 +163,44 @@ router.get('/getUserById', passport.authenticate('jwt', {
   })
 })
 
+router.post('/updateUserInfo', passport.authenticate('jwt', {
+  session: false
+}), function(req, res, next) {
+  var jsonObj = {}
+  jsonObj["father_husband_name"] = req.body.fatherName
+  jsonObj["dob"] = req.body.dob
+  jsonObj["age"] = req.body.age
+  jsonObj["gender"] = req.body.gender
+  jsonObj["other_number"] = req.body.otherNumber
+  jsonObj["residential_address"] = req.body.resAddress
+  jsonObj["pan"] = req.body.pan
+  jsonObj["aadhar"] = req.body.aadhar
+  jsonObj["nominee"] = req.body.nominee
+  jsonObj["dependents"] = req.body.dependents
+  jsonObj["occupation"] = req.body.occupation
+  jsonObj["business_name"] = req.body.business
+  jsonObj["office_address"] = req.body.officeAddress
+  jsonObj["income"] = req.body.income
+  jsonObj["first_reference"] = req.body.firstReference
+  jsonObj["second_reference"] = req.body.secondReference
+  jsonObj["email"] = req.body.email
+  jsonObj["number"] = req.body.number
+  jsonObj["id"] = req.body.id
+  user.updateUserInfo(jsonObj, req.body.id)
+  .then(response => {
+    return res.json({
+      status: true,
+      message: "Success"
+    })
+  })
+  .catch(err => {
+    return res.json({
+      status: false,
+      message: "Some error occurred. Please try again." + err
+    })
+  })
+})
+
 router.post('/addMultipleUsers', passport.authenticate('jwt', {
   session: false
 }), function (req, res, next) {
@@ -171,7 +209,7 @@ router.post('/addMultipleUsers', passport.authenticate('jwt', {
       if (err) {
         res.json({
           "status": false,
-          "message": "Some error occurred. Please try again."
+          "message": "Some error occurred. Please try again." + err
         })
         return reject({
           "status": false

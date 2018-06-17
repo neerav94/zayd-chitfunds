@@ -226,7 +226,7 @@ router.post('/subscribeUser', passport.authenticate('jwt', {
           "message": "User with this contact number does not exist in the database. Before subscribing for the group, please add the user in the database."
         })
       } else {
-        group.checkTokenExist(req.body.token)
+        group.checkTokenExist(req.body.token, req.body.groupId)
           .then(response => {
             if (response.status == 1) {
               res.json({
@@ -494,4 +494,26 @@ router.get('/getActiveSubscribers', passport.authenticate('jwt', {
     })
   })
 })
+
+router.get('/getSubscriberPaymentDetails', passport.authenticate('jwt', {
+  "session": false
+}), (req, res, next) => {
+  var groupId = req.query.groupId;
+  var tokenId = req.query.tokenId;
+  group.getSubscriberPaymentDetails(groupId, tokenId)
+  .then(response => {
+    console.log(response);
+    res.json({
+      "status": true,
+      "message": response
+    })
+  })
+  .catch(err => {
+    res.json({
+      "status": false,
+      "message": "Error: " + err
+    })
+  })
+})
+
 module.exports = router;
