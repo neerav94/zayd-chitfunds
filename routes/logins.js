@@ -33,9 +33,10 @@ router.post('/users/register', (req, res, next) => {
       } else if (response.status == 1) {
         user.addNewUser(users, (error, results, fields) => {
           if (error) {
+            console.log(error);
             res.json({
               status: false, // error occured while registering
-              message: 'Some error occurred. Please try again.'
+              message: 'Some error occurred. Please try again.' + error
             })
           } else {
             res.json({

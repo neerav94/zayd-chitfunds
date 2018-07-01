@@ -27,6 +27,8 @@ export class LoginComponent implements OnInit {
   login: boolean = true; // show login form
   signup: boolean = false; // show signup form
 
+  loading = false;
+
   constructor( 
     private validationService: ValidationService, 
     private authService: AuthService,
@@ -74,6 +76,7 @@ export class LoginComponent implements OnInit {
     }
 
     if(!this.numberEmpty && !this.passwordEmpty) {
+      this.loading = true;
       this.authService.login(user).subscribe(data => {
         if(data.status) {
           this.authService.storeUserData(data.token, data.user)
@@ -87,6 +90,7 @@ export class LoginComponent implements OnInit {
           this.logInErrorMessage = data.message
           this.router.navigate(['/v1/login'], { replaceUrl: true });
         }
+        this.loading = false;
       })
     }
   }
@@ -120,14 +124,17 @@ export class LoginComponent implements OnInit {
     }
     // if all validation are correct then make http call for register
     if(!this.signUpEmailEmpty && !this.signUpEmailValidation && !this.signUpNameEmpty && !this.signUpNumberEmpty && !this.signUpPasswordEmpty) {
+      this.loading = true;
       this.authService.registerUser(user).subscribe(data => {
         if(data.status) {
-          this.router.navigate(['/v1/home']);
+          alert("You have been successfully registered. Please login and start using the services.");
+          // this.router.navigate(['/v1/home'], { replaceUrl: true });
         } else {
           this.signUpError = true;
           this.signUpErrorMessage = data.message
           this.router.navigate(['/v1/login']);
         }
+        this.loading = false;
       })
     }
   }

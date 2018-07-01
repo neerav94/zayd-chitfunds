@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { ValidationService } from '../../../services/validation.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-profile',
@@ -22,7 +23,7 @@ export class AdminProfileComponent implements OnInit {
   adminOldPassword: boolean = false;
   adminNewPassword: boolean = false;
 
-  constructor(private authService: AuthService, private validationService: ValidationService) { }
+  constructor(private authService: AuthService, private validationService: ValidationService, private router: Router) { }
 
   ngOnInit() {
     document.getElementById("homeView").classList.remove("current");
@@ -126,6 +127,11 @@ export class AdminProfileComponent implements OnInit {
       }
       this.loading = false;
     })
+  }
+
+  logOut() {
+    this.authService.logOut();
+    this.router.navigate(['/v1/login'], { replaceUrl: true });
   }
 
 }

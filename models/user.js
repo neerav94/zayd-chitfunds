@@ -32,7 +32,7 @@ module.exports.updateUserInfo = function (userData, id) {
 }
 
 module.exports.getAllUsers = function (callback) {
-    database.connection.query('SELECT * FROM users', callback)
+    database.connection.query('SELECT * FROM users WHERE role = 0', callback)
 }
 
 module.exports.getUserById = function (id, callback) {

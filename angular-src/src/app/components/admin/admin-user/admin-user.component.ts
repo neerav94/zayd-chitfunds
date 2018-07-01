@@ -52,7 +52,7 @@ export class AdminUserComponent implements OnInit {
 
     //override the onAfterAddingfile property of the uploader so it doesn't authenticate with //credentials.
     this.uploader.onAfterAddingFile = (file)=> { 
-      this.loading = true;
+      // this.loading = true;
       file.withCredentials = false; 
     };
     //overide the onCompleteItem property of the uploader so we are 

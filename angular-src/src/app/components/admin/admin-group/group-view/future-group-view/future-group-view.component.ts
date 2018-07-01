@@ -67,13 +67,14 @@ export class FutureGroupViewComponent implements OnInit {
         this.notificationMessage = "You have successfully added users."
         this.groupService.getAllSubscribers(this.groupInfo[0].grp_id).subscribe(data => {
           if(data.status) {
+            this.loading = false;
             this.subscribedUsers = data.message;
           } else {
+            this.loading = false;
             alert(data.message)
           }
         })
       }
-      this.loading = false;
     }
   }
 

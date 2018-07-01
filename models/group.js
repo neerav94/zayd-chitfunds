@@ -73,6 +73,22 @@ module.exports.getAllGroups = function () {
   })
 }
 
+module.exports.getGroupByNumber = function(number) {
+  return new Promise((resolve, reject) => {
+    database.connection.query('SELECT * FROM subscribers WHERE number = ? GROUP BY group_id', [number], function(error, results, fields) {
+      if(error) {
+        reject(error)
+      } else {
+        let groupIdArray = [];
+        for(let i=0; i<results.length; i++) {
+          groupIdArray.push(results[i].group_id)
+        }
+        resolve(groupIdArray);
+      }
+    })
+  })
+}
+
 module.exports.getGroupById = function (id) {
   return new Promise((resolve, reject) => {
     database.connection.query('SELECT * FROM groupinfo WHERE grp_id = ?', [id], function(error, results, fields) {

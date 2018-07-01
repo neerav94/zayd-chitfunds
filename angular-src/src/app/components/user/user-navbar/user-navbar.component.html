@@ -1,3 +1,10 @@
-<p>
-  user-navbar works!
-</p>
+<nav class="nav links">
+  <ul>
+    <li id="userHomeView" class="current" (click)="homePageView">
+      <a routerLink="/v1/home">Home</a>
+    </li>
+    <li id="userProfileView">
+      <a routerLink="/v1/profile">My Profile</a>
+    </li>
+  </ul>
+</nav>

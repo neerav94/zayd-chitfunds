@@ -1,6 +1,141 @@
-<div *ngIf="user">
-  <p>
-    user-home works!
-  </p>
-  <h1>{{user.name}}</h1>  
+<style>
+  .container-box {
+    background: linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, .8));
+    margin: 16px;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-evenly;
+    text-align: center;
+  }
+
+  span {
+    color: #1ab188;
+  }
+
+  .display {
+    display: inline-block;
+  }
+
+  .color-white {
+    color: #fff;
+  }
+
+  .heading {
+    padding: 8px;
+  }
+
+  .groups-container {
+    overflow-y: auto;
+    max-height: calc(100vh - 80px);
+  }
+
+  .group-box {
+    background: linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, .8));
+    margin: 16px;
+  }
+
+  .upper-container {
+    padding: 8px;
+  }
+
+  .lower-container {
+    padding: 8px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  .group-title {
+    padding-bottom: 8px;
+  }
+
+  .group-title a {
+    text-decoration: none
+  }
+
+  .group-title a:hover {
+    color: #1ab188;
+  }
+
+  .upper-container div {
+    vertical-align: top;
+  }
+
+  .sub-heading {
+    padding: 0 8px;
+    text-align: center;
+  }
+
+</style>
+
+<app-user-navbar></app-user-navbar>
+
+<div *ngIf="loading">
+  <app-loading></app-loading>
+</div>
+
+<div *ngIf="!loading">
+  <div class="container-box">
+    <div>
+      <div class="color-white title heading">Total Savings</div>
+      <div class="color-white title-number sub-heading">
+        <span>&#8377; 120000</span>
+      </div>
+    </div>
+    <div>
+      <div class="color-white title heading">Total Prized Money</div>
+      <div class="color-white title-number sub-heading">
+        <span>&#8377; 120000</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="groups-container">
+    <div *ngFor="let group of userGroups">
+      <div class="group-box">
+        <div class="upper-container">
+          <div class="display">
+            <img src="../../../../../../assets/icons/groupIcon.svg" alt="Group Icon">
+          </div>
+          <div class="display">
+            <p class="group-title">
+              <a class="color-white title" [routerLink]="['/v1/erpGroup', group.grp_id]">{{group.grp_name}}</a>
+            </p>
+            <div class="color-white special-font">
+              <span>&#8377; {{group.chit_value/group.num_members}}</span> every month</div>
+          </div>
+        </div>
+        <div class="lower-container">
+          <div>
+            <div class="color-white text heading">Members</div>
+            <div class="color-white special-font sub-heading">{{group.num_members}}</div>
+          </div>
+          <div>
+            <div class="color-white text heading">Chit Value</div>
+            <div class="color-white special-font sub-heading">
+              <span>&#8377; {{group.chit_value}}</span>
+            </div>
+          </div>
+          <div>
+            <div class="color-white text heading">Months over</div>
+            <div class="color-white special-font sub-heading">{{group.months}}</div>
+          </div>
+          <div>
+            <div class="color-white text heading">Remaining Months</div>
+            <div class="color-white special-font sub-heading">{{group.num_members - group.months}}</div>
+          </div>
+          <div>
+            <div class="color-white text heading">Auction Day</div>
+            <div class="color-white special-font sub-heading">{{group.auction}}</div>
+          </div>
+          <div>
+            <div class="color-white text heading">Start Day</div>
+            <div *ngIf="group.start_date" class="color-white special-font sub-heading">{{group.startDay}}</div>
+            <div *ngIf="!group.start_date" class="color-white special-font sub-heading">- -</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

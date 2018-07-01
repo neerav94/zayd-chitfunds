@@ -49,6 +49,16 @@ export class GroupService {
     .map(res => res.json())
   }
 
+  // get group by number
+  getGroupByNumber(number) {
+    let headers = new Headers()
+    this.loadToken()
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(this.url + '/v1/group/getGroupByNumber?number=' + number, {headers: headers})
+    .map(res => res.json())
+  }
+
   // Set dates to start the group
   setStartDate(data) {
     let headers = new Headers();
