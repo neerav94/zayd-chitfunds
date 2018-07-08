@@ -51,6 +51,7 @@ export class ManagePaymentComponent implements OnInit {
 
   createData(item) {
     let obj = {};
+    obj["name"] = item.name;
     obj["token"] = item.token;
     obj["group_id"] = this.id;
     obj["amount"] = 0;
@@ -64,7 +65,14 @@ export class ManagePaymentComponent implements OnInit {
     let tempData = [];
     for(var i=0; i<this.managePayment.length; i++) {
       if(this.managePayment[i]["amount"] !== 0) {
-        tempData.push(this.managePayment[i])
+        let obj = {};
+        obj["token"] = this.managePayment[i]["token"];
+        obj["group_id"] = this.managePayment[i]["group_id"];
+        obj["amount"] = this.managePayment[i]["amount"];
+        obj["payment_mode"] = this.managePayment[i]["payment_mode"];
+        obj["payment_comment"] = this.managePayment[i]["payment_comment"];
+        obj["payment_date"] = this.managePayment[i]["payment_date"];
+        tempData.push(obj)
       }
     }
     this.groupService.recordPayment(tempData).subscribe(data => {

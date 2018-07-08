@@ -164,8 +164,56 @@ module.exports.subscribeUser = function(data, callback) {
   database.connection.query('INSERT INTO subscribers SET ?', data, callback)
 }
 
+module.exports.removeUser = function(token, groupId) {
+  return new Promise((resolve, reject) => {
+    database.connection.query('DELETE FROM subscribers WHERE token = ? AND group_id = ?', [[token], [groupId]], function(error, results, fields) {
+      if(error) {
+        return reject(error)
+      } else {
+        return resolve(true)
+      }
+    })
+  })
+}
+
 module.exports.getGroupId = function(groupName, callback) {
   database.connection.query('SELECT grp_id FROM groupinfo WHERE grp_name = ?', [groupName], callback)
+}
+
+module.exports.getDailyCollection = function(startDate, endDate) {
+  return new Promise((resolve, reject) => {
+    database.connection.query('SELECT SUM(amount) AS amount FROM payments WHERE payment_date >= ? AND payment_date <= ?', [[startDate], [endDate]], function(error, results, fields) {
+      if(error) {
+        var response = {};
+        response["status"] = false;
+        response["message"] = error
+        reject(response)
+      } else {
+        var response = {};
+        response["status"] = true;
+        response["message"] = results[0].amount;
+        resolve(response);
+      }
+    })
+  })
+}
+
+module.exports.getWeeklyCollection = function(startDate, endDate) {
+  return new Promise((resolve, reject) => {
+    database.connection.query('SELECT SUM(amount) AS amount FROM payments WHERE payment_date >= ? AND payment_date <= ?', [[startDate], [endDate]], function(error, results, fields) {
+      if(error) {
+        var response = {};
+        response["status"] = false;
+        response["message"] = error
+        reject(response)
+      } else {
+        var response = {};
+        response["status"] = true;
+        response["message"] = results[0].amount;
+        resolve(response);
+      }
+    })
+  })
 }
 
 module.exports.setPayment = function(data) {

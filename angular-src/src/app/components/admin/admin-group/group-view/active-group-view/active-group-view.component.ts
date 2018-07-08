@@ -18,16 +18,21 @@ export class ActiveGroupViewComponent implements OnInit {
   paymentCollected: number;
 
   numMonths = [];
-  selectedMonth = "Manage Payment";
-  selectedCycle = "Select Cycle";
+  numDraws = [];
+  selectedMonth = "Manage Payments";
+  selectedCycle = "Select Draw";
 
   activeSubscribers: any;
 
   constructor(private router: Router, private route: ActivatedRoute, private groupService: GroupService) {}
 
   ngOnInit() {
+    this.groupInfo[0].chit_amount = this.groupInfo[0].chit_value.toLocaleString('en', {useGrouping:true})
     for (var i = 1; i <= this.groupInfo[0].num_members; i++) {
-      this.numMonths.push("Cycle " + i);
+      this.numMonths.push("Installment " + i);
+    }
+    for (var i = 1; i <= this.groupInfo[0].num_members; i++) {
+      this.numDraws.push("Draw " + i);
     }
     this.route.params.subscribe(params => {
       this.id = +params['id']; // (+) converts string 'id' to a number.
@@ -35,7 +40,11 @@ export class ActiveGroupViewComponent implements OnInit {
     this.loading = true;
     this.groupService.paymentCollected(this.id).subscribe(data => {
       if (data.status) {
-        this.paymentCollected = parseInt(data.message);
+        if(data.message) {
+          this.paymentCollected = parseInt(data.message);
+        } else {
+          this.paymentCollected = 0;
+        }
       } else {
         alert(data.message);
       }
@@ -45,6 +54,11 @@ export class ActiveGroupViewComponent implements OnInit {
     this.groupService.getActiveSubscribers(this.id).subscribe(data => {
       if (data.status) {
         this.activeSubscribers = data.message;
+        for(let i=0;i<this.activeSubscribers.length; i++) {
+          this.activeSubscribers[i].amount = this.activeSubscribers[i].amount.toLocaleString('en', {useGrouping:true})
+          this.activeSubscribers[i].advance = this.activeSubscribers[i].advance.toLocaleString('en', {useGrouping:true})
+          this.activeSubscribers[i].pending = this.activeSubscribers[i].pending.toLocaleString('en', {useGrouping:true})
+        }
       } else {
         alert(data.message);
       }
@@ -85,6 +99,11 @@ export class ActiveGroupViewComponent implements OnInit {
         this.groupService.getActiveSubscribers(this.id).subscribe(data => {
           if (data.status) {
             this.activeSubscribers = data.message;
+            for(let i=0;i<this.activeSubscribers.length; i++) {
+              this.activeSubscribers[i].amount = this.activeSubscribers[i].amount.toLocaleString('en', {useGrouping:true})
+              this.activeSubscribers[i].advance = this.activeSubscribers[i].advance.toLocaleString('en', {useGrouping:true})
+              this.activeSubscribers[i].pending = this.activeSubscribers[i].pending.toLocaleString('en', {useGrouping:true})
+            }
           } else {
             alert(data.message);
           }

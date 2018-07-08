@@ -75,7 +75,7 @@ span {
   .form-container {
     padding: 32px;
     position: absolute;
-    top: 10%;
+    top: 5%;
     left: 35%;
     background: #333333;
   }
@@ -155,7 +155,7 @@ span {
   .form-container {
     padding: 24px;
     position: absolute;
-    top: 10%;
+    top: 5%;
     left: 28%;
     background: #333333;
   }
@@ -235,7 +235,7 @@ span {
   .form-container {
     padding: 16px;
     position: absolute;
-    top: 10%;
+    top: 5%;
     left: 20%;
     background: #333333;
   }
@@ -315,7 +315,7 @@ span {
   .form-container {
     padding: 16px;
     position: absolute;
-    top: 10%;
+    top: 5%;
     left: 10%;
     right: 10%;
     background: #333333;

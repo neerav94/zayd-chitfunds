@@ -166,10 +166,67 @@ router.get('/admin/deleteAdmin', passport.authenticate('jwt', {
     })
 })
 
+router.post('/admin/forgotPassword', passport.authenticate('jwt', {
+  session: false
+}), (req, res, next) => {
+  var salt = bcrypt.genSaltSync(10);
+  var hashedNewPassword = bcrypt.hashSync(req.body.password, salt);
+  user.forgotPassword(hashedNewPassword, req.body.number)
+  .then(response => {
+    return res.json({
+      status: true,
+      message: "Success"
+    })
+  })
+  .catch(err => {
+    console.log(err);
+    return res.json({
+      status: false,
+      message: "Some error occurred.Please try again. " + err
+    })
+  })
+})
+
+router.post('/admin/updateNumber', passport.authenticate('jwt', {
+  session: false
+}), (req, res, next) => {
+  var oldNumber = req.body.oldNumber;
+  var newNumber = req.body.newNumber;
+  user.checkUserExist(oldNumber)
+  .then(response => {
+    if(response.status === 0) {
+      user.updateNumber(oldNumber, newNumber)
+      .then(response => {
+        return res.json({
+          status: true,
+          message: "Success"
+        })
+        .catch(err => {
+          return res.json({
+            status: false,
+            message: 'Some error occurred. PLease try again ' + err
+          })
+        })
+      })
+    } else {
+      return res.json({
+        status: false,
+        message: "User with the old number does not exist"
+      })
+    }
+  })
+  .catch(err => {
+    console.log(err);
+    return res.json({
+      status: false,
+      message: "Some error occurred. Please try again. " + err
+    })
+  })
+})
+
 router.post('/admin/updatePassword', passport.authenticate('jwt', {
   session: false
 }), (req, res, next) => {
-
   var salt = bcrypt.genSaltSync(10);
   user.getPassword(req.body.number)
     .then(response => {

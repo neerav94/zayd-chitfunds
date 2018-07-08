@@ -32,6 +32,9 @@ export class UserPaymentComponent implements OnInit {
     this.groupService.getUserPaymentDetails(this.tokenId, this.groupId).subscribe(data => {
       if(data.status) {
         this.userPaymentDetails = data.message;
+        for(let i=0;i<this.userPaymentDetails.length; i++) {
+          this.userPaymentDetails[i].amount = this.userPaymentDetails[i].amount.toLocaleString('en', {useGrouping:true})
+        }
       } else {
         alert(data.message);
       }

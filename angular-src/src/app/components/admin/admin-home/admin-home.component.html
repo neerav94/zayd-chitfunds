@@ -1,1 +1,85 @@
 <app-admin-navbar></app-admin-navbar>
+
+<style>
+  .data-container {
+    background: linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, .8));
+    margin: 16px;
+  }
+
+  img {
+    height: 60px;
+    width: 60px;
+  }
+
+  span {
+    color: #1ab188;
+  }
+
+  .display {
+    display: inline-block;
+  }
+
+  .color-white {
+    color: #ffffff;
+  }
+
+  .collection-container {
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+  }
+
+</style>
+
+<div *ngIf="loading">
+  <app-loading></app-loading>
+</div>
+
+<div *ngIf="!loading">
+  <div class="data-container">
+    <div>
+      <img class="display" src="../../../../assets/icons/payments.svg" alt="Collection" />
+      <div class="display color-white title" style="vertical-align: top;">Collections</div>
+    </div>
+    <div class="collection-container">
+      <div>
+        <div class="color-white text">Aggregate Chit Value</div>
+        <div class="color-white special-font-home">
+          <span>&#8377; {{aggregateAmount}}</span>
+        </div>
+      </div>
+      <div>
+        <div class="color-white text">Today's</div>
+        <div class="color-white special-font-home">
+          <span>&#8377; {{dailyCollection}}</span>
+        </div>
+      </div>
+      <div>
+        <div class="color-white text">This Week</div>
+        <div class="color-white special-font-home">
+          <span>&#8377; {{weeklyCollection}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="data-container">
+    <div>
+      <img class="display" src="../../../../assets/icons/groupIcon.svg" alt="Collection" />
+      <div class="display color-white title" style="vertical-align: top;">Statistics</div>
+    </div>
+    <div class="collection-container">
+      <div>
+        <div class="color-white text">Total Users</div>
+        <div class="color-white special-font-home">
+          <span>{{numUsers}}</span>
+        </div>
+      </div>
+      <div>
+        <div class="color-white text">Total Groups</div>
+        <div class="color-white special-font-home">
+          <span>{{numGroups}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

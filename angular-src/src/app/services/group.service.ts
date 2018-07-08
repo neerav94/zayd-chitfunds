@@ -78,6 +78,15 @@ export class GroupService {
     .map(res => res.json())
   }
 
+  removeUser(data) {
+    let headers = new Headers()
+    this.loadToken()
+    headers.append('Authorization', this.authToken)
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(this.url + '/v1/group/removeUser', data, {headers: headers})
+    .map(res => res.json())
+  }
+
   getAllSubscribers(groupId) {
     let headers = new Headers()
     this.loadToken()
@@ -112,6 +121,24 @@ export class GroupService {
     headers.append('Content-Type', 'application/json');
     return this.http.get(this.url + '/v1/group/getGroupPayment?groupId=' + groupId, {headers: headers})
     .map(res => res.json())
+  }
+
+  getDailyCollection() {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(this.url + '/v1/group/getDailyCollection', {headers: headers})
+    .map(res => res.json());
+  }
+
+  getWeeklyCollection() {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(this.url + '/v1/group/getWeeklyCollection', {headers: headers})
+    .map(res => res.json());
   }
 
   getActiveSubscribers(groupId) {

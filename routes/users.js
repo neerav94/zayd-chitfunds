@@ -49,12 +49,15 @@ addMultipleUsers = function(item, index) {
       } else {
         email = item["email"]
       }
+      var salt = bcrypt.genSaltSync(10);
+      var temp = item["mobile"].toString()
+      var hashedPassword = bcrypt.hashSync(temp, salt);
       var user = {
         "name": item["name"],
         "email": email,
         "number": item["mobile"],
         "role": 0,
-        "password": "",
+        "password": hashedPassword,
         "created_at": today
       }
       login.addNewUser(user, (error, results, fields) => {
@@ -76,13 +79,16 @@ router.post('/addUser', passport.authenticate('jwt', {
   session: false
 }), (req, res, next) => {
   var today = new Date();
+  var salt = bcrypt.genSaltSync(10);
+  var temp = req.body.contact.toString()
+  var hashedPassword = bcrypt.hashSync(temp, salt);
 
   var user = {
     "name": req.body.name,
     "email": req.body.email,
     "number": req.body.contact,
     "role": 0,
-    "password": "",
+    "password": hashedPassword,
     "created_at": today
   }
 

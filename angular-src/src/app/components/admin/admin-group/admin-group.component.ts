@@ -17,6 +17,7 @@ export class AdminGroupComponent implements OnInit {
   groupName: boolean = false;
   chitValue: boolean = false;
   numMonths: boolean = false;
+  auctionDay: boolean = false;
   showNotification: boolean = false;
   loading: boolean = false;
 
@@ -74,7 +75,13 @@ export class AdminGroupComponent implements OnInit {
       this.numMonths = false
     }
 
-    if(!this.chitValue && !this.groupName && !this.numMonths) {
+    if(this.validationService.isNumberEmpty(groupInfo.auctionDate)) {
+      this.auctionDay = true
+    } else {
+      this.auctionDay = false
+    }
+
+    if(!this.chitValue && !this.groupName && !this.numMonths && !this.auctionDay) {
       if(groupInfo.status == "") {
         groupInfo.status = false;
       }

@@ -29,6 +29,10 @@ span {
   background: linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, .8));
 }
 
+.group-info > * {
+  text-align: center;
+}
+
 .button {
   display: inline-block;
   padding: 8px;
@@ -93,6 +97,22 @@ th {
   margin: 16px;
 }
 
+select {
+  background: transparent;
+  font-size: 18px;
+  color: #fff;
+  padding: 4px;
+}
+
+select option {
+  color: #000;
+}
+
+.manage-payment {
+  margin: 0px 16px;
+  float: right;
+}
+
 @media only screen and (min-width: 1224px) {
   .form-container {
     padding: 32px;
@@ -101,6 +121,14 @@ th {
     left: 25%;
     background: #333333;
   }
+  .remove-form-container {
+    padding: 32px;
+    position: absolute;
+    top: 25%;
+    left: 30%;
+    background: #333333;
+  }
+  .remove-form-container h1,
   .form-container h1 {
     color: #fff;
     text-align: center;
@@ -191,6 +219,14 @@ th {
     left: 28%;
     background: #333333;
   }
+  .remove-form-container {
+    padding: 32px;
+    position: absolute;
+    top: 10%;
+    left: 30%;
+    background: #333333;
+  }
+  .remove-form-container h1,
   .form-container h1 {
     color: #fff;
     text-align: center;
@@ -269,6 +305,14 @@ th {
     left: 20%;
     background: #333333;
   }
+  .remove-form-container {
+    padding: 32px;
+    position: absolute;
+    top: 10%;
+    left: 25%;
+    background: #333333;
+  }
+  .remove-form-container h1,
   .form-container h1 {
     color: #fff;
     text-align: center;
@@ -348,6 +392,15 @@ th {
     right: 10%;
     background: #333333;
   }
+  .remove-form-container {
+    padding: 32px;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    right: 10%;
+    background: #333333;
+  }
+  .remove-form-container h1,
   .form-container h1 {
     color: #fff;
     text-align: center;

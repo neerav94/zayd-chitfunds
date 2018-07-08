@@ -38,11 +38,11 @@
             <div class="color-white special-font sub-heading">{{group.num_members - group.months}}</div>
           </div>
           <div>
-            <div class="color-white text heading">Auction Day</div>
-            <div class="color-white special-font sub-heading">{{group.auction}}</div>
+            <div class="color-white text heading">Draw Day</div>
+            <div class="color-white special-font sub-heading">{{group.auction_day}}<sup>th</sup> of every month</div>
           </div>
           <div>
-            <div class="color-white text heading">Start Day</div>
+            <div class="color-white text heading">Start Date & Draw Time</div>
             <div *ngIf="group.start_date" class="color-white special-font sub-heading">{{group.startDay}}</div>
             <div *ngIf="!group.start_date" class="color-white special-font sub-heading">- -</div>
           </div>
@@ -70,9 +70,13 @@
       <br>
       <div *ngIf="numMonths" class="text error-message">Total number of months cannot be empty.</div>
 
+      <input type="number" class="text" placeholder="Enter auction day" name="auctionDate" ngModel>
+      <br>
+      <div *ngIf="auctionDay" class="text error-message">Auction day cannot be empty.</div>
+
       <div>
         <input id="checkBox" type="checkbox" value="lag" name="status" ngModel>
-        <label for="checkBox" class="text">Auction is 1 month later than the installment.</label>
+        <label for="checkBox" class="text">Draw is 1 month later than the installment.</label>
       </div>
 
       <button type="submit" class="text">Create Group</button>

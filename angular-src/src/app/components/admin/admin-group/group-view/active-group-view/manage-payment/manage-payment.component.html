@@ -3,9 +3,13 @@
   </div>
   
   <div *ngIf="!loading">
-    <h1 class="main-page-sub-title group-title">Manage Payment</h1>
+    <h1 class="main-page-sub-title group-title">Manage Payments</h1>
 
     <div class="data-container" *ngFor="let payment of managePayment; let i = index">
+      <div class="data-container-child">
+        <div>Name</div>
+        <input type="text" [(ngModel)]="payment.name" readonly>
+      </div>
       <div class="data-container-child">
         <div>Token</div>
         <input type="text" [(ngModel)]="payment.token" name="payment.token" readonly>
@@ -20,7 +24,9 @@
           <option value="Cash" selected>Cash</option>
           <option value="Cheque">Cheque</option>
           <option value="NEFT">NEFT</option>
-          <option value="NetBanking">NetBanking</option>
+          <option value="IMPS">IMPS</option>
+          <option value="UPI">UPI</option>
+          <option value="Deposit">Deposit</option>
         </select>
       </div>
       <div class="data-container-child">

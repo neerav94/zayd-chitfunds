@@ -109,7 +109,8 @@ router.post('/createGroup', passport.authenticate('jwt', {
     "grp_name": req.body.name,
     "num_members": req.body.months,
     "chit_value": req.body.chitValue,
-    "status": req.body.status
+    "status": req.body.status,
+    "auction_day": req.body.auctionDate
   }
   group.checkGroupExist(req.body.name)
     .then(response => {
@@ -161,22 +162,22 @@ router.get('/getAllGroups', passport.authenticate('jwt', {
 })
 
 router.get('/getGroupByNumber', passport.authenticate('jwt', {
-    session: false
-  }), (req, res, next) => {
-    group.getGroupByNumber(req.query.number)
-      .then(response => {
-        res.json({
-          status: true,
-          message: response
-        })
+  session: false
+}), (req, res, next) => {
+  group.getGroupByNumber(req.query.number)
+    .then(response => {
+      res.json({
+        status: true,
+        message: response
       })
-      .catch(error => {
-        res.json({
-          status: false,
-          message: "Some error occurred. Please try again." + error
-        })
+    })
+    .catch(error => {
+      res.json({
+        status: false,
+        message: "Some error occurred. Please try again." + error
       })
-  })
+    })
+})
 
 router.get('/getGroupById', passport.authenticate('jwt', {
   session: false
@@ -246,32 +247,25 @@ router.post('/subscribeUser', passport.authenticate('jwt', {
       } else {
         group.checkTokenExist(req.body.token, req.body.groupId)
           .then(response => {
-            if (response.status == 1) {
-              res.json({
-                "status": false,
-                "message": "The token number is already given to a subscriber."
-              })
-            } else {
-              var subscriber = {}
-              subscriber["name"] = req.body.name
-              subscriber["number"] = req.body.contact
-              subscriber["token"] = req.body.token
-              subscriber["group_id"] = req.body.groupId
-              subscriber["group_name"] = req.body.groupName
-              group.subscribeUser(subscriber, (error, results, fields) => {
-                if (error) {
-                  res.json({
-                    "status": false,
-                    "message": "Some error occurred. Please try again."
-                  })
-                } else {
-                  res.json({
-                    "status": true,
-                    "message": "User was successfully subscribed to the group"
-                  })
-                }
-              })
-            }
+            var subscriber = {}
+            subscriber["name"] = req.body.name
+            subscriber["number"] = req.body.contact
+            subscriber["token"] = req.body.token
+            subscriber["group_id"] = req.body.groupId
+            subscriber["group_name"] = req.body.groupName
+            group.subscribeUser(subscriber, (error, results, fields) => {
+              if (error) {
+                res.json({
+                  "status": false,
+                  "message": "Some error occurred. Please try again."
+                })
+              } else {
+                res.json({
+                  "status": true,
+                  "message": "User was successfully subscribed to the group"
+                })
+              }
+            })
           })
           .catch(response => {
             res.json({
@@ -286,6 +280,34 @@ router.post('/subscribeUser', passport.authenticate('jwt', {
         "status": false,
         "message": "Some error occurred. Please try again."
       })
+    })
+})
+
+router.post('/removeUser', passport.authenticate('jwt', {
+  session: false
+}), (req, res, next) => {
+  group.checkTokenExist(req.body.token, req.body.groupId)
+    .then(response => {
+      if (response.status == 0) {
+        res.json({
+          "status": false,
+          "message": "User with this token does not exist"
+        })
+      } else {
+        group.removeUser(req.body.token, req.body.groupId)
+          .then(response => {
+            res.json({
+              "status": true,
+              "message": "User was successfully removed from the group"
+            })
+          })
+          .catch(response => {
+            res.json({
+              "status": 0,
+              "message": "Some error occurred. Please try again" + response
+            })
+          })
+      }
     })
 })
 
@@ -474,6 +496,113 @@ router.get('/getGroupPayment', passport.authenticate('jwt', {
       res.json({
         "status": false,
         "message": "Error: " + err
+      })
+    })
+})
+
+router.get('/getDailyCollection', passport.authenticate('jwt', {
+  session: false
+}), (req, res, next) => {
+  var dateObj = new Date();
+  var month = parseInt(dateObj.getMonth())
+  month = month + 1
+  var startDate = dateObj.getFullYear() + '.' + month + '.' + dateObj.getDate() + ' ' + '00:00:00'
+  var endDate = dateObj.getFullYear() + '.' + month + '.' + dateObj.getDate() + ' ' + '23:59:59'
+  startDate = new Date(startDate).getTime()
+  endDate = new Date(endDate).getTime()
+  group.getDailyCollection(startDate, endDate)
+    .then(response => {
+      if (response.status) {
+        res.json({
+          "status": true,
+          "message": response.message
+        })
+      } else {
+        res.json({
+          "status": false,
+          "message": "Error: " + response.message
+        })
+      }
+    })
+    .catch(err => {
+      res.json({
+        "status": false,
+        "message": "Some error occurred. Please try again " + err
+      })
+    })
+})
+
+function getStartAndEndOfWeek(date) {
+
+  //Calculating the starting point
+
+  var curr = date ? new Date(date) : new Date();
+  var first = curr.getDate() - dayOfWeek(curr);
+
+  var firstday, lastday;
+
+  if (first < 1) {
+    //Get prev month and year
+    var k = new Date(curr.valueOf());
+    k.setDate(1);
+    k.setMonth(k.getMonth() - 1);
+    var prevMonthDays = new Date(k.getFullYear(), (k.getMonth() + 1), 0).getDate();
+
+    first = prevMonthDays - (dayOfWeek(curr) - curr.getDate());
+    firstday = new Date(k.setDate(first));
+    lastday = new Date(k.setDate(first + 6));
+  } else {
+    // First day is the day of the month - the day of the week
+    firstday = new Date(curr.setDate(first));
+    lastday = new Date(curr.setDate(first + 6));
+  }
+
+  return [firstday, lastday];
+}
+
+function dayOfWeek(date, firstDay) {
+  var daysOfWeek = {
+    sunday: 0,
+    monday: 1,
+    tuesday: 2,
+    wednesday: 3,
+    thursday: 4,
+    friday: 5,
+    saturday: 6,
+  };
+  firstDay = firstDay || "monday";
+  var day = date.getDay() - daysOfWeek[firstDay];
+  return (day < 0 ? day + 7 : day);
+}
+
+router.get('/getWeeklyCollection', passport.authenticate('jwt', {
+  session: false
+}), (req, res, next) => {
+  var dateObj = new Date();
+  var month = parseInt(dateObj.getMonth())
+  month = month + 1
+  var startDate = dateObj.getFullYear() + '.' + month + '.' + dateObj.getDate()
+  var dateArray = getStartAndEndOfWeek(startDate);
+  startDate = dateArray[0].getTime();
+  var endDate = dateArray[1].getTime();
+  group.getWeeklyCollection(startDate, endDate)
+    .then(response => {
+      if (response.status) {
+        res.json({
+          "status": true,
+          "message": response.message
+        })
+      } else {
+        res.json({
+          "status": false,
+          "message": "Error: " + response.message
+        })
+      }
+    })
+    .catch(err => {
+      res.json({
+        "status": false,
+        "message": "Some error occurred. Please try again " + err
       })
     })
 })

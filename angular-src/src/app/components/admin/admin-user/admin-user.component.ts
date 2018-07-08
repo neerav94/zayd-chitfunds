@@ -42,6 +42,13 @@ export class AdminUserComponent implements OnInit {
     this.userService.getAllUsers().subscribe(data => {
       if(data.status) {
         this.allUsers = data.message;
+        this.allUsers.sort(function(a,b) {
+          if ( a.name < b.name )
+              return -1;
+          if ( a.name > b.name )
+              return 1;
+          return 0;
+        });
       } else {
         alert(data.message)
       }
@@ -69,6 +76,13 @@ export class AdminUserComponent implements OnInit {
         this.userService.getAllUsers().subscribe(data => {
           if(data.status) {
             this.allUsers = data.message;
+            this.allUsers.sort(function(a,b) {
+              if ( a.name < b.name )
+                  return -1;
+              if ( a.name > b.name )
+                  return 1;
+              return 0;
+            });
           } else {
             alert(data.message)
           }
@@ -107,6 +121,13 @@ export class AdminUserComponent implements OnInit {
           this.userService.getAllUsers().subscribe(data => {
             if(data.status) {
               this.allUsers = data.message;
+              this.allUsers.sort(function(a,b) {
+                if ( a.name < b.name )
+                    return -1;
+                if ( a.name > b.name )
+                    return 1;
+                return 0;
+              });
             } else {
               alert(data.message)
             }

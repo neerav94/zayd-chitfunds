@@ -23,6 +23,12 @@ export class AdminProfileComponent implements OnInit {
   adminOldPassword: boolean = false;
   adminNewPassword: boolean = false;
 
+  userNumber: boolean = false;
+  userNewPassword: boolean = false;
+
+  userOldNumber: boolean = false;
+  userNewNumber: boolean = false;
+
   constructor(private authService: AuthService, private validationService: ValidationService, private router: Router) { }
 
   ngOnInit() {
@@ -113,6 +119,62 @@ export class AdminProfileComponent implements OnInit {
           alert(data.message);
         }
         this.loading = false;
+      })
+    }
+  }
+
+  forgotUserPassword(userObj) {
+    if(this.validationService.isNumberEmpty(userObj.number)) {
+      this.userNumber = true;
+    } else {
+      this.userNumber = false;
+    }
+
+    if(this.validationService.isPasswordEmpty(userObj.password)) {
+      this.userNewPassword = true;
+    } else {
+      this.userNewPassword = false;
+    }
+
+    if(!this.userNewPassword && !this.userNumber) {
+      this.loading = true;
+      this.authService.forgotPassword(userObj).subscribe(data => {
+        if(data.status) {
+          alert("Password Updated successfully!");
+        } else {
+          alert(data.message);
+        }
+        this.loading = false;
+      })
+    }
+  }
+
+  updateMobileNumber(numberObj) {
+    if(this.validationService.isNumberEmpty(numberObj.oldNumber)) {
+      this.userOldNumber = true;
+    } else {
+      this.userOldNumber = false;
+    }
+
+    if(this.validationService.isNumberEmpty(numberObj.newNumber)) {
+      this.userNewNumber = true;
+    } else {
+      this.userNewNumber = false;
+    }
+
+    if(!this.userNewNumber && !this.userOldNumber) {
+      this.loading = true;
+      this.authService.updateNumber(numberObj).subscribe(data => {
+        if(data.status) {
+          alert("Number Updated successfully!");
+        } else {
+          alert(data.message);
+        }
+        this.loading = false;
+        if(this.number == numberObj["oldNumber"]) {
+          this.authService.logOut();
+          this.router.navigate(['/v1/login'], { replaceUrl: true });
+        }
       })
     }
   }

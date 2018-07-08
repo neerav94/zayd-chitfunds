@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { GroupService } from '../../../../../services/group.service';
 import { ValidationService } from '../../../../../services/validation.service';
 
@@ -15,15 +16,19 @@ export class FutureGroupViewComponent implements OnInit {
   loading: boolean = false;
   openStartGroup: boolean = false;
   openAddMembers: boolean = false;
+  openRemoveMembers: boolean = false;
   showNotification: boolean = false;
   subscribeUserError: boolean = false;
+  removeUserError: boolean = false;
   
   subscribeUserErrorMessage: string = ""
+  removeUserErrorMessage: string = ""
   notificationMessage: string = ""
 
   userContact: boolean = false;
   userName: boolean = false;
   userToken: boolean = false;
+  removeUserToken: boolean = false;
 
   date: Date = new Date();
   startDate: any;
@@ -31,21 +36,50 @@ export class FutureGroupViewComponent implements OnInit {
 
   uploader:FileUploader;
 
+  numMonths = [];
+  selectedMonth = "Manage Payments";
+  id: number;
+
+  activeSubscribers: any;
+
   constructor(
+    private router: Router,
+    private route: ActivatedRoute,
     private groupService: GroupService,
     private validationService: ValidationService
   ) { }
 
   ngOnInit() {
+    this.groupInfo[0].chit_amount = this.groupInfo[0].chit_value.toLocaleString('en', {useGrouping:true})
+    for (var i = 1; i <= this.groupInfo[0].num_members; i++) {
+      this.numMonths.push("Installment " + i);
+    }
+    this.route.params.subscribe(params => {
+      this.id = +params['id']; // (+) converts string 'id' to a number.
+    });
     this.loading = true;
-    this.groupService.getAllSubscribers(this.groupInfo[0].grp_id).subscribe(data => {
-      if(data.status) {
-        this.subscribedUsers = data.message
+    this.loading = true;
+    this.groupService.getActiveSubscribers(this.id).subscribe(data => {
+      if (data.status) {
+        this.activeSubscribers = data.message;
+        for(let i=0;i<this.activeSubscribers.length; i++) {
+          this.activeSubscribers[i].amount = this.activeSubscribers[i].amount.toLocaleString('en', {useGrouping:true})
+          this.activeSubscribers[i].advance = this.activeSubscribers[i].advance.toLocaleString('en', {useGrouping:true})
+          this.activeSubscribers[i].pending = this.activeSubscribers[i].pending.toLocaleString('en', {useGrouping:true})
+        }
       } else {
-        alert("Some error occurred. Please refresh the page and try again.")
+        alert(data.message);
       }
       this.loading = false;
     })
+    // this.groupService.getAllSubscribers(this.groupInfo[0].grp_id).subscribe(data => {
+    //   if(data.status) {
+    //     this.subscribedUsers = data.message
+    //   } else {
+    //     alert("Some error occurred. Please refresh the page and try again.")
+    //   }
+    //   this.loading = false;
+    // })
 
     this.uploader = new FileUploader({url: this.groupService.url + "/v1/group/subscribeUsers", itemAlias: 'subscriberData', authToken: this.groupService.authToken});
 
@@ -65,17 +99,28 @@ export class FutureGroupViewComponent implements OnInit {
       } else {
         this.openAddMembers = false;
         this.notificationMessage = "You have successfully added users."
-        this.groupService.getAllSubscribers(this.groupInfo[0].grp_id).subscribe(data => {
-          if(data.status) {
-            this.loading = false;
-            this.subscribedUsers = data.message;
+        this.groupService.getActiveSubscribers(this.id).subscribe(data => {
+          if (data.status) {
+            this.activeSubscribers = data.message;
+            for(let i=0;i<this.activeSubscribers.length; i++) {
+              this.activeSubscribers[i].amount = this.activeSubscribers[i].amount.toLocaleString('en', {useGrouping:true})
+              this.activeSubscribers[i].advance = this.activeSubscribers[i].advance.toLocaleString('en', {useGrouping:true})
+              this.activeSubscribers[i].pending = this.activeSubscribers[i].pending.toLocaleString('en', {useGrouping:true})
+            }
           } else {
-            this.loading = false;
-            alert(data.message)
+            alert(data.message);
           }
+          this.loading = false;
         })
       }
     }
+  }
+
+  changeSelectedMonth(event) {
+    var value = event.value;
+    value = value.split(':')[1].trim();
+    value = value.split(' ')[1];
+    this.router.navigate(['/v1/erpGroup/' + this.id + '/payments']);
   }
 
   // function called when on start date is selected
@@ -144,16 +189,64 @@ export class FutureGroupViewComponent implements OnInit {
           setTimeout(() => {
             this.showNotification = false;
           },5000);
-          this.groupService.getAllSubscribers(this.groupInfo[0].grp_id).subscribe(data => {
-            if(data.status) {
-              this.subscribedUsers = data.message
+          this.groupService.getActiveSubscribers(this.id).subscribe(data => {
+            if (data.status) {
+              this.activeSubscribers = data.message;
+              for(let i=0;i<this.activeSubscribers.length; i++) {
+                this.activeSubscribers[i].amount = this.activeSubscribers[i].amount.toLocaleString('en', {useGrouping:true})
+                this.activeSubscribers[i].advance = this.activeSubscribers[i].advance.toLocaleString('en', {useGrouping:true})
+                this.activeSubscribers[i].pending = this.activeSubscribers[i].pending.toLocaleString('en', {useGrouping:true})
+              }
             } else {
-              alert("Some error occurred. Please refresh the page and try again.")
+              alert(data.message);
             }
+            this.loading = false;
           })
         } else {
           this.subscribeUserError = true;
           this.subscribeUserErrorMessage = data.message
+        } 
+        this.loading = false;
+      })
+    }
+  }
+
+  //function called to remove subscribed user
+  removeUsers(tokenInfo): void {
+    if(this.validationService.isNumberEmpty(tokenInfo.token)) {
+      this.removeUserToken = true
+    } else {
+      this.removeUserToken = false
+    }
+    if(!this.removeUserToken) {
+      this.loading = true;
+      tokenInfo["groupId"] = this.groupInfo[0].grp_id;
+      tokenInfo["groupName"] = this.groupInfo[0].grp_name;
+      this.groupService.removeUser(tokenInfo).subscribe(data => {
+        if(data.status) {
+          this.removeUserError = false;
+          this.openRemoveMembers = false;
+          this.showNotification = true;
+          this.notificationMessage = "Successfully removed a user."
+          setTimeout(() => {
+            this.showNotification = false;
+          },5000);
+          this.groupService.getActiveSubscribers(this.id).subscribe(data => {
+            if (data.status) {
+              this.activeSubscribers = data.message;
+              for(let i=0;i<this.activeSubscribers.length; i++) {
+                this.activeSubscribers[i].amount = this.activeSubscribers[i].amount.toLocaleString('en', {useGrouping:true})
+                this.activeSubscribers[i].advance = this.activeSubscribers[i].advance.toLocaleString('en', {useGrouping:true})
+                this.activeSubscribers[i].pending = this.activeSubscribers[i].pending.toLocaleString('en', {useGrouping:true})
+              }
+            } else {
+              alert(data.message);
+            }
+            this.loading = false;
+          })
+        } else {
+          this.removeUserError = true;
+          this.removeUserErrorMessage = data.message
         } 
         this.loading = false;
       })
@@ -172,8 +265,16 @@ export class FutureGroupViewComponent implements OnInit {
     this.openAddMembers = true;
   }
 
+  removeMembers() {
+    this.openRemoveMembers = true;
+  }
+
   closeAddMembers() {
     this.openAddMembers = false;
+  }
+
+  closeRemoveMembers() {
+    this.openRemoveMembers = false;
   }
 
   // function called when cancel button is clicked in the date dialog
