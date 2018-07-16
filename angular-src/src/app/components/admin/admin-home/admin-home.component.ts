@@ -42,7 +42,7 @@ export class AdminHomeComponent implements OnInit {
         let groupsArray = [];
         for(let i=0; i<tempGroups.length; i++) {
           let diff = tempGroups[i].num_members - tempGroups[i].months
-          if(diff != 0) {
+          if(diff >= 0) {
             groupsArray.push(tempGroups[i]);
           }
         }
@@ -88,6 +88,7 @@ export class AdminHomeComponent implements OnInit {
   }
 
   countGroups(obj) {
+    console.log(obj);
     return new Promise((resolve, reject) => {
       this.loading = true;
       this.groupService.getGroupById(obj.grp_id).subscribe(data => {
@@ -95,11 +96,15 @@ export class AdminHomeComponent implements OnInit {
           let groupInfo = data.message
           if(groupInfo[0].start_date) {
             this.groupService.getAllSubscribers(groupInfo[0].grp_id).subscribe(data => {
-              if(data.message.length === groupInfo[0].num_members) {
+              if(data.message.length >= groupInfo[0].num_members) {
                 this.numGroups += 1;
                 resolve(true);
+              } else {
+                reject(false);
               }
             })
+          } else {
+            reject(false);
           }
         } else {
           alert("Some error occurred. Please try again.")
@@ -114,16 +119,20 @@ export class AdminHomeComponent implements OnInit {
   }
 
   aggregatePayment(obj) {
-    this.loading = true;
-    this.groupService.paymentCollected(obj.grp_id).subscribe(data => {
-      if (data.status) {
-        if(data.message) {
-          this.paymentCollected += parseInt(data.message);
+    return new Promise((resolve, reject) => {
+      this.loading = true;
+      this.groupService.paymentCollected(obj.grp_id).subscribe(data => {
+        if (data.status) {
+          if(data.message) {
+            this.paymentCollected += parseInt(data.message);
+            resolve(true);
+          }
+        } else {
+          alert(data.message);
+          reject(false);
         }
-      } else {
-        alert(data.message);
-      }
-      this.loading = false;
+        this.loading = false;
+      })
     })
   }
 }

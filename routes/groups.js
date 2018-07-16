@@ -74,9 +74,21 @@ subscribeMultipleUsers = function (item) {
 
 getUsersPayment = function (item, months, amountToPay) {
   return new Promise((resolve, reject) => {
-    group.getUserPayment(item.token, item.group_id)
+    group.getUserPayment(item.token, item.group_id, item.active)
       .then(res => {
-        var totalAmountToPay = amountToPay * months;
+        var totalAmountToPay = 0;
+        if(item.months && item.active==0) {
+          totalAmountToPay = amountToPay * parseInt(item.months);
+        } else if(item.months && item.active ==1) {
+          var diffMonths = months - parseInt(item.months);
+          if(diffMonths <= 0) {
+            totalAmountToPay = 0;
+          } else {
+            totalAmountToPay = amountToPay * diffMonths;
+          }
+        } else {
+          totalAmountToPay = amountToPay * months;
+        }
         if (res.total) {
           if (res.total < totalAmountToPay) {
             item["pending"] = totalAmountToPay - res.total;
@@ -440,6 +452,50 @@ router.post('/subscribeUsers', passport.authenticate('jwt', {
         "status": false,
         "message": "Some error occurred. PlLease try again."
       })
+    })
+})
+
+router.post('/substituteSubscriber', passport.authenticate('jwt', {
+  session: false
+}), (req, res, next) => {
+  login.checkUserExist(req.body.number)
+    .then(response => {
+      if (response.status == 1) {
+        res.json({
+          "status": false,
+          "message": "User with this contact number does not exist in the database. Before substituting, please add the user in the database."
+        })
+      } else {
+        var subscriber = {}
+        subscriber["name"] = req.body.name
+        subscriber["number"] = req.body.number
+        subscriber["token"] = req.body.token
+        subscriber["group_id"] = req.body.groupId
+        subscriber["group_name"] = req.body.groupName
+        subscriber["months"] = req.body.monthsRemaining
+        group.editActiveStatus(req.body.groupId, req.body.token, req.body.monthsOver)
+        .then(response => {
+          group.subscribeUser(subscriber, (error, results, fields) => {
+            if(error) {
+              res.json({
+                "status": false,
+                "message": "Some error occurred. Please try again " + error
+              })
+            } else {
+              res.json({
+                "status": true,
+                "message": "User was successfully substituted."
+              })
+            }
+          })
+        })
+        .catch(err => {
+          res.json({
+            "status": false,
+            "message": "Some error occurred. Please try again. " + err
+          })
+        })
+      }
     })
 })
 

@@ -164,6 +164,24 @@ module.exports.subscribeUser = function(data, callback) {
   database.connection.query('INSERT INTO subscribers SET ?', data, callback)
 }
 
+module.exports.editActiveStatus = function(id, token, months) {
+  return new Promise((resolve, reject) => {
+    database.connection.query('UPDATE payments SET active = 0 WHERE group_id=? AND token=?', [[id], [token]], function(error, results, fields) {
+      if(error) {
+        reject(error)
+      } else {
+        database.connection.query('UPDATE subscribers SET active = 0, months=? WHERE group_id=? AND token=?', [[months], [id], [token]], function(error, results, fields) {
+          if(error) {
+            reject(error)
+          } else {
+            resolve(true)
+          }
+        })
+      }
+    })
+  })
+}
+
 module.exports.removeUser = function(token, groupId) {
   return new Promise((resolve, reject) => {
     database.connection.query('DELETE FROM subscribers WHERE token = ? AND group_id = ?', [[token], [groupId]], function(error, results, fields) {
@@ -230,7 +248,7 @@ module.exports.setPayment = function(data) {
 
 module.exports.setPrizedSubscriber = function(data) {
   return new Promise((resolve, reject) => {
-    database.connection.query('UPDATE subscribers SET prized_cycle=? WHERE token=? AND group_id=?', [data["cycle"], data["token"], data["group_id"]], function(error, results, fields) {
+    database.connection.query('UPDATE subscribers SET prized_cycle=? WHERE token=? AND group_id=? AND active=1', [data["cycle"], data["token"], data["group_id"]], function(error, results, fields) {
       if(error) {
         return reject(error);
       } else {
@@ -277,9 +295,9 @@ module.exports.getMonthsOver = function(groupId) {
   })
 }
 
-module.exports.getUserPayment = function(token, groupId) {
+module.exports.getUserPayment = function(token, groupId, activeStatus) {
   return new Promise((resolve, reject) => {
-    database.connection.query('SELECT SUM(amount) as total FROM payments WHERE token=? AND group_id=?', [[token], [groupId]], function(error, results, fields) {
+    database.connection.query('SELECT SUM(amount) as total FROM payments WHERE token=? AND group_id=? AND active=?', [[token], [groupId], [activeStatus]], function(error, results, fields) {
       if(error) {
         return reject(error)
       } else {

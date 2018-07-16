@@ -78,6 +78,15 @@ export class GroupService {
     .map(res => res.json())
   }
 
+  substituteSubscriber(data) {
+    let headers = new Headers()
+    this.loadToken()
+    headers.append('Authorization', this.authToken)
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(this.url + '/v1/group/substituteSubscriber', data, {headers: headers})
+    .map(res => res.json())
+  }
+
   removeUser(data) {
     let headers = new Headers()
     this.loadToken()

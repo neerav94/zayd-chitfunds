@@ -15,6 +15,10 @@ span {
   color: #fff;
 }
 
+.color-red {
+  color: red;
+}
+
 .sub-heading {
   padding-top: 8px;
 }
@@ -92,7 +96,7 @@ th {
 
 .user-container {
   margin: 16px;
-  padding-top: 48px;
+  /* padding-top: 48px; */
 }
 
 a {
@@ -130,4 +134,69 @@ a:hover {
   border: 1px solid #1ab188;
   display: inline-block;
   margin-right: 16px;
+}
+
+.button-other {
+  display: inline-block;
+  padding: 8px;
+  margin-left: 16px;
+  border-radius: 32px;
+  color: white;
+  background: #da2c6e;
+  border: 1px solid #da2c6e;
+  cursor: pointer;
+}
+
+.substitute-form-container {
+  padding: 32px;
+  position: absolute;
+  top: 15%;
+  left: 30%;
+  background: #333333;
+}
+
+.substitute-form-container h1 {
+  color: #fff;
+  text-align: center;
+}
+
+form {
+  padding: 0 16px;
+}
+.input-form {
+  width: calc(100% - 2px);
+  color: #fff;
+  background: transparent;
+  outline: none;
+  border: 2px solid #1ab188;
+  padding: 16px;
+  margin: 32px 0 0 0;
+}
+.input-form[type=number]::-webkit-inner-spin-button,
+.input-form[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+.label-form {
+  display: inline;
+  color: white;
+}
+.button-form {
+  background: #1ab188;
+  border: none;
+  width: 100%;
+  color: #fff;
+  outline: none;
+  padding: 16px;
+  cursor: pointer;
+  margin-top: 32px;
+}
+.button-form:hover {
+  background: #158c6b;
+}
+.error-message {
+  color: #d32f2f;
+  padding: 4px 0 0 32px;
 }

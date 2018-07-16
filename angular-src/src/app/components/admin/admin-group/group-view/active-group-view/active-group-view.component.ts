@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GroupService } from '../../../../../services/group.service';
+import { ValidationService } from '../../../../../services/validation.service';
 
 @Component({
   selector: 'app-active-group-view',
@@ -24,7 +25,14 @@ export class ActiveGroupViewComponent implements OnInit {
 
   activeSubscribers: any;
 
-  constructor(private router: Router, private route: ActivatedRoute, private groupService: GroupService) {}
+  showSubstitueForm: boolean = false;
+  substituteSubscriberToken: boolean = false;
+  substituteSubscriberNumber: boolean = false;
+  substituteSubscriberName: boolean = false;
+  substituteSubscriberMonths1: boolean = false;
+  substituteSubscriberMonths2: boolean = false;
+
+  constructor(private router: Router, private route: ActivatedRoute, private groupService: GroupService, private validationService: ValidationService) {}
 
   ngOnInit() {
     this.groupInfo[0].chit_amount = this.groupInfo[0].chit_value.toLocaleString('en', {useGrouping:true})
@@ -122,6 +130,70 @@ export class ActiveGroupViewComponent implements OnInit {
     } else {
       this.prizeCustomerStatus = true;
     }
+  }
+
+  substituteSubscribers(userInfo) {
+    if(this.validationService.isNumberEmpty(userInfo.number)) {
+      this.substituteSubscriberNumber = true
+    } else {
+      this.substituteSubscriberNumber = false
+    }
+    if(this.validationService.isNumberEmpty(userInfo.token)) {
+      this.substituteSubscriberToken = true;
+    } else {
+      this.substituteSubscriberToken = false;
+    }
+    if(this.validationService.isNameEmpty(userInfo.name)) {
+      this.substituteSubscriberName = true;
+    } else {
+      this.substituteSubscriberName = false;
+    }
+    if(this.validationService.isNameEmpty(userInfo.monthsOver)) {
+      this.substituteSubscriberMonths1 = true;
+    } else {
+      this.substituteSubscriberMonths1 = false;
+    }
+    if(this.validationService.isNameEmpty(userInfo.monthsRemaining)) {
+      this.substituteSubscriberMonths2 = true;
+    } else {
+      this.substituteSubscriberMonths2 = false;
+    }
+
+    if(!this.substituteSubscriberToken && !this.substituteSubscriberNumber && !this.substituteSubscriberName && !this.substituteSubscriberMonths1 && !this.substituteSubscriberMonths2) {
+      userInfo["groupId"] = this.id
+      userInfo["groupName"] = this.groupInfo[0].grp_name
+      this.loading = true;
+      this.groupService.substituteSubscriber(userInfo).subscribe(data => {
+        if(data.status) {
+          this.loading = true;
+          this.groupService.getActiveSubscribers(this.id).subscribe(data => {
+            if (data.status) {
+              this.activeSubscribers = data.message;
+              for(let i=0;i<this.activeSubscribers.length; i++) {
+                this.activeSubscribers[i].amount = this.activeSubscribers[i].amount.toLocaleString('en', {useGrouping:true})
+                this.activeSubscribers[i].advance = this.activeSubscribers[i].advance.toLocaleString('en', {useGrouping:true})
+                this.activeSubscribers[i].pending = this.activeSubscribers[i].pending.toLocaleString('en', {useGrouping:true})
+              }
+            } else {
+              alert(data.message);
+            }
+            this.loading = false;
+          })
+        } else {
+          alert(data.message)
+        }
+        this.loading = false;
+        this.closeSubstituteSubscriber();
+      })
+    }
+  }
+
+  substituteSubscriber() {
+    this.showSubstitueForm = true;
+  }
+
+  closeSubstituteSubscriber() {
+    this.showSubstitueForm = false;
   }
 
 }
