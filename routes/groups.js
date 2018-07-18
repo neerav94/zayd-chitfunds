@@ -698,6 +698,41 @@ router.get('/getActiveSubscribers', passport.authenticate('jwt', {
     })
 })
 
+router.get('/getSubscribedGroups', passport.authenticate('jwt', {
+  session: false
+}), (req, res, next) => {
+  group.getSubscribedGroups(req.query.number)
+  .then(response => {
+    return res.json({
+      "status": true,
+      "message": response
+    })
+  })
+  .catch(err => {
+    res.json({
+      "status": false,
+      "message": "Some error occurred: " + err
+    })
+  })
+})
+
+router.get('/getUserSavings', passport.authenticate('jwt', {
+  session: false
+}), (req, res, next) => {
+  group.getUserPayment(req.query.token, req.query.groupId, req.query.active).then(response => {
+    return res.json({
+      "status": true,
+      "message": response.total
+    }) 
+  })
+  .catch(err => {
+    res.json({
+      "status": false,
+      "message": "Some error occurred: " + err
+    })
+  })
+})
+
 router.get('/getSubscriberPaymentDetails', passport.authenticate('jwt', {
   "session": false
 }), (req, res, next) => {
@@ -705,7 +740,6 @@ router.get('/getSubscriberPaymentDetails', passport.authenticate('jwt', {
   var tokenId = req.query.tokenId;
   group.getSubscriberPaymentDetails(groupId, tokenId)
     .then(response => {
-      console.log(response);
       res.json({
         "status": true,
         "message": response

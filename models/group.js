@@ -282,6 +282,18 @@ module.exports.getActiveSubscribers = function(groupId) {
   })
 }
 
+module.exports.getSubscribedGroups = function(number) {
+  return new Promise((resolve, reject) => {
+    database.connection.query('SELECT * FROM subscribers WHERE number=?', [number], function(error, results, fields) {
+      if(error) {
+        return reject(error)
+      } else {
+        return resolve(results);
+      }
+    })
+  })
+}
+
 module.exports.getMonthsOver = function(groupId) {
   return new Promise((resolve, reject) => {
     database.connection.query('SELECT * FROM groupinfo WHERE grp_id=?', [groupId], function (error, results, fields) {

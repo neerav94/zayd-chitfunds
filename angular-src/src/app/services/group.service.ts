@@ -159,6 +159,24 @@ export class GroupService {
     .map(res => res.json())
   }
 
+  getUserSubscribedGroups(number) {
+    let headers = new Headers()
+    this.loadToken()
+    headers.append('Authorization', this.authToken)
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(this.url + '/v1/group/getSubscribedGroups?number=' + number, {headers: headers})
+    .map(res => res.json())
+  }
+
+  getUserSavings(groupId, token, active) {
+    let headers = new Headers()
+    this.loadToken()
+    headers.append('Authorization', this.authToken)
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(this.url + '/v1/group/getUserSavings?groupId=' + groupId + '&token=' + token + '&active=' + active, {headers: headers})
+    .map(res => res.json())
+  }
+
   getUserPaymentDetails(tokenId, groupId) {
     let headers = new Headers()
     this.loadToken()

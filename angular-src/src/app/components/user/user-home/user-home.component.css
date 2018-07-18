@@ -32,6 +32,74 @@
   padding-bottom: 8px;
 }
 
+.container-box {
+  background: linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, .8));
+  margin: 16px;
+  display: flex;
+  display: -webkit-flex;
+  justify-content: space-evenly;
+  text-align: center;
+}
+
+span {
+  color: #1ab188;
+}
+
+.display {
+  display: inline-block;
+}
+
+.color-white {
+  color: #fff;
+}
+
+.heading {
+  padding: 8px;
+}
+
+.groups-container {
+  /* overflow-y: auto; */
+  max-height: calc(100vh - 80px);
+}
+
+.group-box {
+  background: linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, .8));
+  margin: 16px;
+}
+
+.upper-container {
+  padding: 8px;
+}
+
+.lower-container {
+  padding: 8px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.group-title {
+  padding-bottom: 8px;
+}
+
+.group-title a {
+  text-decoration: none
+}
+
+.group-title a:hover {
+  color: #1ab188;
+}
+
+.upper-container div {
+  vertical-align: top;
+}
+
+.sub-heading {
+  padding: 0 8px;
+  text-align: center;
+}
+
 @media screen and (min-device-width: 320px) and (max-device-width: 500px) {
   .nav {
     position: relative;
