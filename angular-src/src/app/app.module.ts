@@ -27,6 +27,7 @@ import { AdminUserViewComponent } from './components/admin/admin-user/admin-user
 import { ManagePaymentComponent } from './components/admin/admin-group/group-view/active-group-view/manage-payment/manage-payment.component';
 import { UserPaymentComponent } from './components/admin/admin-group/group-view/active-group-view/user-payment/user-payment.component';
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
+import { SelfTransactionsComponent } from './components/user/user-home/self-transactions/self-transactions.component'
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { UserProfileComponent } from './components/user/user-profile/user-profil
     FileSelectDirective,
     ManagePaymentComponent,
     UserPaymentComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    SelfTransactionsComponent
   ],
   imports: [
     BrowserModule,

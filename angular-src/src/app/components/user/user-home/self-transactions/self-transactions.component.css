@@ -1,0 +1,17 @@
+table {
+  color: #fff;
+  text-align: center;
+}
+
+th {
+  color: #da2c6e;
+}
+
+.table td {
+  border-top: 0;
+}
+
+.user-container {
+  margin: 16px;
+  /* padding-top: 48px; */
+}

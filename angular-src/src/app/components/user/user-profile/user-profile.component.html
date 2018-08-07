@@ -4,4 +4,24 @@
   <app-loading></app-loading>
 </div>
 
-<div *ngIf="!loading"></div>
+<div *ngIf="!loading">
+  <div class="data-container">
+    <div>
+      <div class="main-page-mid-title color-white pad-top-x">Update Password</div>
+      <form #updatePassword="ngForm" (ngSubmit)="updateUserPassword(updatePassword.value)">
+        <input type="password" class="text" placeholder="Enter old password" name="oldPassword" ngModel>
+        <br>
+        <div *ngIf="userOldPassword" class="text error-message">Password cannot be empty.</div>
+
+        <input type="password" class="text" placeholder="Enter new password" name="newPassword" ngModel>
+        <br>
+        <div *ngIf="userNewPassword" class="text error-message">Password cannot be empty.</div>
+        <button type="submit" class="text">Update Password</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="data-container">
+    <button on-click="logOut()">Log Out</button>
+  </div>
+</div>

@@ -36,6 +36,12 @@ export class ActiveGroupViewComponent implements OnInit {
 
   ngOnInit() {
     this.groupInfo[0].chit_amount = this.groupInfo[0].chit_value.toLocaleString('en', {useGrouping:true})
+    if(this.groupInfo[0].months > this.groupInfo[0].num_members) {
+      this.groupInfo[0].months = this.groupInfo[0].num_members;
+      this.groupInfo[0]["installments"] = 0;
+    } else {
+      this.groupInfo[0]["installments"] = this.groupInfo[0].num_members - this.groupInfo[0].months
+    }
     for (var i = 1; i <= this.groupInfo[0].num_members; i++) {
       this.numMonths.push("Installment " + i);
     }

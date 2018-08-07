@@ -1,0 +1,169 @@
+.data-container {
+  background: linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, .8));
+  margin: 16px;
+  text-align: center;
+}
+
+.color-white {
+  color: #fff;
+}
+
+.pad-top-x {
+  padding-top: 16px;
+}
+
+@media only screen and (min-width: 1224px) {
+  form {
+    padding: 0 32px;
+  }
+  input {
+    width: calc(25vw - 36px);
+    color: #fff;
+    background: transparent;
+    outline: none;
+    border: 2px solid #1ab188;
+    padding: 16px;
+    margin: 32px 0 0 0;
+  }
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+  }
+  button {
+    background: #1ab188;
+    border: none;
+    width: calc(25vw - 36px);
+    color: #fff;
+    outline: none;
+    padding: 16px;
+    cursor: pointer;
+    margin: 32px 0;
+  }
+  button:hover {
+    background: #158c6b;
+  }
+  .error-message {
+    color: #d32f2f;
+    padding: 4px 0 0 32px;
+  }
+}
+
+@media only screen and (min-device-width: 850px) and (max-device-width: 1024px) {
+  form {
+    padding: 0 32px;
+  }
+  input {
+    width: 25vw;
+    color: #fff;
+    background: transparent;
+    outline: none;
+    border: 2px solid #1ab188;
+    padding: 16px;
+    margin: 32px 0 0 0;
+  }
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+  }
+  button {
+    background: #1ab188;
+    border: none;
+    width: 25vw;
+    color: #fff;
+    outline: none;
+    padding: 16px;
+    cursor: pointer;
+    margin: 32px 0;
+  }
+  button:hover {
+    background: #158c6b;
+  }
+  .error-message {
+    color: #d32f2f;
+    padding: 4px 0 0 32px;
+  }
+}
+
+@media only screen and (min-device-width: 500px) and (max-device-width: 800px) {
+  form {
+    padding: 0 32px;
+  }
+  input {
+    width: calc(40vw);
+    color: #fff;
+    background: transparent;
+    outline: none;
+    border: 2px solid #1ab188;
+    padding: 16px;
+    margin: 32px 0 0 0;
+  }
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+  }
+  button {
+    background: #1ab188;
+    border: none;
+    width: calc(40vw);
+    color: #fff;
+    outline: none;
+    padding: 16px;
+    cursor: pointer;
+    margin: 32px 0;
+  }
+  button:hover {
+    background: #158c6b;
+  }
+  .error-message {
+    color: #d32f2f;
+    padding: 4px 0 0 32px;
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  form {
+    padding: 0 32px;
+  }
+  input {
+    width: 75vw;
+    color: #fff;
+    background: transparent;
+    outline: none;
+    border: 2px solid #1ab188;
+    padding: 16px;
+    margin: 32px 0 0 0;
+  }
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+  }
+  button {
+    background: #1ab188;
+    border: none;
+    width: 75vw;
+    color: #fff;
+    outline: none;
+    padding: 16px;
+    cursor: pointer;
+    margin: 32px 0;
+  }
+  button:hover {
+    background: #158c6b;
+  }
+  .error-message {
+    color: #d32f2f;
+    padding: 4px 0 0 32px;
+  }
+}

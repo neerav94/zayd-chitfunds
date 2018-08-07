@@ -319,6 +319,18 @@ module.exports.getUserPayment = function(token, groupId, activeStatus) {
   })
 }
 
+module.exports.getSelfTransactions = function(token, groupId, activeStatus) {
+  return new Promise((resolve, reject) => {
+    database.connection.query('SELECT * FROM payments WHERE token=? AND group_id=? AND active=?', [[token], [groupId], [activeStatus]], function(error, results, fields) {
+      if(error) {
+        return reject(error)
+      } else {
+        return resolve(results);
+      }
+    })
+  })
+}
+
 module.exports.getSubscriberPaymentDetails = function(groupId, tokenId) {
   return new Promise((resolve, reject) => {
     database.connection.query('SELECT * FROM payments WHERE token=? AND group_id=?', [[tokenId], [groupId]], function(error, results, fields) {

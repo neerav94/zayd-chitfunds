@@ -1,0 +1,27 @@
+.data-container {
+  background: linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, .8));
+  margin: 16px;
+}
+
+img {
+  height: 60px;
+  width: 60px;
+}
+
+span {
+  color: #1ab188;
+}
+
+.display {
+  display: inline-block;
+}
+
+.color-white {
+  color: #ffffff;
+}
+
+.collection-container {
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+}

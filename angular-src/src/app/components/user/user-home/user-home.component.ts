@@ -22,6 +22,8 @@ export class UserHomeComponent implements OnInit {
   userSavings: string = '';
   userSavingsAmount: number = 0;
 
+  selfTransactionsData: Array<object> = [];
+
   constructor(
     private authService: AuthService,
     private groupService: GroupService,
@@ -54,6 +56,7 @@ export class UserHomeComponent implements OnInit {
                 this.groupService.getUserSubscribedGroups(this.user[0].number).subscribe(data => {
                   if(data.status) {
                     let tempData = data.message;
+                    this.selfTransactionsData = tempData;
                     let amount = 0;
                     for(let i=0; i<tempData.length; i++) {
                       this.promiseArray.push(this.getTotalSavings(tempData[i]));
@@ -63,7 +66,6 @@ export class UserHomeComponent implements OnInit {
                     }
                     this.userPrizedMoney = amount.toLocaleString('en', {useGrouping:true});
                     Promise.all(this.promiseArray).then(response => {
-                      console.log(this.userSavings);
                     }).catch(err => {
                       alert(err);
                     })

@@ -54,6 +54,8 @@ export class AdminHomeComponent implements OnInit {
         this.loading = false;
         Promise.all(promises).then(response => {
           this.aggregateAmount = this.paymentCollected.toLocaleString('en', {useGrouping:true})
+        }).catch(err => {
+          console.log(err)
         })
       }
     })
@@ -88,7 +90,6 @@ export class AdminHomeComponent implements OnInit {
   }
 
   countGroups(obj) {
-    console.log(obj);
     return new Promise((resolve, reject) => {
       this.loading = true;
       this.groupService.getGroupById(obj.grp_id).subscribe(data => {
@@ -98,17 +99,17 @@ export class AdminHomeComponent implements OnInit {
             this.groupService.getAllSubscribers(groupInfo[0].grp_id).subscribe(data => {
               if(data.message.length >= groupInfo[0].num_members) {
                 this.numGroups += 1;
-                resolve(true);
+                resolve({status: true});
               } else {
-                reject(false);
+                reject({status: false});
               }
             })
           } else {
-            reject(false);
+            reject({status: false});
           }
         } else {
           alert("Some error occurred. Please try again.")
-          reject(false);
+          reject({status: false});
         }
         this.loading = false;
       }, err => {
@@ -125,11 +126,12 @@ export class AdminHomeComponent implements OnInit {
         if (data.status) {
           if(data.message) {
             this.paymentCollected += parseInt(data.message);
-            resolve(true);
+            this.aggregateAmount = this.paymentCollected.toLocaleString('en', {useGrouping:true})
+            resolve({status: true});
           }
         } else {
           alert(data.message);
-          reject(false);
+          reject({status: false});
         }
         this.loading = false;
       })

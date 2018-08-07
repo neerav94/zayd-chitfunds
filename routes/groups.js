@@ -136,7 +136,7 @@ router.post('/createGroup', passport.authenticate('jwt', {
           if (error) {
             res.json({
               status: false, // error occured while creating
-              message: 'Some error occurred. Please try again.'
+              message: 'Some error occurred. Please try again.' + error
             })
           } else {
             res.json({
@@ -150,7 +150,7 @@ router.post('/createGroup', passport.authenticate('jwt', {
     .catch(err => {
       res.json({
         status: false, // error occured while creating group
-        message: 'Some error occurred. Please try again.'
+        message: 'Some error occurred. Please try again.' + err
       })
     });
 })
@@ -168,7 +168,7 @@ router.get('/getAllGroups', passport.authenticate('jwt', {
     .catch(error => {
       res.json({
         status: false,
-        message: "Some error occurred while fetching all the groups."
+        message: "Some error occurred while fetching all the groups."  + error
       })
     })
 })
@@ -222,7 +222,7 @@ router.get('/getAllSubscribers', passport.authenticate('jwt', {
     .catch(error => {
       res.json({
         "status": false,
-        "message": "Some error occurred. Please try again."
+        "message": "Some error occurred. Please try again." + error
       })
     })
 })
@@ -232,10 +232,9 @@ router.post('/setDate', passport.authenticate('jwt', {
 }), (req, res, next) => {
   group.setDateForGroup(req.body, (error, results, fields) => {
     if (error) {
-      console.log(error)
       res.json({
         status: false,
-        message: "Some error occurred. Please try again."
+        message: "Some error occurred. Please try again." + error
       })
     } else {
       res.json({
@@ -269,7 +268,7 @@ router.post('/subscribeUser', passport.authenticate('jwt', {
               if (error) {
                 res.json({
                   "status": false,
-                  "message": "Some error occurred. Please try again."
+                  "message": "Some error occurred. Please try again." + error
                 })
               } else {
                 res.json({
@@ -282,7 +281,7 @@ router.post('/subscribeUser', passport.authenticate('jwt', {
           .catch(response => {
             res.json({
               "status": 0,
-              "message": "Some error occurred. Please try again"
+              "message": "Some error occurred. Please try again" + response
             })
           })
       }
@@ -290,7 +289,7 @@ router.post('/subscribeUser', passport.authenticate('jwt', {
     .catch(response => {
       res.json({
         "status": false,
-        "message": "Some error occurred. Please try again."
+        "message": "Some error occurred. Please try again." + response
       })
     })
 })
@@ -331,7 +330,7 @@ router.post('/subscribeUsers', passport.authenticate('jwt', {
         if (err) {
           res.json({
             "status": false,
-            "message": "Some error occurred. Please try again."
+            "message": "Some error occurred. Please try again." + err
           })
           return reject({
             "status": false
@@ -447,10 +446,9 @@ router.post('/subscribeUsers', passport.authenticate('jwt', {
       }
     })
     .catch(error => {
-      console.log(error)
       res.json({
         "status": false,
-        "message": "Some error occurred. PlLease try again."
+        "message": "Some error occurred. Please try again." + error
       })
     })
 })
@@ -513,10 +511,9 @@ router.post('/recordPayment', passport.authenticate('jwt', {
       })
     })
     .catch(err => {
-      console.log(err);
       res.json({
         "status": false,
-        "message": "Some error occurred."
+        "message": "Some error occurred." + err
       })
     })
 })
@@ -533,7 +530,7 @@ router.post('/recordPrizedSubscriber', passport.authenticate('jwt', {
     .catch(err => {
       res.json({
         "status": false,
-        "message": "Some error occurred."
+        "message": "Some error occurred." + err
       })
     })
 })
@@ -726,6 +723,22 @@ router.get('/getUserSavings', passport.authenticate('jwt', {
     }) 
   })
   .catch(err => {
+    res.json({
+      "status": false,
+      "message": "Some error occurred: " + err
+    })
+  })
+})
+
+router.get('/getSelfTransactions', passport.authenticate('jwt', {
+  session: false
+}), (req, res, next) => {
+  group.getSelfTransactions(req.query.token, req.query.groupId, req.query.active).then(response => {
+    return res.json({
+      "status": true,
+      "message": response
+    }) 
+  }).catch(err => {
     res.json({
       "status": false,
       "message": "Some error occurred: " + err
