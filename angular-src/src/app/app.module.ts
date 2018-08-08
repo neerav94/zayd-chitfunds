@@ -6,7 +6,7 @@ import { HttpModule } from '@angular/http';
 import { DataTableModule } from "angular2-datatable";
 
 import { DlDateTimePickerDateModule } from 'angular-bootstrap-datetimepicker';
-import { FileSelectDirective } from 'ng2-file-upload';
+import { FileUploadModule } from 'ng2-file-upload';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule, routingComponents } from './app.routes';
@@ -40,7 +40,6 @@ import { SelfTransactionsComponent } from './components/user/user-home/self-tran
     ActiveGroupViewComponent,
     FutureGroupViewComponent,
     AdminUserViewComponent,
-    FileSelectDirective,
     ManagePaymentComponent,
     UserPaymentComponent,
     UserProfileComponent,
@@ -49,6 +48,7 @@ import { SelfTransactionsComponent } from './components/user/user-home/self-tran
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FileUploadModule,
     FormsModule,
     HttpModule,
     DlDateTimePickerDateModule,

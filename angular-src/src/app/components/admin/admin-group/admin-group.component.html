@@ -10,7 +10,7 @@
       <div class="group-box">
         <div class="upper-container">
           <div class="display">
-            <img src="../../../../../../assets/icons/groupIcon.svg" alt="Group Icon">
+            <img src="./assets/icons/groupIcon.svg" alt="Group Icon">
           </div>
           <div class="display">
             <p class="group-title"><a class="color-white title" [routerLink]="['/v1/erpGroup', group.grp_id]">{{group.grp_name}}</a></p>
@@ -52,7 +52,7 @@
   </div>
 
   <div class="add-icon-image" (click)="createGroup()">
-    <img src="../../../../../../assets/icons/addIcon.svg" alt="Add Icon">
+    <img src="./assets/icons/addIcon.svg" alt="Add Icon">
   </div>
 
   <div class="form-container" *ngIf="createGroupStatus">
@@ -85,7 +85,7 @@
   </div>
 
   <div id="notificationBox" *ngIf="showNotification">
-    <img src="../../../../assets/icons/successIcon.svg" alt="Success Icon">
+    <img src="./assets/icons/successIcon.svg" alt="Success Icon">
     <div class="text">You have successfully created a new group.</div>
   </div>
 </div>
