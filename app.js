@@ -36,13 +36,13 @@ app.use('/v1/login', logins);
 app.use('/v1/group', groups);
 app.use('/v1/user', users);
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     //set headers to allow cross origin request.
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        next();
-    });
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 app.get('/', (req, res) => {
     res.send('Invalid Endpoint')
