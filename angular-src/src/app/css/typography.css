@@ -15,47 +15,47 @@
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 500px) {
   .main-page-title {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 4em;
     letter-spacing: 25px;
   }
   .main-page-sub-title {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 1.4em;
     letter-spacing: 1.02px;
   }
   .main-page-last-title {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 1.25em;
     letter-spacing: 0.75px;
   }
   .main-page-mid-title {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 1.15em;
     letter-spacing: 0.75px;
   }
   .title {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 1.5em;
     letter-spacing: 1.02px;
   }
   .title-number {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 1.5em;
     letter-spacing: 0.75px;
   }
   .links {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 1em;
     letter-spacing: 0.75px;
   }
   .text {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 0.75em;
     letter-spacing: 0.75px;
   }
   .special-font {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 0.75em;
     letter-spacing: 0.75px;
   }
@@ -63,47 +63,47 @@
 
 @media only screen and (min-device-width: 550px) and (max-device-width: 800px) {
   .main-page-title {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 6em;
     letter-spacing: 25px;
   }
   .main-page-sub-title {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 2em;
     letter-spacing: 1.02px;
   }
   .main-page-last-title {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 1.55em;
     letter-spacing: 0.75px;
   }
   .main-page-mid-title {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 1.35em;
     letter-spacing: 0.75px;
   }
   .title {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 2em;
     letter-spacing: 1.02px;
   }
   .title-number {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 2em;
     letter-spacing: 0.75px;
   }
   .links {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 1.25em;
     letter-spacing: 0.75px;
   }
   .text {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 1em;
     letter-spacing: 0.75px;
   }
   .special-font {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 1em;
     letter-spacing: 0.75px;
   }
@@ -111,47 +111,47 @@
 
 @media only screen and (min-device-width: 850px) and (max-device-width: 1024px) {
   .main-page-title {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 6em;
-    letter-spacing: 25px;
+    letter-spacing: 15px;
   }
   .main-page-sub-title {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 2em;
     letter-spacing: 1.02px;
   }
   .main-page-last-title {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 1.55em;
     letter-spacing: 0.75px;
   }
   .main-page-mid-title {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 1.35em;
     letter-spacing: 0.75px;
   }
   .title {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 2em;
     letter-spacing: 1.02px;
   }
   .title-number {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 2em;
     letter-spacing: 0.75px;
   }
   .links {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 1.25em;
     letter-spacing: 0.75px;
   }
   .text {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 1em;
     letter-spacing: 0.75px;
   }
   .special-font {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 1em;
     letter-spacing: 0.75px;
   }
@@ -159,65 +159,65 @@
 
 @media only screen and (min-width: 1224px) {
   .main-page-title {
-    font-family: Calibri, Arial;
-    font-size: 10em;
-    letter-spacing: 25px;
+    font-family: Arial;
+    font-size: 8em;
+    letter-spacing: 15px;
   }
   .main-page-sub-title {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 3em;
     letter-spacing: 1.02px;
   }
   .main-page-last-title {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 1.75em;
     letter-spacing: 0.75px;
   }
   .main-page-mid-title {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 1.5em;
     letter-spacing: 0.75px;
   }
   .title {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 2em;
     letter-spacing: 1.02px;
   }
   .title-number {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 2em;
     letter-spacing: 0.75px;
   }
   .links {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 1.25em;
     letter-spacing: 0.75px;
   }
   .text {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 1em;
     letter-spacing: 0.75px;
   }
   .special-font {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 1em;
     letter-spacing: 0.75px;
   }
   .special-font-home {
-    font-family: Calibri, Arial;
+    font-family: Arial;
     font-size: 2em;
     letter-spacing: 0.75px;
   }
 }
 
 .main-title {
-  font-family: Calibri, Arial;
+  font-family: Arial;
   font-size: 4em;
   letter-spacing: 1.02px;
 }
 
 .main-sub-title {
-  font-family: Calibri, Arial;
+  font-family: Arial;
   font-size: 2em;
   letter-spacing: 1.02px;
 }

@@ -253,7 +253,7 @@ export class FutureGroupViewComponent implements OnInit {
     }
   }
 
-  startGroup() {
+  selectDate() {
     this.openStartGroup = true;
   }
 

@@ -3,7 +3,7 @@
 </div>
 
 <div *ngIf="!loading">
-  <h1 class="main-page-sub-title group-title">Token number: {{tokenId}}</h1>
+  <h1 class="main-page-sub-title group-title">Token No.: {{tokenId}}</h1>
 
   <div class="user-container">
     <table class="table text" [mfData]="userPaymentDetails" #mf="mfDataTable">
@@ -16,7 +16,7 @@
             <mfDefaultSorter by="name">Amount</mfDefaultSorter>
           </th>
           <th class="main-page-mid-title">
-            <mfDefaultSorter by="name">Mode</mfDefaultSorter>
+            <mfDefaultSorter by="name">Payment Mode</mfDefaultSorter>
           </th>
           <th class="main-page-mid-title">
             <mfDefaultSorter by="email">Comments</mfDefaultSorter>
