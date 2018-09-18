@@ -8,11 +8,17 @@
   <div class="data-container">
     <div>
       <img class="display" src="./assets/icons/payments.svg" alt="Collection" />
-      <div class="display color-white title" style="vertical-align: top;">Collections</div>
+      <div class="display color-white title" style="vertical-align: top; padding: 12px;">Collections</div>
     </div>
     <div class="collection-container">
       <div>
         <div class="color-white text">Aggregate Chit Value</div>
+        <div style="padding-top: 4px;" class="color-white special-font-home">
+          <span>&#8377; {{aggregateChitValue}}</span>
+        </div>
+      </div>
+      <div>
+        <div class="color-white text">Aggregate Running Group's</div>
         <div style="padding-top: 4px;" class="color-white special-font-home">
           <span>&#8377; {{aggregateAmount}}</span>
         </div>
@@ -34,13 +40,19 @@
   <div class="data-container">
     <div>
       <img class="display" src="./assets/icons/groupIcon.svg" alt="Collection" />
-      <div class="display color-white title" style="vertical-align: top;">Statistics</div>
+      <div class="display color-white title" style="vertical-align: top; padding: 12px;">Statistics</div>
     </div>
     <div class="collection-container">
       <div>
         <div class="color-white text">Total Users</div>
         <div class="color-white special-font-home">
           <span>{{numUsers}}</span>
+        </div>
+      </div>
+      <div>
+        <div class="color-white text">Total Groups</div>
+        <div class="color-white special-font-home">
+          <span>{{totalGroups}}</span>
         </div>
       </div>
       <div>

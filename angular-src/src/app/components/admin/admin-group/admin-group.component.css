@@ -71,6 +71,13 @@ span {
   cursor: pointer;
 }
 
+.close-icon {
+  display: inline;
+  color: #fff;
+  cursor: pointer;
+  float: right;
+}
+
 @media only screen and (min-width: 1224px) {
   .form-container {
     padding: 32px;

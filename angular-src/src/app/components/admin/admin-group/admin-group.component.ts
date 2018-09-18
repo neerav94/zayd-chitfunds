@@ -55,6 +55,11 @@ export class AdminGroupComponent implements OnInit {
     }
   }
 
+  closeCreateGroup() {
+    this.createGroupStatus = false;
+    this.createGroupError = false;
+  }
+
   // function called when a user clicks on submit group info button
   submitGroupInfo(groupInfo: any):void {
     if(this.validationService.isNumberEmpty(groupInfo.chitValue)) {

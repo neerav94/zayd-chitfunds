@@ -49,6 +49,7 @@ export class AdminUserComponent implements OnInit {
               return 1;
           return 0;
         });
+        console.log(this.allUsers)
       } else {
         alert(data.message)
       }

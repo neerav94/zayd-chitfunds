@@ -16,6 +16,7 @@ export class AdminUserViewComponent implements OnInit {
   
   gender;
   occupation;
+  name: string = '';
   fatherName: string = '';
   age: string = '';
   dob: string = '';
@@ -60,6 +61,7 @@ export class AdminUserViewComponent implements OnInit {
       if(data.status) {
         this.userInfo = data.message
         this.activeView = true;
+        this.name = this.userInfo[0].name
         this.number = this.userInfo[0].number
         this.email = this.userInfo[0].email
         this.fatherName = this.userInfo[0].father_husband_name

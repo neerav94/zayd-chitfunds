@@ -173,6 +173,7 @@ router.post('/updateUserInfo', passport.authenticate('jwt', {
   session: false
 }), function(req, res, next) {
   var jsonObj = {}
+  jsonObj["name"] = req.body.name
   jsonObj["father_husband_name"] = req.body.fatherName
   jsonObj["dob"] = req.body.dob
   jsonObj["age"] = req.body.age

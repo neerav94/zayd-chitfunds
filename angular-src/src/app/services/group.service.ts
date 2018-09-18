@@ -6,7 +6,7 @@ import { tokenNotExpired } from 'angular2-jwt';
 @Injectable()
 export class GroupService {
 
-  url: string = ""
+  url: string = "http://localhost:3000"
   authToken: any;
 
   constructor(

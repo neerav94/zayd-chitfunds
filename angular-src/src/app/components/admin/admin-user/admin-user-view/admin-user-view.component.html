@@ -7,6 +7,10 @@
     <h1 class="main-page-sub-title user-name">{{userInfo[0].name}}</h1>
     <form #formData="ngForm" (ngSubmit)="submitUserInfo(formData.value)">
       <div class="pad-top form-div">
+        <label class="text">Name</label>
+        <input type="text" class="text" name="name" [(ngModel)]="name">
+      </div>
+      <div class="pad-top form-div">
         <label class="text">Father's/Husband's Name</label>
         <input type="text" class="text" name="fatherName" [(ngModel)]="fatherName">
       </div>

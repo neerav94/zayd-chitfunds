@@ -12,8 +12,11 @@ export class AdminHomeComponent implements OnInit {
   loading: boolean = false;
   numUsers: number = 0;
   numGroups: number = 0;
+  totalGroups: number = 0;
   paymentCollected: number = 0;
+  totalChitValue: number = 0;
   aggregateAmount: string = '';
+  aggregateChitValue: string = '';
   dailyCollection: string = '';
   weeklyCollection: string = '';
 
@@ -54,6 +57,7 @@ export class AdminHomeComponent implements OnInit {
         this.loading = false;
         Promise.all(promises).then(response => {
           this.aggregateAmount = this.paymentCollected.toLocaleString('en', {useGrouping:true})
+          this.aggregateChitValue = this.totalChitValue.toLocaleString('en', {useGrouping: true})
         }).catch(err => {
           console.log(err)
         })
@@ -90,6 +94,7 @@ export class AdminHomeComponent implements OnInit {
   }
 
   countGroups(obj) {
+    this.totalGroups += 1;
     return new Promise((resolve, reject) => {
       this.loading = true;
       this.groupService.getGroupById(obj.grp_id).subscribe(data => {
@@ -125,8 +130,10 @@ export class AdminHomeComponent implements OnInit {
       this.groupService.paymentCollected(obj.grp_id).subscribe(data => {
         if (data.status) {
           if(data.message) {
+            this.totalChitValue += obj["chit_value"]
             this.paymentCollected += parseInt(data.message);
             this.aggregateAmount = this.paymentCollected.toLocaleString('en', {useGrouping:true})
+            this.aggregateChitValue = this.totalChitValue.toLocaleString('en', {useGrouping:true})
             resolve({status: true});
           }
         } else {
