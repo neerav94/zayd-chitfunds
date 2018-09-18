@@ -3,6 +3,11 @@
   padding: 16px 40px 0;
 }
 
+.sub-group-title {
+  color: #fff;
+  padding: 0 40px 16px 40px;
+}
+
 .data-container {
   color: #fff;
   display: flex;
@@ -23,6 +28,14 @@ input {
   padding: 4px
 }
 
+input[type="checkbox"] {
+  margin: 16px 16px 16px 40px;
+}
+
+label {
+  color: #fff;
+}
+
 button {
   float: right;
   padding: 8px;
@@ -40,4 +53,13 @@ select {
 
 select option {
   color: #000;
+}
+
+img {
+  height: 80px;
+  width: 80px;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  cursor: pointer;
 }

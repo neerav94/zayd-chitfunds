@@ -37,7 +37,7 @@
   </div>
 
   <div class="group-info">
-    <div style="padding-bottom: 16px;" class="main-page-last-title color-white">Amount Collected
+    <div style="padding-bottom: 16px;" class="title color-white">Amount Collected
       <span class="special-font monthly-collection">&#8377; {{paymentCollected}}</span>
     </div>
     <progress value="{{paymentCollected}}" max="{{groupInfo[0].chit_value * groupInfo[0].num_members}}"></progress>
@@ -68,7 +68,7 @@
     </select>
   </div>
 
-  <div class="prize-cutomer-title links" (click)="selectPrizeCustomer()">Prized Subscriber</div>
+  <div class="prize-cutomer-title text" (click)="selectPrizeCustomer()">Prized Subscriber</div>
   <div class="button-other text" (click)="substituteSubscriber()">Substitute Subscriber</div>
 
   <div class="substitute-form-container" *ngIf="showSubstitueForm">
@@ -109,42 +109,42 @@
     <table class="table text" [mfData]="activeSubscribers" #mf="mfDataTable">
       <thead>
         <tr>
-          <th class="main-page-mid-title">
+          <th class="links">
             <mfDefaultSorter by="name">Sr. No.</mfDefaultSorter>
           </th>
-          <th class="main-page-mid-title">
+          <th class="links">
             <mfDefaultSorter by="name">Token No.</mfDefaultSorter>
           </th>
-          <th class="main-page-mid-title">
+          <th class="links">
             <mfDefaultSorter by="email">Name</mfDefaultSorter>
           </th>
-          <th class="main-page-mid-title">
+          <th class="links">
             <mfDefaultSorter by="age">Amount Paid</mfDefaultSorter>
           </th>
-          <th class="main-page-mid-title">
+          <th class="links">
             <mfDefaultSorter by="age">Advance Balance</mfDefaultSorter>
           </th>
-          <th class="main-page-mid-title">
+          <th class="links">
             <mfDefaultSorter by="age">Balance Due</mfDefaultSorter>
           </th>
-          <th class="main-page-mid-title">
+          <th class="links">
             <mfDefaultSorter by="age">Prized Draw</mfDefaultSorter>
           </th>
-          <th class="main-page-mid-title">
+          <th class="links">
             <mfDefaultSorter by="age">Transaction History</mfDefaultSorter>
           </th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let item of mf.data; let i = index;">
-          <td class="links">{{i + 1}}</td>
-          <td class="links" [class.color-red]="item.active === 0">{{item.token}}</td>
-          <td class="links" [class.color-red]="item.active === 0">{{item.name}}</td>
-          <td class="links" [class.color-red]="item.active === 0">{{item.amount}}</td>
-          <td class="links" [class.color-red]="item.active === 0">{{item.advance}}</td>
-          <td class="links" style="color: red;">{{item.pending}}</td>
-          <td class="links" [class.color-red]="item.active === 0">{{item.prized_cycle}}</td>
-          <td class="links">
+          <td class="text">{{i + 1}}</td>
+          <td class="text" [class.color-red]="item.active === 0">{{item.token}}</td>
+          <td class="text" [class.color-red]="item.active === 0">{{item.name}}</td>
+          <td class="text" [class.color-red]="item.active === 0">{{item.amount}}</td>
+          <td class="text" [class.color-red]="item.active === 0">{{item.advance}}</td>
+          <td class="text" style="color: red;">{{item.pending}}</td>
+          <td class="text" [class.color-red]="item.active === 0">{{item.prized_cycle}}</td>
+          <td class="text">
             <a [routerLink]="['/v1/erpGroup', item.token, item.group_id]">View</a>
           </td>
         </tr>

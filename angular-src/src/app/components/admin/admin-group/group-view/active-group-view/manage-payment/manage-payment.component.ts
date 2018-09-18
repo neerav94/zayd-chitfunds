@@ -11,6 +11,8 @@ export class ManagePaymentComponent implements OnInit {
 
   loading: boolean = false;
   id: number;
+  installmentNum: number;
+  checkedStatus: boolean = false;
 
   managePayment: Array<Object> = [];
   
@@ -21,6 +23,10 @@ export class ManagePaymentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.installmentNum = params['num']; // (+) converts string 'id' to a number.
+    });
+
     this.getMembers().then(data => {
       for(var i in data) {
         this.createData(data[i]);
@@ -82,5 +88,22 @@ export class ManagePaymentComponent implements OnInit {
         alert(data.message);
       }
     })
+  }
+
+  _checkBoxChanged() {
+    if(this.checkedStatus) {
+      let tempAmount = this.managePayment[0]["amount"];
+      for(let i in this.managePayment) {
+        this.managePayment[i]["amount"] = tempAmount;
+      }
+    } else {
+      for(let i in this.managePayment) {
+        this.managePayment[i]["amount"] = 0;
+      }
+    }
+  }
+
+  goToHome() {
+    this.router.navigate(['/v1/erpHome/']);
   }
 }

@@ -5,6 +5,10 @@
 <div *ngIf="!loading">
   <h1 class="main-page-sub-title group-title">Token No.: {{tokenId}}</h1>
 
+  <div (click)="goToHome()">
+    <img src="./assets/icons/home.svg" alt="Home" />
+  </div>
+
   <div class="user-container">
     <table class="table text" [mfData]="userPaymentDetails" #mf="mfDataTable">
       <thead>

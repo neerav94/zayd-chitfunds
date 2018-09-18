@@ -42,4 +42,8 @@ export class UserPaymentComponent implements OnInit {
     })
   }
 
+  goToHome() {
+    this.router.navigate(['/v1/erpHome/']);
+  }
+
 }

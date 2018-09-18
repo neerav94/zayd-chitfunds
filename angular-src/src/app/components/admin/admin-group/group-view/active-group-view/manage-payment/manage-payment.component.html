@@ -4,7 +4,14 @@
   
   <div *ngIf="!loading">
     <h1 class="main-page-sub-title group-title">Manage Payments</h1>
+    <h2 class="main-page-mid-title sub-group-title">Installment Number: {{installmentNum}}</h2>
 
+    <div (click)="goToHome()">
+      <img src="./assets/icons/home.svg" alt="Home" />
+    </div>
+
+    <input type="checkbox" [(ngModel)]="checkedStatus" (change)="_checkBoxChanged()"><label>Copy amount for all the tokens.</label>
+    
     <div class="data-container" *ngFor="let payment of managePayment; let i = index">
       <div class="data-container-child">
         <div>Name</div>

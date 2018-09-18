@@ -13,28 +13,28 @@
     <table class="table text" [mfData]="allUsers" #mf="mfDataTable">
       <thead>
         <tr>
-          <th class="main-page-last-title">
+          <th class="links">
             <mfDefaultSorter by="name">Name</mfDefaultSorter>
           </th>
-          <th class="main-page-last-title">
+          <th class="links">
             <mfDefaultSorter by="email">Mobile No.</mfDefaultSorter>
           </th>
-          <th class="main-page-last-title">
+          <th class="links">
             <mfDefaultSorter by="age">Email</mfDefaultSorter>
           </th>
-          <th class="main-page-last-title">
+          <th class="links">
             <mfDefaultSorter by="city">Groups</mfDefaultSorter>
           </th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let item of mf.data">
-          <td class="links">
+          <td class="text">
             <a [routerLink]="['/v1/erpUser', item.id]">{{item.name}}</a>
           </td>
-          <td class="links">{{item.number}}</td>
-          <td class="links">{{item.email}}</td>
-          <td class="links">{{item.subscribedGroups}}</td>
+          <td class="text">{{item.number}}</td>
+          <td class="text">{{item.email}}</td>
+          <td class="text">{{item.subscribedGroups}}</td>
         </tr>
       </tbody>
     </table>

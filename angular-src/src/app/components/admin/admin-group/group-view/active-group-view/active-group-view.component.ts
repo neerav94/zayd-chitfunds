@@ -84,7 +84,8 @@ export class ActiveGroupViewComponent implements OnInit {
     var value = event.value;
     value = value.split(':')[1].trim();
     value = value.split(' ')[1];
-    this.router.navigate(['/v1/erpGroup/' + this.id + '/payments']);
+    console.log(value);
+    this.router.navigate(['/v1/erpGroup/' + this.id + '/payments', {num: value}]);
   }
 
   changeSelectedCycle(event) {
