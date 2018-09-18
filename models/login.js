@@ -82,6 +82,18 @@ module.exports.updateNumber = function(oldNumber, newNumber) {
   })
 }
 
+module.exports.deleteNumber = function(number) {
+  return new Promise((resolve, reject) => {
+    database.connection.query('DELETE FROM users WHERE number=?', [number], function(error, results, fields) {
+      if(error) {
+        return reject(error)
+      } else {
+        resolve(true)
+      }
+    })
+  })
+}
+
 module.exports.updatePassword = function(newPassword, number) {
   return new Promise((resolve, reject) => {
     database.connection.query('UPDATE users SET password = ? WHERE number = ?', [[newPassword], [number]], function(error, results, fields) {

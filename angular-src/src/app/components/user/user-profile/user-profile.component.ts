@@ -14,6 +14,7 @@ export class UserProfileComponent implements OnInit {
 
   userOldPassword: boolean = false;
   userNewPassword: boolean = false;
+  userPasswordError: boolean = false;
 
   number: number = -1;
 
@@ -40,7 +41,13 @@ export class UserProfileComponent implements OnInit {
       this.userNewPassword = false;
     }
 
-    if(!this.userNewPassword && !this.userOldPassword) {
+    if(this.validationService.validatePassword(passwordObj.newPassword)) {
+      this.userPasswordError = false;
+    } else {
+      this.userPasswordError = true;
+    }
+
+    if(!this.userNewPassword && !this.userOldPassword && !this.userPasswordError) {
       passwordObj["number"] = this.number;
       this.loading = true;
       this.authService.updatePassword(passwordObj).subscribe(data => {

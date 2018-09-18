@@ -37,6 +37,14 @@ export class ValidationService {
     return false;
   }
 
+  //check password's length
+  validatePassword(password: String): boolean {
+    if(password.length < 6) {
+      return false;
+    }
+    return true;
+  }
+
   // check for email validation
   validateEmail(email: String): boolean {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

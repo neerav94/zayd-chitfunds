@@ -4,7 +4,12 @@ table {
 }
 
 th {
-  color: #da2c6e;
+  background: #da2c6e;
+  border: none;
+}
+
+.table th {
+  border: 0;
 }
 
 .table td {

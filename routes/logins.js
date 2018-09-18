@@ -187,6 +187,42 @@ router.post('/admin/forgotPassword', passport.authenticate('jwt', {
   })
 })
 
+router.post('/admin/deleteNumber', passport.authenticate('jwt', {
+  session: false
+}), (req, res, next) => {
+  var number = req.body.mobileNumber
+  user.checkUserExist(number)
+  .then(response => {
+    if(response.status === 0) {
+      user.deleteNumber(number)
+      .then(response => {
+        return res.json({
+          status: true,
+          message: "Success"
+        })
+        .catch(err => {
+          return res.json({
+            status: false,
+            message: 'Some error occurred. PLease try again ' + err
+          })
+        })
+      })
+    } else {
+      return res.json({
+        status: false,
+        message: "User with this number does not exist"
+      })
+    }
+  })
+  .catch(err => {
+    console.log(err);
+    return res.json({
+      status: false,
+      message: "Some error occurred. Please try again. " + err
+    })
+  })
+})
+
 router.post('/admin/updateNumber', passport.authenticate('jwt', {
   session: false
 }), (req, res, next) => {

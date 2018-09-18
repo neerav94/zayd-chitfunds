@@ -16,6 +16,7 @@
         <input type="password" class="text" placeholder="Enter new password" name="newPassword" ngModel>
         <br>
         <div *ngIf="userNewPassword" class="text error-message">Password cannot be empty.</div>
+        <div *ngIf="userPasswordError" class="text error-message">Password must be minimum 6 characters long.</div>
         <button type="submit" class="text">Update Password</button>
       </form>
     </div>

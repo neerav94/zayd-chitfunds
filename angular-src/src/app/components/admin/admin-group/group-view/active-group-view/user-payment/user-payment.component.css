@@ -1,7 +1,12 @@
 .group-title {
-    color: #1ab188;
-    padding: 16px 40px 0;
-  }
+  color: #1ab188;
+  padding: 16px 40px 0;
+}
+
+.sub-group-title {
+  color: #fff;
+  padding: 0 40px 16px 40px;
+}
 
 table {
   color: #fff;
@@ -9,7 +14,12 @@ table {
 }
 
 th {
-  color: #da2c6e;
+  background: #da2c6e;
+  border: none;
+}
+
+.table th {
+  border: 0;
 }
 
 .table td {

@@ -20,11 +20,19 @@ export class AdminProfileComponent implements OnInit {
   adminNumber: boolean = false;
   adminEmail: boolean = false;
   adminPassword: boolean = false;
+  adminPasswordError: boolean = false;
+
   adminOldPassword: boolean = false;
   adminNewPassword: boolean = false;
+  adminPasswordLength: boolean = false;
 
   userNumber: boolean = false;
   userNewPassword: boolean = false;
+  userPasswordLength: boolean = false;
+
+  userMobileNumber: boolean = false;
+  userMobileNumberConfirm: boolean = false;
+  numberMismatch: boolean = false;
 
   userOldNumber: boolean = false;
   userNewNumber: boolean = false;
@@ -77,7 +85,14 @@ export class AdminProfileComponent implements OnInit {
     } else {
       this.adminPassword = false;
     }
-    if(!this.adminEmail && !this.adminName && !this.adminNumber && !this.adminPassword) {
+
+    if(this.validationService.validatePassword(adminInfo.password)) {
+      this.adminPasswordError = false;
+    } else {
+      this.adminPasswordError = true;
+    }
+
+    if(!this.adminEmail && !this.adminName && !this.adminNumber && !this.adminPassword && !this.adminPasswordError) {
       this.loading = true;
       this.authService.registerAdmin(adminInfo).subscribe(data => {
         if(data.status) {
@@ -109,7 +124,13 @@ export class AdminProfileComponent implements OnInit {
       this.adminNewPassword = false;
     }
 
-    if(!this.adminNewPassword && !this.adminOldPassword) {
+    if(this.validationService.validatePassword(passwordObj.newPassword)) {
+      this.adminPasswordLength = false;
+    } else {
+      this.adminPasswordLength = true;
+    }
+
+    if(!this.adminNewPassword && !this.adminOldPassword && !this.adminPasswordLength) {
       passwordObj["number"] = this.number;
       this.loading = true;
       this.authService.updatePassword(passwordObj).subscribe(data => {
@@ -136,7 +157,13 @@ export class AdminProfileComponent implements OnInit {
       this.userNewPassword = false;
     }
 
-    if(!this.userNewPassword && !this.userNumber) {
+    if(this.validationService.validatePassword(userObj.password)) {
+      this.userPasswordLength = false;
+    } else {
+      this.userPasswordLength = true;
+    }
+
+    if(!this.userNewPassword && !this.userNumber && !this.userPasswordLength) {
       this.loading = true;
       this.authService.forgotPassword(userObj).subscribe(data => {
         if(data.status) {
@@ -175,6 +202,38 @@ export class AdminProfileComponent implements OnInit {
           this.authService.logOut();
           this.router.navigate(['/v1/login'], { replaceUrl: true });
         }
+      })
+    }
+  }
+
+  deleteMobileNumber(numberObj) {
+    if(this.validationService.isNumberEmpty(numberObj.mobileNumber)) {
+      this.userMobileNumber = true;
+    } else {
+      this.userMobileNumber = false;
+    }
+
+    if(this.validationService.isNumberEmpty(numberObj.mobileNumberConfirm)) {
+      this.userMobileNumberConfirm = true;
+    } else {
+      this.userMobileNumberConfirm = false;
+    }
+
+    if(numberObj.mobileNumber !== numberObj.mobileNumberConfirm) {
+      this.numberMismatch = true;
+    } else {
+      this.numberMismatch = false;
+    }
+    
+    if(!this.userMobileNumberConfirm && !this.userMobileNumber && !this.numberMismatch) {
+      this.loading = true;
+      this.authService.deleteNumber(numberObj).subscribe(data => {
+        if(data.status) {
+          alert("Number deleted successfully!");
+        } else {
+          alert(data.message);
+        }
+        this.loading = false;
       })
     }
   }

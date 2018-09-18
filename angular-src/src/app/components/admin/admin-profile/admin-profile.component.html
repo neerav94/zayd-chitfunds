@@ -24,6 +24,8 @@
       <br>
       <div *ngIf="adminPassword" class="text error-message">Password cannot be empty.</div>
 
+      <div *ngIf="adminPasswordError" class="text error-message">Password must be minimum 6 characters long.</div>
+
       <button type="submit" class="text">Create Admin</button>
       <div *ngIf="createAdminError" class="error-message text">{{createAdminErrorMessage}}</div>
     </form>
@@ -48,6 +50,7 @@
         <input type="password" class="text" placeholder="Enter new password" name="newPassword" ngModel>
         <br>
         <div *ngIf="adminNewPassword" class="text error-message">Password cannot be empty.</div>
+        <div *ngIf="adminPasswordLength" class="text error-message">Password must be minimum 6 characters long.</div>
         <button type="submit" class="text">Update Password</button>
       </form>
     </div>
@@ -62,12 +65,13 @@
         <input type="password" class="text" placeholder="Enter password" name="password" ngModel>
         <br>
         <div *ngIf="userNewPassword" class="text error-message">Password cannot be empty.</div>
+        <div *ngIf="userPasswordLength" class="text error-message">Password must be minimum 6 characters long.</div>
         <button type="submit" class="text">Update Password</button>
       </form>
     </div>
   </div>
 
-  <div class="data-container">
+  <div class="data-container display-flex">
     <div *ngIf="isSuperAdmin">
       <div class="main-page-mid-title color-white pad-top-x">Change Mobile Number</div>
       <form #updateNumber="ngForm" (ngSubmit)="updateMobileNumber(updateNumber.value)">
@@ -79,6 +83,21 @@
         <br>
         <div *ngIf="userNewNumber" class="text error-message">Number cannot be empty.</div>
         <button type="submit" class="text">Update Number</button>
+      </form>
+    </div>
+
+    <div *ngIf="isSuperAdmin">
+      <div class="main-page-mid-title color-white pad-top-x">Delete User</div>
+      <form #deleteNumber="ngForm" (ngSubmit)="deleteMobileNumber(deleteNumber.value)">
+        <input type="number" class="text" placeholder="Enter mobile number" name="mobileNumber" ngModel>
+        <br>
+        <div *ngIf="userMobileNumber" class="text error-message">Number cannot be empty.</div>
+
+        <input type="number" class="text" placeholder="Confirm mobile number" name="mobileNumberConfirm" ngModel>
+        <br>
+        <div *ngIf="userMobileNumberConfirm" class="text error-message">Number cannot be empty.</div>
+        <div *ngIf="numberMismatch" class="text error-message">Number should be same.</div>
+        <button type="submit" class="text">Delete Number</button>
       </form>
     </div>
   </div>

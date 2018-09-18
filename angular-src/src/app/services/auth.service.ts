@@ -56,6 +56,15 @@ export class AuthService {
     .map(res => res.json());
   }
 
+  deleteNumber(numberObj) {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(this.url + '/v1/login/admin/deleteNumber', numberObj, {headers: headers})
+    .map(res => res.json());
+  }
+
   updateNumber(numberObj) {
     let headers = new Headers();
     this.loadToken();
