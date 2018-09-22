@@ -5,9 +5,9 @@
 </div>
 
 <div *ngIf="!loading">
-  <!-- <div>
-  <input type="number" class="special-font" placeholder="Search by number">
-</div> -->
+  <div style="text-align:center;">
+    <input #inputstring type="text" class="special-font searchBox" placeholder="Search for user name" (keyup)="_searchUser(inputstring.value)">
+  </div>
 
   <div class="user-container">
     <table class="table text" [mfData]="allUsers" #mf="mfDataTable">
@@ -38,7 +38,7 @@
           <td class="text">{{item.number}}</td>
           <td class="text">{{item.email}}</td>
           <td class="text">{{item.subscribedGroups}}</td>
-          <td class="text">
+          <td class="text" style="padding-left: 96px;">
             <a [routerLink]="['/v1/erpUser/transactions', item.number]">View</a>
           </td>
         </tr>

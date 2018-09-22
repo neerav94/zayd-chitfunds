@@ -5,6 +5,10 @@
 </div>
 
 <div *ngIf="!loading">
+  <div style="text-align:center;">
+    <input #inputstring type="text" class="special-font searchBox" placeholder="Search for group name" (keyup)="_searchGroup(inputstring.value)">
+  </div>
+
   <div class="groups-container">
     <div *ngFor="let group of allGroups">
       <div class="group-box">

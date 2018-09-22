@@ -22,6 +22,7 @@ export class AdminGroupComponent implements OnInit {
   loading: boolean = false;
 
   allGroups: any;
+  allGroupsBackup: any;
 
   constructor(
     private validationService: ValidationService,
@@ -38,6 +39,7 @@ export class AdminGroupComponent implements OnInit {
     this.groupService.getAllGroups().subscribe(data => {
       if(data.status) {
         this.allGroups = data.message;
+        this.allGroupsBackup = this.allGroups;
       } else {
         alert(data.message)
       }
@@ -103,6 +105,7 @@ export class AdminGroupComponent implements OnInit {
           this.groupService.getAllGroups().subscribe(data => {
             if(data.status) {
               this.allGroups = data.message;
+              this.allGroupsBackup = this.allGroups;
             } else {
               alert(data.message)
             }
@@ -115,4 +118,25 @@ export class AdminGroupComponent implements OnInit {
       })
     }
   }
+
+  _searchGroup(value) {
+    if (value) {
+      let groupList = [];
+      for (let i = 0; i < this.allGroupsBackup.length; i++) {
+        let testableRegExp = new RegExp(this._regularExpression(value), "i");
+        let tempString = this.allGroupsBackup[i]["grp_name"]
+        if (tempString.match(testableRegExp)) {
+          groupList.push(this.allGroupsBackup[i]);
+        }
+      }
+      this.allGroups = groupList;
+    } else {
+      this.allGroups = this.allGroupsBackup;
+    }
+  }
+
+  _regularExpression(input) {
+    return input.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+  }
+
 }

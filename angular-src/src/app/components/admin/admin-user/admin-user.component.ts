@@ -24,6 +24,7 @@ export class AdminUserComponent implements OnInit {
   notificationMessage: string = ""
 
   allUsers: any;
+  allUserBackup: any;
 
   uploader:FileUploader;
 
@@ -49,6 +50,7 @@ export class AdminUserComponent implements OnInit {
               return 1;
           return 0;
         });
+        this.allUserBackup = this.allUsers
       } else {
         alert(data.message)
       }
@@ -83,6 +85,7 @@ export class AdminUserComponent implements OnInit {
                   return 1;
               return 0;
             });
+            this.allUserBackup = this.allUsers
           } else {
             alert(data.message)
           }
@@ -128,6 +131,7 @@ export class AdminUserComponent implements OnInit {
                     return 1;
                 return 0;
               });
+              this.allUserBackup = this.allUsers
             } else {
               alert(data.message)
             }
@@ -154,6 +158,26 @@ export class AdminUserComponent implements OnInit {
   
   closeAddUsers() {
     this.addUserStatus = false;
+  }
+
+  _searchUser(value) {
+    if (value) {
+      let userList = [];
+      for (let i = 0; i < this.allUserBackup.length; i++) {
+        let testableRegExp = new RegExp(this._regularExpression(value), "i");
+        let tempString = this.allUserBackup[i]["name"]
+        if (tempString.match(testableRegExp)) {
+          userList.push(this.allUserBackup[i]);
+        }
+      }
+      this.allUsers = userList;
+    } else {
+      this.allUsers = this.allUserBackup;
+    }
+  }
+
+  _regularExpression(input) {
+    return input.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
   }
 
 }
