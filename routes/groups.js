@@ -62,12 +62,11 @@ subscribeMultipleUsers = function (item) {
     data["token"] = item["token"]
     data["group_id"] = item["groupId"]
     data["group_name"] = item["group"]
-    group.subscribeUser(data, (error, results, fields) => {
-      if (error) {
-        resolve(false);
-      } else {
-        resolve(true);
-      }
+    group.subscribeUser(data).then(response => {
+      console.log(response);
+      resolve(true);
+    }).catch(error => {
+      reject(error);
     })
   })
 }
@@ -258,29 +257,35 @@ router.post('/subscribeUser', passport.authenticate('jwt', {
       } else {
         group.checkTokenExist(req.body.token, req.body.groupId)
           .then(response => {
-            var subscriber = {}
-            subscriber["name"] = req.body.name
-            subscriber["number"] = req.body.contact
-            subscriber["token"] = req.body.token
-            subscriber["group_id"] = req.body.groupId
-            subscriber["group_name"] = req.body.groupName
-            group.subscribeUser(subscriber, (error, results, fields) => {
-              if (error) {
-                res.json({
-                  "status": false,
-                  "message": "Some error occurred. Please try again." + error
-                })
-              } else {
+            if(response.status == 1) {
+              res.json({
+                "status": false,
+                "message": "Token number already exists."
+              })
+            } else {
+              var subscriber = {}
+              subscriber["name"] = req.body.name
+              subscriber["number"] = req.body.contact
+              subscriber["token"] = req.body.token
+              subscriber["group_id"] = req.body.groupId
+              subscriber["group_name"] = req.body.groupName
+              group.subscribeUser(subscriber).then(response => {
                 res.json({
                   "status": true,
-                  "message": "User was successfully subscribed to the group"
+                  "message": response["message"]
                 })
-              }
-            })
+              })
+              .catch(error => {
+                res.json({
+                  "status": false,
+                  "message": error["message"]
+                })
+              })
+            }
           })
           .catch(response => {
             res.json({
-              "status": 0,
+              "status": false,
               "message": "Some error occurred. Please try again" + response
             })
           })
@@ -407,7 +412,8 @@ router.post('/subscribeUsers', passport.authenticate('jwt', {
               })
             })
             .then(response => {
-              return new Promise((resolve, reject) => {
+              group.checkGroupSubscribers(xlData).then(response => {
+                return new Promise((resolve, reject) => {
                   var promises = []
                   for (var i = 0; i < xlData.length; i++) {
                     promises.push(subscribeMultipleUsers(xlData[i]))
@@ -436,6 +442,12 @@ router.post('/subscribeUsers', passport.authenticate('jwt', {
                     "message": "Users are successfully subscribed to the group."
                   })
                 })
+              }).catch(error => {
+                res.json({
+                  "status": false,
+                  "message": error["message"]
+                })
+              })
             })
         })
       } else {
@@ -473,18 +485,17 @@ router.post('/substituteSubscriber', passport.authenticate('jwt', {
         subscriber["months"] = req.body.monthsRemaining
         group.editActiveStatus(req.body.groupId, req.body.token, req.body.monthsOver)
         .then(response => {
-          group.subscribeUser(subscriber, (error, results, fields) => {
-            if(error) {
-              res.json({
-                "status": false,
-                "message": "Some error occurred. Please try again " + error
-              })
-            } else {
-              res.json({
-                "status": true,
-                "message": "User was successfully substituted."
-              })
-            }
+          group.substituteSubscriber(subscriber).then(response => {
+            res.json({
+              "status": true,
+              "message": "User was successfully substituted."
+            })
+          })
+          .catch(error => {
+            res.json({
+              "status": false,
+              "message": "Some error occurred." + error
+            })
           })
         })
         .catch(err => {

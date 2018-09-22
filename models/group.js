@@ -162,8 +162,103 @@ module.exports.getAllSubscribers = function(groupId) {
   })
 }
 
-module.exports.subscribeUser = function(data, callback) {
-  database.connection.query('INSERT INTO subscribers SET ?', data, callback)
+module.exports.checkGroupSubscribers = function(data) {
+  console.log(data);
+  return new Promise((resolve, reject) => {
+    database.connection.query('SELECT * FROM subscribers WHERE group_id=?', [data[0].groupId], function(error, results, fields) {
+      if(error) {
+        var response = {};
+        response["status"] = false;
+        response["message"] = "Some error occurred." + error;
+        reject(response);
+      } else {
+        let currentNumber = results.length;
+        database.connection.query('SELECT * FROM groupinfo WHERE grp_id=?', [data[0].groupId], function(error, results, fields) {
+          if(error) {
+            var response = {};
+            response["status"] = false;
+            response["message"] = "Some error occurred." + error;
+            reject(response);
+          } else {
+            let numMembers = results[0]["num_members"]
+            if(currentNumber < numMembers) {
+              let allowedMembers = numMembers - currentNumber;
+              if(data.length > allowedMembers) {
+                var response = {};
+                response["status"] = false;
+                response["message"] = "Group is already full. No more subscribers can be added to the group."
+                reject(response);
+              } else {
+                resolve(true);
+              }
+            } else {
+              var response = {};
+              response["status"] = false;
+              response["message"] = "The subscribers must be equal to the group capacity. Please check the number of subscribers and the group capacity of members."
+              reject(response);
+            }
+          }
+        })
+      }
+    })
+  })
+}
+
+module.exports.subscribeUser = function(data) {
+  return new Promise((resolve, reject) => {
+    database.connection.query('SELECT * FROM subscribers WHERE group_id=?', [data.group_id], function(error, results, fields) {
+      if(error) {
+        var response = {};
+        response["status"] = false;
+        response["message"] = "Some error occurred." + error;
+        reject(response);
+      } else {
+        let currentNumber = results.length;
+        database.connection.query('SELECT * FROM groupinfo WHERE grp_id=?', [data.group_id], function(error, results, fields) {
+          if(error) {
+            var response = {};
+            response["status"] = false;
+            response["message"] = "Some error occurred." + error;
+            reject(response);
+          } else {
+            let numMembers = results[0]["num_members"]
+            if(currentNumber < numMembers) { 
+              database.connection.query('INSERT INTO subscribers SET ?', data, function(error, results, fields) {
+                if(error) {
+                  var response = {};
+                  response["status"] = false;
+                  response["message"] = "Some error occurred." + error;
+                  reject(response);
+                } else {
+                  var response = {};
+                  response["status"] = true;
+                  response["message"] = "User was successfully subscribed to the group";
+                  resolve(response);
+                }
+              })
+            } else {
+              var response = {};
+              response["status"] = false;
+              response["message"] = "Group is already full. No more subscribers can be added to the group."
+              reject(response);
+            }
+          }
+        })
+      }
+    })
+  })
+}
+
+module.exports.substituteSubscriber = function(data) {
+  return new Promise((resolve, reject) => {
+    database.connection.query('INSERT INTO subscribers SET ?', data, function(error, results, fields) {
+      if(error) {
+        reject(error)
+      } else {
+        resolve(results)
+      }
+    })
+  })
 }
 
 module.exports.editActiveStatus = function(id, token, months) {
