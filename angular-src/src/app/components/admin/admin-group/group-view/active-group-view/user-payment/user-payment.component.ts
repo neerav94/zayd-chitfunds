@@ -14,10 +14,6 @@ export class UserPaymentComponent implements OnInit {
   groupId: number;
   tokenId: number;
 
-  userName: string = '';
-
-  authToken: any;
-
   userPaymentDetails: any;
 
   constructor(

@@ -62,3 +62,10 @@
     padding-bottom: 8px;
   }
 }
+
+.name-div {
+  position: absolute;
+  right: 32px;
+  top: 20px;
+  color: #fff;
+}

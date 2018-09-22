@@ -8,9 +8,13 @@ import { Router } from '@angular/router';
 })
 export class UserNavbarComponent implements OnInit {
 
+  userName: string = "";
+
   constructor(private router: Router) { }
 
   ngOnInit() {
+    const token = JSON.parse(localStorage.getItem('user'))
+    this.userName = token["name"];
   }
 
 }

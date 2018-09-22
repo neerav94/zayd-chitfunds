@@ -17,9 +17,13 @@ export class UserHomeComponent implements OnInit {
 
   userGroupsObject: Object;
   promiseArray: Array<any> = []; 
+  promiseGroupArray: Array<object> = [];
+
+  pendingAmount: number = 0;
 
   userPrizedMoney: string = '';
   userSavings: string = '';
+  userPendingAmount: string = '';
   userSavingsAmount: number = 0;
 
   selfTransactionsData: Array<object> = [];
@@ -65,9 +69,16 @@ export class UserHomeComponent implements OnInit {
                       }
                     }
                     this.userPrizedMoney = amount.toLocaleString('en', {useGrouping:true});
-                    Promise.all(this.promiseArray).then(response => {
-                    }).catch(err => {
+                    Promise.all(this.promiseArray).then(response => {}).catch(err => {
                       alert(err);
+                    })
+
+
+                    for(let i in tempData) {
+                      this.promiseGroupArray.push(this.getTotalPendings(tempData[i]));
+                    }
+                    Promise.all(this.promiseGroupArray).then(response => {}).catch(err => {
+                      console.log(err);
                     })
                     this.loading = false;
                   } else {
@@ -107,6 +118,31 @@ export class UserHomeComponent implements OnInit {
           alert(data.message);
           reject(false);
         }
+      })
+    })
+  }
+
+  getTotalPendings(obj) {
+    return new Promise((resolve, reject) => {
+      this.loading = true;
+      this.groupService.getActiveSubscribers(obj.group_id).subscribe(data => {
+        if (data.status) {
+          let tempGroupData = data.message;
+          for(let i in tempGroupData) {
+            if(tempGroupData[i]["number"] == this.user[0].number) {
+              this.pendingAmount += tempGroupData[i]["pending"];
+            }
+            for(let j in this.userGroups) {
+              if(this.userGroups[j]["grp_id"] == tempGroupData[i]["group_id"]) {
+                this.userGroups[j]["pendingAmount"] = tempGroupData[i]["pending"].toLocaleString('en', {useGrouping:true});
+              }
+            }
+          }
+          this.userPendingAmount = this.pendingAmount.toLocaleString('en', {useGrouping:true});
+        } else {
+          alert(data.message);
+        }
+        this.loading = false;
       })
     })
   }

@@ -18,6 +18,12 @@
         <span>&#8377; {{userPrizedMoney}}</span>
       </div>
     </div>
+    <div>
+      <div class="color-white title heading">Total Pending Amount</div>
+      <div class="color-white title-number sub-heading">
+        <span style="color: red;">&#8377; {{userPendingAmount}}</span>
+      </div>
+    </div>
   </div>
 
   <div class="groups-container">
@@ -62,6 +68,10 @@
             <div class="color-white text heading">Start Day</div>
             <div *ngIf="group.start_date" class="color-white special-font sub-heading">{{group.startDay}}</div>
             <div *ngIf="!group.start_date" class="color-white special-font sub-heading">- -</div>
+          </div>
+          <div>
+            <div class="color-white text heading">Pending Amount</div>
+            <div class="color-white special-font sub-heading" style="color: red;">{{group.pendingAmount}}</div>
           </div>
         </div>
       </div>

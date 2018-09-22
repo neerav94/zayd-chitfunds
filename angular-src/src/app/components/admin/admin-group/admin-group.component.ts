@@ -39,6 +39,13 @@ export class AdminGroupComponent implements OnInit {
     this.groupService.getAllGroups().subscribe(data => {
       if(data.status) {
         this.allGroups = data.message;
+        this.allGroups.sort(function(a,b) {
+          if ( a.grp_name < b.grp_name )
+              return -1;
+          if ( a.grp_name > b.grp_name )
+              return 1;
+          return 0;
+        });
         this.allGroupsBackup = this.allGroups;
       } else {
         alert(data.message)
@@ -105,6 +112,13 @@ export class AdminGroupComponent implements OnInit {
           this.groupService.getAllGroups().subscribe(data => {
             if(data.status) {
               this.allGroups = data.message;
+              this.allGroups.sort(function(a,b) {
+                if ( a.grp_name < b.grp_name )
+                    return -1;
+                if ( a.grp_name > b.grp_name )
+                    return 1;
+                return 0;
+              });
               this.allGroupsBackup = this.allGroups;
             } else {
               alert(data.message)
