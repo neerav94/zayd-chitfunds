@@ -21,6 +21,8 @@ export class AdminGroupComponent implements OnInit {
   showNotification: boolean = false;
   loading: boolean = false;
 
+  promiseGroupArray: Array<Object> = [];
+  
   allGroups: any;
   allGroupsBackup: any;
 
@@ -47,6 +49,12 @@ export class AdminGroupComponent implements OnInit {
           return 0;
         });
         this.allGroupsBackup = this.allGroups;
+        for(let i in this.allGroups) {
+          this.promiseGroupArray.push(this.getTotalPendings(this.allGroups[i]));
+        }
+        Promise.all(this.promiseGroupArray).then(response => {}).catch(err => {
+          console.log(err);
+        })
       } else {
         alert(data.message)
       }
@@ -131,6 +139,29 @@ export class AdminGroupComponent implements OnInit {
         }
       })
     }
+  }
+
+  getTotalPendings(obj) {
+    return new Promise((resolve, reject) => {
+      this.loading = true;
+      this.groupService.getActiveSubscribers(obj.grp_id).subscribe(data => {
+        if (data.status) {
+          let tempGroupData = data.message;
+          let pendingAmount = 0;
+          for(let i in tempGroupData) {
+            pendingAmount += tempGroupData[i]["pending"];
+            for(let j in this.allGroups) {
+              if(this.allGroups[j]["grp_id"] == tempGroupData[i]["group_id"]) {
+                this.allGroups[j]["pendingAmount"] = pendingAmount.toLocaleString('en', {useGrouping:true});
+              }
+            }
+          }
+        } else {
+          alert(data.message);
+        }
+        this.loading = false;
+      })
+    })
   }
 
   _searchGroup(value) {

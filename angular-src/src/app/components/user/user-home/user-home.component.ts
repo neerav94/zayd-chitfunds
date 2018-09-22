@@ -72,8 +72,6 @@ export class UserHomeComponent implements OnInit {
                     Promise.all(this.promiseArray).then(response => {}).catch(err => {
                       alert(err);
                     })
-
-
                     for(let i in tempData) {
                       this.promiseGroupArray.push(this.getTotalPendings(tempData[i]));
                     }

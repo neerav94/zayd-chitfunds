@@ -79,6 +79,13 @@
     color: #d32f2f;
     padding: 4px 0 0 32px;
   }
+  .main-logo {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    height: 60px;
+    width: 200px;
+  }
 }
 
 @media only screen and (min-device-width: 850px) and (max-device-width: 1024px) {
@@ -161,6 +168,13 @@
   .error-message {
     color: #d32f2f;
     padding: 4px 0 0 32px;
+  }
+  .main-logo {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    height: 60px;
+    width: 200px;
   }
 }
 
@@ -245,6 +259,13 @@
     color: #d32f2f;
     padding: 4px 0 0 32px;
   }
+  .main-logo {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    height: 60px;
+    width: 200px;
+  }
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
@@ -328,5 +349,12 @@
   .error-message {
     color: #d32f2f;
     padding: 4px 0 0 32px;
+  }
+  .main-logo {
+    position: absolute;
+    top: 8px;
+    right: 14%;
+    height: 60px;
+    width: 260px;
   }
 }
