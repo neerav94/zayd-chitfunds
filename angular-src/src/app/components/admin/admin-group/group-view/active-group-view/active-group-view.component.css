@@ -207,3 +207,12 @@ form {
   color: #d32f2f;
   padding: 4px 0 0 32px;
 }
+
+.homeImage {
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  cursor: pointer;
+}

@@ -16,6 +16,7 @@ import { ManagePaymentComponent } from './components/admin/admin-group/group-vie
 import { UserPaymentComponent } from './components/admin/admin-group/group-view/active-group-view/user-payment/user-payment.component';
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 import { SelfTransactionsComponent } from './components/user/user-home/self-transactions/self-transactions.component'
+import { AdminUserTransactionsComponent } from './components/admin/admin-user/admin-user-transactions/admin-user-transactions.component'
 
 export const routes: Routes = [
     { path: '', redirectTo: 'v1/login', pathMatch: 'full'},
@@ -26,6 +27,7 @@ export const routes: Routes = [
     { path: 'v1/erpGroup/:id', component: GroupViewComponent, canActivate: [AuthGuard] },
     { path: 'v1/erpUser/:id', component: AdminUserViewComponent, canActivate: [AuthGuard]},
     { path: 'v1/erpUser', component: AdminUserComponent, canActivate: [AuthGuard] },
+    { path: 'v1/erpUser/transactions/:id', component: AdminUserTransactionsComponent, canActivate: [AuthGuard] },
     { path: 'v1/erpProfile', component: AdminProfileComponent, canActivate: [AuthGuard] },
     { path: 'v1/erpGroup/:id/payments', component: ManagePaymentComponent, canActivate: [AuthGuard] },
     { path: 'v1/erpGroup/:id1/:id', component: UserPaymentComponent, canActivate: [AuthGuard] },
@@ -44,4 +46,4 @@ export const routes: Routes = [
 })
 
 export class AppRoutingModule {}
-export const routingComponents = [LoginComponent, ErrorComponent, UserHomeComponent, AdminHomeComponent, AdminUserComponent, AdminGroupComponent, AdminProfileComponent, ManagePaymentComponent, UserPaymentComponent, UserProfileComponent, SelfTransactionsComponent]
+export const routingComponents = [LoginComponent, ErrorComponent, UserHomeComponent, AdminHomeComponent, AdminUserComponent, AdminGroupComponent, AdminProfileComponent, AdminUserTransactionsComponent, ManagePaymentComponent, UserPaymentComponent, UserProfileComponent, SelfTransactionsComponent]

@@ -6,6 +6,11 @@
   <h1 class="main-page-sub-title group-title">{{groupInfo[0].grp_name}}</h1>
   <h2 class="links color-white">
     <span class="special-font monthly-collection">&#8377; {{groupInfo[0].chit_value/groupInfo[0].num_members}}</span> every month</h2>
+  
+  <div (click)="goToHome()">
+    <img class="homeImage" src="./assets/icons/home.svg" alt="Home" />
+  </div>
+  
   <div class="group-info">
     <div>
       <div class="color-white text heading">Members/No. of Installments</div>

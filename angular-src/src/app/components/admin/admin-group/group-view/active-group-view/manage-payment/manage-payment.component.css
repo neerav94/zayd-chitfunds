@@ -56,8 +56,8 @@ select option {
 }
 
 img {
-  height: 80px;
-  width: 80px;
+  height: 40px;
+  width: 40px;
   position: absolute;
   top: 16px;
   right: 16px;

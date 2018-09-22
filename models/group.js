@@ -20,6 +20,8 @@ function setGroupData(results) {
   var currentDate = new Date();
   for (var i in results) {
     startDay = new Date(results[i].start_date)
+    startDay.setHours(startDay.getHours() + 5); 
+    startDay.setMinutes(startDay.getMinutes() + 30);
     startDay = startDay.getDate() + "/" + (startDay.getMonth() + 1) + "/" + startDay.getFullYear() + " " + startDay.getHours() + ":" + startDay.getMinutes()
     results[i]["startDay"] = startDay
     if (results[i].start_date) {
@@ -339,6 +341,8 @@ module.exports.getSubscriberPaymentDetails = function(groupId, tokenId) {
       } else {
         for(var i=0; i<results.length; i++) {
           paymentDate = new Date(results[i]["payment_date"]);
+          paymentDate.setHours(paymentDate.getHours() + 5); 
+          paymentDate.setMinutes(paymentDate.getMinutes() + 30);
           paymentDate = paymentDate.getDate() + "/" + (paymentDate.getMonth() + 1) + "/" + paymentDate.getFullYear() + " " + paymentDate.getHours() + ":" + paymentDate.getMinutes()
           results[i]["payment_date"] = paymentDate
         }

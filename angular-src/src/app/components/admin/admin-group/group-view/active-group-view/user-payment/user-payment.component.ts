@@ -32,8 +32,6 @@ export class UserPaymentComponent implements OnInit {
       this.tokenId = +params['id1'];
     });
 
-    this.loadToken();
-
     this.loading = true;
     this.groupService.getUserPaymentDetails(this.tokenId, this.groupId).subscribe(data => {
       if(data.status) {
@@ -50,14 +48,6 @@ export class UserPaymentComponent implements OnInit {
 
   goToHome() {
     this.router.navigate(['/v1/erpHome/']);
-  }
-
-  // function to load the token
-  loadToken() {
-    let token = localStorage.getItem('user')
-    token = JSON.parse(token);
-    this.authToken = token;
-    this.userName = this.authToken["name"]
   }
 
 }

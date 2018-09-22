@@ -203,4 +203,8 @@ export class ActiveGroupViewComponent implements OnInit {
     this.showSubstitueForm = false;
   }
 
+  goToHome() {
+    this.router.navigate(['/v1/erpHome/']);
+  }
+
 }

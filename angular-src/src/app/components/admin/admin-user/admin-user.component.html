@@ -25,6 +25,9 @@
           <th class="links">
             <mfDefaultSorter by="city">Groups</mfDefaultSorter>
           </th>
+          <th class="links">
+            <mfDefaultSorter by="city">Transaction History</mfDefaultSorter>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -35,6 +38,9 @@
           <td class="text">{{item.number}}</td>
           <td class="text">{{item.email}}</td>
           <td class="text">{{item.subscribedGroups}}</td>
+          <td class="text">
+            <a [routerLink]="['/v1/erpUser/transactions', item.number]">View</a>
+          </td>
         </tr>
       </tbody>
     </table>

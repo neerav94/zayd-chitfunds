@@ -46,6 +46,15 @@ export class UserService {
     .map(res => res.json())
   }
 
+  getUserTransactions(number) {
+    let headers = new Headers()
+    this.loadToken()
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(this.url + '/v1/user/getUserTransactions?number='+number, {headers: headers})
+    .map(res => res.json())
+  }
+
   addMultipleUsers(files: Array<File>) {
     var formData: any = new FormData();
     for(var i = 0; i < files.length; i++) {

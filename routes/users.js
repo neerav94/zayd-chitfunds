@@ -169,6 +169,23 @@ router.get('/getUserById', passport.authenticate('jwt', {
   })
 })
 
+router.get('/getUserTransactions', passport.authenticate('jwt', {
+  session: false
+}), (req, res, next) => {
+  user.getUserTransactions(req.query.number).then(response => {
+    res.json({
+      "status": true,
+      "message": response
+    })
+  })
+  .catch(error => {
+    res.json({
+      "status": false,
+      "message": error
+    })
+  })
+})
+
 router.post('/updateUserInfo', passport.authenticate('jwt', {
   session: false
 }), function(req, res, next) {
