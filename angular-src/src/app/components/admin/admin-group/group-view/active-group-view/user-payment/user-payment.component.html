@@ -34,12 +34,16 @@
       <tbody>
         <tr *ngFor="let item of mf.data; let i = index;">
           <td class="text">{{i + 1}}</td>
-          <td class="text">{{item.amount}}</td>
+          <td *ngIf="userRole == 2" class="text"><input type="text" [(ngModel)]="mf.data[i].amount"></td>
+          <td *ngIf="userRole == 1" class="text">{{item.amount}}</td>
           <td class="text">{{item.payment_mode}}</td>
           <td class="text">{{item.payment_comment}}</td>
           <td class="text">{{item.payment_date}}</td>
         </tr>
       </tbody>
     </table>
+    <div>
+      <button *ngIf="userRole == 2" (click)="updatePayments()">Update Payments</button>
+    </div>
   </div>
 </div>

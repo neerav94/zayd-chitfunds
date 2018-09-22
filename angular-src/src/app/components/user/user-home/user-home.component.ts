@@ -68,7 +68,7 @@ export class UserHomeComponent implements OnInit {
                         amount += 0.95 * this.userGroupsObject[tempData[i].group_id].chit_value;
                       }
                     }
-                    this.userPrizedMoney = amount.toLocaleString('en', {useGrouping:true});
+                    this.userPrizedMoney = amount.toLocaleString('en-IN', {useGrouping:true});
                     Promise.all(this.promiseArray).then(response => {}).catch(err => {
                       alert(err);
                     })
@@ -108,7 +108,7 @@ export class UserHomeComponent implements OnInit {
       this.groupService.getUserSavings(obj.group_id, obj.token, obj.active).subscribe(data => {
         if(data.status) {
           this.userSavingsAmount += data.message;
-          this.userSavings = this.userSavingsAmount.toLocaleString('en', {useGrouping:true});
+          this.userSavings = this.userSavingsAmount.toLocaleString('en-IN', {useGrouping:true});
           this.loading = false;
           resolve(true);
         } else {
@@ -132,11 +132,11 @@ export class UserHomeComponent implements OnInit {
             }
             for(let j in this.userGroups) {
               if(this.userGroups[j]["grp_id"] == tempGroupData[i]["group_id"]) {
-                this.userGroups[j]["pendingAmount"] = tempGroupData[i]["pending"].toLocaleString('en', {useGrouping:true});
+                this.userGroups[j]["pendingAmount"] = tempGroupData[i]["pending"].toLocaleString('en-IN', {useGrouping:true});
               }
             }
           }
-          this.userPendingAmount = this.pendingAmount.toLocaleString('en', {useGrouping:true});
+          this.userPendingAmount = this.pendingAmount.toLocaleString('en-IN', {useGrouping:true});
         } else {
           alert(data.message);
         }

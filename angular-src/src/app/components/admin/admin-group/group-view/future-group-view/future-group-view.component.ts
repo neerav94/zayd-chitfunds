@@ -50,7 +50,7 @@ export class FutureGroupViewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.groupInfo[0].chit_amount = this.groupInfo[0].chit_value.toLocaleString('en', {useGrouping:true})
+    this.groupInfo[0].chit_amount = this.groupInfo[0].chit_value.toLocaleString('en-IN', {useGrouping:true})
     for (var i = 1; i <= this.groupInfo[0].num_members; i++) {
       this.numMonths.push("Installment " + i);
     }
@@ -63,9 +63,9 @@ export class FutureGroupViewComponent implements OnInit {
       if (data.status) {
         this.activeSubscribers = data.message;
         for(let i=0;i<this.activeSubscribers.length; i++) {
-          this.activeSubscribers[i].amount = this.activeSubscribers[i].amount.toLocaleString('en', {useGrouping:true})
-          this.activeSubscribers[i].advance = this.activeSubscribers[i].advance.toLocaleString('en', {useGrouping:true})
-          this.activeSubscribers[i].pending = this.activeSubscribers[i].pending.toLocaleString('en', {useGrouping:true})
+          this.activeSubscribers[i].amount = this.activeSubscribers[i].amount.toLocaleString('en-IN', {useGrouping:true})
+          this.activeSubscribers[i].advance = this.activeSubscribers[i].advance.toLocaleString('en-IN', {useGrouping:true})
+          this.activeSubscribers[i].pending = this.activeSubscribers[i].pending.toLocaleString('en-IN', {useGrouping:true})
         }
       } else {
         alert(data.message);
@@ -103,9 +103,9 @@ export class FutureGroupViewComponent implements OnInit {
           if (data.status) {
             this.activeSubscribers = data.message;
             for(let i=0;i<this.activeSubscribers.length; i++) {
-              this.activeSubscribers[i].amount = this.activeSubscribers[i].amount.toLocaleString('en', {useGrouping:true})
-              this.activeSubscribers[i].advance = this.activeSubscribers[i].advance.toLocaleString('en', {useGrouping:true})
-              this.activeSubscribers[i].pending = this.activeSubscribers[i].pending.toLocaleString('en', {useGrouping:true})
+              this.activeSubscribers[i].amount = this.activeSubscribers[i].amount.toLocaleString('en-IN', {useGrouping:true})
+              this.activeSubscribers[i].advance = this.activeSubscribers[i].advance.toLocaleString('en-IN', {useGrouping:true})
+              this.activeSubscribers[i].pending = this.activeSubscribers[i].pending.toLocaleString('en-IN', {useGrouping:true})
             }
           } else {
             alert(data.message);
@@ -193,9 +193,9 @@ export class FutureGroupViewComponent implements OnInit {
             if (data.status) {
               this.activeSubscribers = data.message;
               for(let i=0;i<this.activeSubscribers.length; i++) {
-                this.activeSubscribers[i].amount = this.activeSubscribers[i].amount.toLocaleString('en', {useGrouping:true})
-                this.activeSubscribers[i].advance = this.activeSubscribers[i].advance.toLocaleString('en', {useGrouping:true})
-                this.activeSubscribers[i].pending = this.activeSubscribers[i].pending.toLocaleString('en', {useGrouping:true})
+                this.activeSubscribers[i].amount = this.activeSubscribers[i].amount.toLocaleString('en-IN', {useGrouping:true})
+                this.activeSubscribers[i].advance = this.activeSubscribers[i].advance.toLocaleString('en-IN', {useGrouping:true})
+                this.activeSubscribers[i].pending = this.activeSubscribers[i].pending.toLocaleString('en-IN', {useGrouping:true})
               }
             } else {
               alert(data.message);
@@ -235,9 +235,9 @@ export class FutureGroupViewComponent implements OnInit {
             if (data.status) {
               this.activeSubscribers = data.message;
               for(let i=0;i<this.activeSubscribers.length; i++) {
-                this.activeSubscribers[i].amount = this.activeSubscribers[i].amount.toLocaleString('en', {useGrouping:true})
-                this.activeSubscribers[i].advance = this.activeSubscribers[i].advance.toLocaleString('en', {useGrouping:true})
-                this.activeSubscribers[i].pending = this.activeSubscribers[i].pending.toLocaleString('en', {useGrouping:true})
+                this.activeSubscribers[i].amount = this.activeSubscribers[i].amount.toLocaleString('en-IN', {useGrouping:true})
+                this.activeSubscribers[i].advance = this.activeSubscribers[i].advance.toLocaleString('en-IN', {useGrouping:true})
+                this.activeSubscribers[i].pending = this.activeSubscribers[i].pending.toLocaleString('en-IN', {useGrouping:true})
               }
             } else {
               alert(data.message);

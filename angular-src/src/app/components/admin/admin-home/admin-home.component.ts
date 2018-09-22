@@ -66,8 +66,8 @@ export class AdminHomeComponent implements OnInit {
         }
         this.loading = false;
         Promise.all(promises).then(response => {
-          this.aggregateAmount = this.paymentCollected.toLocaleString('en', {useGrouping:true})
-          this.aggregateChitValue = this.totalChitValue.toLocaleString('en', {useGrouping: true})
+          this.aggregateAmount = this.paymentCollected.toLocaleString('en-IN', {useGrouping:true})
+          this.aggregateChitValue = this.totalChitValue.toLocaleString('en-IN', {useGrouping: true})
         }).catch(err => {
           console.log(err)
         })
@@ -78,7 +78,7 @@ export class AdminHomeComponent implements OnInit {
     this.groupService.getDailyCollection().subscribe(data => {
       if(data.status) {
         if(data.message) {
-          this.dailyCollection = data.message.toLocaleString('en', {useGrouping:true})
+          this.dailyCollection = data.message.toLocaleString('en-IN', {useGrouping:true})
         } else {
           this.dailyCollection = '0';
         }
@@ -92,7 +92,7 @@ export class AdminHomeComponent implements OnInit {
     this.groupService.getWeeklyCollection().subscribe(data => {
       if(data.status) {
         if(data.message) {
-          this.weeklyCollection = data.message.toLocaleString('en', {useGrouping:true})
+          this.weeklyCollection = data.message.toLocaleString('en-IN', {useGrouping:true})
         } else {
           this.weeklyCollection = '0';
         }
@@ -144,8 +144,8 @@ export class AdminHomeComponent implements OnInit {
           if(data.message) {
             this.totalChitValue += obj["chit_value"]
             this.paymentCollected += parseInt(data.message);
-            this.aggregateAmount = this.paymentCollected.toLocaleString('en', {useGrouping:true})
-            this.aggregateChitValue = this.totalChitValue.toLocaleString('en', {useGrouping:true})
+            this.aggregateAmount = this.paymentCollected.toLocaleString('en-IN', {useGrouping:true})
+            this.aggregateChitValue = this.totalChitValue.toLocaleString('en-IN', {useGrouping:true})
             resolve({status: true});
           }
         } else {

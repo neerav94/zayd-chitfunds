@@ -48,10 +48,13 @@ export class AdminGroupComponent implements OnInit {
               return 1;
           return 0;
         });
-        this.allGroupsBackup = this.allGroups;
         for(let i in this.allGroups) {
+          let tempAmount = parseInt(this.allGroups[i]["chit_value"]) / parseInt(this.allGroups[i]["num_members"])
+          this.allGroups[i]["amountEveryMonth"] = tempAmount.toLocaleString('en-IN', {useGrouping:true})
+          this.allGroups[i]["chit_value"] = this.allGroups[i]["chit_value"].toLocaleString('en-IN', {useGrouping:true})
           this.promiseGroupArray.push(this.getTotalPendings(this.allGroups[i]));
         }
+        this.allGroupsBackup = this.allGroups;
         Promise.all(this.promiseGroupArray).then(response => {}).catch(err => {
           console.log(err);
         })
@@ -127,7 +130,16 @@ export class AdminGroupComponent implements OnInit {
                     return 1;
                 return 0;
               });
+              for(let i in this.allGroups) {
+                let tempAmount = parseInt(this.allGroups[i]["chit_value"]) / parseInt(this.allGroups[i]["num_members"])
+                this.allGroups[i]["amountEveryMonth"] = tempAmount.toLocaleString('en-IN', {useGrouping:true})
+                this.allGroups[i]["chit_value"] = this.allGroups[i]["chit_value"].toLocaleString('en-IN', {useGrouping:true})
+                this.promiseGroupArray.push(this.getTotalPendings(this.allGroups[i]));
+              }
               this.allGroupsBackup = this.allGroups;
+              Promise.all(this.promiseGroupArray).then(response => {}).catch(err => {
+                console.log(err);
+              })
             } else {
               alert(data.message)
             }
@@ -152,7 +164,7 @@ export class AdminGroupComponent implements OnInit {
             pendingAmount += tempGroupData[i]["pending"];
             for(let j in this.allGroups) {
               if(this.allGroups[j]["grp_id"] == tempGroupData[i]["group_id"]) {
-                this.allGroups[j]["pendingAmount"] = pendingAmount.toLocaleString('en', {useGrouping:true});
+                this.allGroups[j]["pendingAmount"] = pendingAmount.toLocaleString('en-IN', {useGrouping:true});
               }
             }
           }

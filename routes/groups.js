@@ -41,6 +41,25 @@ checkGroupExist = function (item) {
   })
 }
 
+updatePayments = function(item) {
+  var today = new Date().getTime();;
+  var json = {};
+  json["amount"] = parseInt(item["amount"]);
+  json["payment_date"] = today
+  json["group_id"] = item["group_id"]
+  json["token"] = item["token"]
+  json["active"] = item["active"]
+  json["id"] = item["id"]
+  console.log(json);
+  return new Promise((resolve, reject) => {
+    group.updateUserPayments(json).then(response => {
+      resolve(true)
+    }).catch(error => {
+      reject(false);
+    })
+  });
+}
+
 checkUserSubscribed = function (item) {
   return new Promise((resolve, reject) => {
     login.checkUserExist(item["mobile"])
@@ -544,6 +563,28 @@ router.post('/recordPrizedSubscriber', passport.authenticate('jwt', {
         "message": "Some error occurred." + err
       })
     })
+})
+
+router.put('/updateUserPayments', passport.authenticate('jwt', {
+  "session": false
+}), (req, res, next) => {
+  let data = req.body;
+  var promises = []
+  for (var i = 0; i < data.length; i++) {
+    promises.push(updatePayments(data[i]))
+  }
+  Promise.all(promises).then(response => {
+    res.json({
+      "status": true,
+      "message": "Payments Upadted."
+    })
+  })
+  .catch(error => {
+    res.json({
+      "status": false,
+      "message": "Some error occurred. " + error
+    })
+  })
 })
 
 router.get('/getGroupPayment', passport.authenticate('jwt', {

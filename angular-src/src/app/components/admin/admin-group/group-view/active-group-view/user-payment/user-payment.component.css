@@ -39,3 +39,15 @@ img {
   right: 16px;
   cursor: pointer;
 }
+
+button {
+  background: #1ab188;
+  border: none;
+  color: #fff;
+  outline: none;
+  padding: 16px;
+  cursor: pointer;
+  margin-top: 32px;
+  border-radius: 4px;
+  float: right;
+}

@@ -221,4 +221,13 @@ export class GroupService {
     return this.http.get(this.url + '/v1/group/getSubscriberPaymentDetails?groupId=' + groupId + '&tokenId=' + tokenId , {headers: headers})
     .map(res => res.json())
   }
+
+  updateUserPayments(paymentData) {
+    let headers = new Headers()
+    this.loadToken()
+    headers.append('Authorization', this.authToken)
+    headers.append('Content-Type', 'application/json');
+    return this.http.put(this.url + '/v1/group/updateUserPayments', paymentData, {headers: headers})
+    .map(res => res.json())
+  }
 }

@@ -14,6 +14,8 @@ export class UserPaymentComponent implements OnInit {
   groupId: number;
   tokenId: number;
 
+  userRole: number;
+
   userPaymentDetails: any;
 
   constructor(
@@ -28,13 +30,39 @@ export class UserPaymentComponent implements OnInit {
       this.tokenId = +params['id1'];
     });
 
+    const token = JSON.parse(localStorage.getItem('user'))
+    this.userRole = token["role"];
+
     this.loading = true;
     this.groupService.getUserPaymentDetails(this.tokenId, this.groupId).subscribe(data => {
       if(data.status) {
         this.userPaymentDetails = data.message;
-        for(let i=0;i<this.userPaymentDetails.length; i++) {
-          this.userPaymentDetails[i].amount = this.userPaymentDetails[i].amount.toLocaleString('en', {useGrouping:true})
-        }
+        // for(let i=0;i<this.userPaymentDetails.length; i++) {
+        //   this.userPaymentDetails[i].amount = this.userPaymentDetails[i].amount.toLocaleString('en-IN', {useGrouping:true})
+        // }
+      } else {
+        alert(data.message);
+      }
+      this.loading = false;
+    })
+  }
+
+  updatePayments() {
+    this.loading = true;
+    this.groupService.updateUserPayments(this.userPaymentDetails).subscribe(data => {
+      if(data.status) {
+        this.loading = true;
+        this.groupService.getUserPaymentDetails(this.tokenId, this.groupId).subscribe(data => {
+          if(data.status) {
+            this.userPaymentDetails = data.message;
+            // for(let i=0;i<this.userPaymentDetails.length; i++) {
+            //   this.userPaymentDetails[i].amount = this.userPaymentDetails[i].amount.toLocaleString('en-IN', {useGrouping:true})
+            // }
+          } else {
+            alert(data.message);
+          }
+          this.loading = false;
+        })
       } else {
         alert(data.message);
       }

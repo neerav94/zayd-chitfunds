@@ -279,6 +279,19 @@ module.exports.editActiveStatus = function(id, token, months) {
   })
 }
 
+module.exports.updateUserPayments = function(data) {
+  return new Promise((resolve, reject) => {
+    database.connection.query('UPDATE payments SET amount=? WHERE id=?', [[data.amount], [data.id]], function(error, results, fields) {
+      if(error) {
+        console.log(error);
+        reject(false)
+      } else {
+        resolve(true);
+      }
+    })
+  })
+}
+
 module.exports.removeUser = function(token, groupId) {
   return new Promise((resolve, reject) => {
     database.connection.query('DELETE FROM subscribers WHERE token = ? AND group_id = ?', [[token], [groupId]], function(error, results, fields) {
