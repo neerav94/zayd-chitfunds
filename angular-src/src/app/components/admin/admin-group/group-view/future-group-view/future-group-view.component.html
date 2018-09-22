@@ -7,6 +7,10 @@
   <h2 class="links color-white">
     <span class="special-font monthly-collection">&#8377; {{groupInfo[0].chit_value/groupInfo[0].num_members}}</span> every month</h2>
 
+  <div (click)="goToHome()">
+    <img class="homeImage" src="./assets/icons/home.svg" alt="Home" />
+  </div>
+
   <div class="group-info">
     <div>
       <div class="color-white text heading">Members/No. of Months</div>
@@ -84,42 +88,42 @@
       <table class="table text" [mfData]="activeSubscribers" #mf="mfDataTable">
         <thead>
           <tr>
-            <th class="main-page-mid-title">
+            <th class="links">
               <mfDefaultSorter by="name">Sr. No.</mfDefaultSorter>
             </th>
-            <th class="main-page-mid-title">
+            <th class="links">
               <mfDefaultSorter by="name">Token No.</mfDefaultSorter>
             </th>
-            <th class="main-page-mid-title">
+            <th class="links">
               <mfDefaultSorter by="email">Name</mfDefaultSorter>
             </th>
-            <th class="main-page-mid-title">
+            <th class="links">
               <mfDefaultSorter by="age">Amount Paid</mfDefaultSorter>
             </th>
-            <th class="main-page-mid-title">
+            <th class="links">
               <mfDefaultSorter by="age">Advance Balance</mfDefaultSorter>
             </th>
-            <th class="main-page-mid-title">
+            <th class="links">
               <mfDefaultSorter by="age">Balance Due</mfDefaultSorter>
             </th>
-            <th class="main-page-mid-title">
+            <th class="links">
                 <mfDefaultSorter by="age">Prized Draw</mfDefaultSorter>
               </th>
-              <th class="main-page-mid-title">
+              <th class="links">
                   <mfDefaultSorter by="age">Transaction History</mfDefaultSorter>
                 </th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of mf.data; let i = index;">
-            <td class="links">{{i + 1}}</td>
-            <td class="links">{{item.token}}</td>
-            <td class="links">{{item.name}}</td>
-            <td class="links">{{item.amount}}</td>
-            <td class="links">{{item.advance}}</td>
-            <td class="links" style="color: red;">{{item.pending}}</td>
-            <td class="links">{{item.prized_cycle}}</td>
-            <td class="links"><a [routerLink]="['/v1/erpGroup', item.token, item.group_id]">View</a></td>
+            <td class="text">{{i + 1}}</td>
+            <td class="text">{{item.token}}</td>
+            <td class="text">{{item.name}}</td>
+            <td class="text">{{item.amount}}</td>
+            <td class="text">{{item.advance}}</td>
+            <td class="text" style="color: red;">{{item.pending}}</td>
+            <td class="text">{{item.prized_cycle}}</td>
+            <td class="text"><a [routerLink]="['/v1/erpGroup', item.token, item.group_id]">View</a></td>
           </tr>
         </tbody>
       </table>
@@ -135,8 +139,8 @@
 
   <div class="form-container" *ngIf="openAddMembers">
     <div>
-      <h1 style="display: inline;" class="main-page-sub-title">Add Users</h1>
-      <div class="close-icon main-page-sub-title" style="float: right; color: white;" (click)="closeAddMembers()">X</div>
+      <h1 style="display: inline;" class="title">Add Users</h1>
+      <div class="close-icon title" style="float: right; color: white; cursor: pointer;" (click)="closeAddMembers()">X</div>
     </div>
     <div style="display: inline-block">
       <form #subscribeUser="ngForm" (ngSubmit)="subscribeUsers(subscribeUser.value)">
@@ -167,8 +171,8 @@
 
   <div class="remove-form-container" *ngIf="openRemoveMembers">
     <div>
-      <h1 style="display: inline;" class="main-page-sub-title">Remove Users</h1>
-      <div class="close-icon main-page-sub-title" style="float: right; color: white;" (click)="closeRemoveMembers()">X</div>
+      <h1 style="display: inline;" class="title">Remove Users</h1>
+      <div class="close-icon title" style="float: right; color: white; cursor: pointer;" (click)="closeRemoveMembers()">X</div>
     </div>
     <div>
       <form #removeUser="ngForm" (ngSubmit)="removeUsers(removeUser.value)">

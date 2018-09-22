@@ -281,4 +281,9 @@ export class FutureGroupViewComponent implements OnInit {
   cancelDate() {
     this.openStartGroup = false;
   }
+
+  goToHome() {
+    this.router.navigate(['/v1/erpHome/']);
+  }
+
 }

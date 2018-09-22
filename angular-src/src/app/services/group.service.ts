@@ -150,6 +150,33 @@ export class GroupService {
     .map(res => res.json());
   }
 
+  getUserDataReport() {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(this.url + '/v1/group/getUserDataReport', {headers: headers})
+    .map(res => res.json());
+  }
+
+  getSubstitutedSubscribersReport() {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(this.url + '/v1/group/getSubstitutedSubscribersReport', {headers: headers})
+    .map(res => res.json());
+  }
+
+  getCollectionReportData(startDate, endDate) {
+    let headers = new Headers()
+    this.loadToken()
+    headers.append('Authorization', this.authToken)
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(this.url + '/v1/group/getCollectionReportData?startDate=' + startDate + '&endDate=' + endDate, {headers: headers})
+    .map(res => res.json())
+  }
+
   getActiveSubscribers(groupId) {
     let headers = new Headers()
     this.loadToken()

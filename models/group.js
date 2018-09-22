@@ -201,6 +201,7 @@ module.exports.getGroupId = function(groupName, callback) {
 }
 
 module.exports.getDailyCollection = function(startDate, endDate) {
+  console.log(typeof(startDate));
   return new Promise((resolve, reject) => {
     database.connection.query('SELECT SUM(amount) AS amount FROM payments WHERE payment_date >= ? AND payment_date <= ?', [[startDate], [endDate]], function(error, results, fields) {
       if(error) {
@@ -213,6 +214,18 @@ module.exports.getDailyCollection = function(startDate, endDate) {
         response["status"] = true;
         response["message"] = results[0].amount;
         resolve(response);
+      }
+    })
+  })
+}
+
+module.exports.getCollectionReportData = function(startDate, endDate) {
+  return new Promise((resolve, reject) => {
+    database.connection.query('SELECT * FROM payments t1 JOIN subscribers t2 ON t1.group_id = t2.group_id AND t1.token = t2.token JOIN groupinfo t3 ON t1.group_id = t3.grp_id WHERE payment_date >= ? AND payment_date <= ?', [[startDate], [endDate]], function(error, results, fields) {
+      if(error) {
+        reject(error)
+      } else {
+        resolve(results)
       }
     })
   })
@@ -279,6 +292,30 @@ module.exports.getActiveSubscribers = function(groupId) {
         return reject(error)
       } else {
         return resolve(results);
+      }
+    })
+  })
+}
+
+module.exports.getUserDataReport = function() {
+  return new Promise((resolve, reject) => {
+    database.connection.query('SELECT * FROM users', function(error, results, fields) {
+      if(error) {
+        reject(error)
+      } else {
+        resolve(results)
+      }
+    })
+  })
+}
+
+module.exports.getSubstitutedSubscribersReport = function() {
+  return new Promise((resolve, reject) => {
+    database.connection.query('SELECT * FROM subscribers WHERE active=0', function(error, results, fields) {
+      if(error) {
+        reject(error)
+      } else {
+        resolve(results)
       }
     })
   })

@@ -48,8 +48,8 @@
 
   <div class="form-container" *ngIf="addUserStatus">
     <div>
-      <h1 class="main-page-sub-title">Add Users</h1>
-      <div class="close-icon main-page-sub-title" (click)="closeAddUsers()">X</div>
+      <h1 class="title">Add Users</h1>
+      <div class="close-icon title" (click)="closeAddUsers()">X</div>
     </div>
     <div style="display: inline-block">
       <form #addUser="ngForm" (ngSubmit)="submitUserInfo(addUser.value)">

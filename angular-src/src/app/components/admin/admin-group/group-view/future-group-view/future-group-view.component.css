@@ -118,6 +118,15 @@ select option {
   float: right;
 }
 
+.homeImage {
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  cursor: pointer;
+}
+
 @media only screen and (min-width: 1224px) {
   .form-container {
     padding: 32px;

@@ -713,6 +713,61 @@ router.get('/getSubscribedGroups', passport.authenticate('jwt', {
   })
 })
 
+router.get('/getSubstitutedSubscribersReport', passport.authenticate('jwt', {
+  session: false
+}), (req, res, next) => {
+  group.getSubstitutedSubscribersReport()
+  .then(response => {
+    return res.json({
+      "status": true,
+      "message": response
+    })
+  })
+  .catch(err => {
+    res.json({
+      "status": false,
+      "message": "Some error occurred: " + err
+    })
+  })
+})
+
+router.get('/getUserDataReport', passport.authenticate('jwt', {
+  session: false
+}), (req, res, next) => {
+  group.getUserDataReport()
+  .then(response => {
+    return res.json({
+      "status": true,
+      "message": response
+    })
+  })
+  .catch(err => {
+    res.json({
+      "status": false,
+      "message": "Some error occurred: " + err
+    })
+  })
+})
+
+router.get('/getCollectionReportData', passport.authenticate('jwt', {
+  session: false
+}), (req, res, next) => {
+  var startDate = parseInt(req.query.startDate);
+  var endDate = parseInt(req.query.endDate);
+  group.getCollectionReportData(startDate, endDate).then(response => {
+    return res.json({
+      "status": true,
+      "message": response
+    })
+  })
+  .catch(err => {
+    res.json({
+      "status": false,
+      "message": "Some error occurred: " + err
+    })
+  })
+})
+
 router.get('/getUserSavings', passport.authenticate('jwt', {
   session: false
 }), (req, res, next) => {
@@ -720,7 +775,7 @@ router.get('/getUserSavings', passport.authenticate('jwt', {
     return res.json({
       "status": true,
       "message": response.total
-    }) 
+    })
   })
   .catch(err => {
     res.json({

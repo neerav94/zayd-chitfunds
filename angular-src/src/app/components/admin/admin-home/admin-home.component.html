@@ -63,4 +63,37 @@
       </div>
     </div>
   </div>
+
+  <div class="data-container">
+    <div>
+      <img class="display" src="./assets/icons/report.svg" alt="Reports" />
+      <div class="display color-white title" style="vertical-align: top; padding: 12px;">Reports</div>
+    </div>
+    <div class="collection-container">
+      <div>
+        <div class="color-white text">Daily Collection Report</div>
+        <div class="button text" (click)="selectDate()">Select Date</div>
+      </div>
+      <div>
+        <div class="color-white text">Users Report</div>
+        <div class="button text" (click)="downloadUserReport()">Download Report</div>
+      </div>
+      <div>
+        <div class="color-white text">Groups Report</div>
+        <div class="button text" (click)="downloadGroupReport()">Download Report</div>
+      </div>
+      <div>
+        <div class="color-white text">Substituted Subscribers Report</div>
+        <div class="button text" (click)="downloadSubstitutedSubscribersReport()">Download Report</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="date-selection-div" *ngIf="dateModalFlag">
+    <div class="main-page-last-title" style="margin-bottom: 16px; display: flex; justify-content: space-between;">
+      <div style="display: inline;">Select date</div>
+      <div class="close-icon" (click)="closeDateModal()">X</div>
+    </div>
+    <dl-date-time-picker on-change="(onCollectionDateSelect($event))"></dl-date-time-picker>
+  </div>
 </div>

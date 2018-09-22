@@ -26,3 +26,35 @@ span {
   justify-content: space-evenly;
   text-align: center;
 }
+
+.button {
+  display: inline-block;
+  padding: 8px;
+  margin-left: 16px;
+  border-radius: 32px;
+  color: white;
+  background: #da2c6e;
+  border: 1px solid #da2c6e;
+  cursor: pointer;
+}
+
+.date-selection-div {
+  padding: 16px;
+  position: absolute;
+  top: 15%;
+  left: 35%;
+  background: #fff;
+  color: white;
+  z-index: 10;
+  width: 400px;
+}
+
+.date-selection-div div {
+  color: #000;
+}
+
+.close-icon {
+  display: inline;
+  cursor: pointer;
+  padding-left: 20px;
+}

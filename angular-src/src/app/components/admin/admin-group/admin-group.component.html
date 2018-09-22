@@ -61,8 +61,8 @@
 
   <div class="form-container" *ngIf="createGroupStatus">
     <div style="display: flex; justify-content: space-between;">
-      <h1 class="main-page-sub-title">Create Group</h1>
-      <div class="close-icon main-page-sub-title" (click)="closeCreateGroup()">X</div>
+      <h1 class="title">Create Group</h1>
+      <div class="close-icon title" (click)="closeCreateGroup()">X</div>
     </div>
     <form #createGroup="ngForm" (ngSubmit)="submitGroupInfo(createGroup.value)">
       <input type="text" class="text" placeholder="Enter group name" name="name" ngModel>

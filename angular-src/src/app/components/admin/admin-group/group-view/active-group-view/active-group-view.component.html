@@ -79,7 +79,7 @@
   <div class="substitute-form-container" *ngIf="showSubstitueForm">
     <div>
       <h1 style="display: inline;" class="title">Substitute Subscriber</h1>
-      <div class="close-icon title" style="float: right; color: white; margin-left: 64px;" (click)="closeSubstituteSubscriber()">X</div>
+      <div class="close-icon title" style="float: right; color: white; margin-left: 64px; cursor: pointer;" (click)="closeSubstituteSubscriber()">X</div>
     </div>
     <div>
       <form #substituteSubscriber="ngForm" (ngSubmit)="substituteSubscribers(substituteSubscriber.value)">
