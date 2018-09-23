@@ -3,6 +3,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { GroupService } from '../../../../../services/group.service';
 import { ValidationService } from '../../../../../services/validation.service';
 
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
+
 @Component({
   selector: 'app-active-group-view',
   templateUrl: './active-group-view.component.html',
@@ -207,6 +210,33 @@ export class ActiveGroupViewComponent implements OnInit {
         this.loading = false;
       })
     }
+  }
+
+  downloadReport() {
+    this.loading = true;
+    let tempSubscribers = [];
+    for(let i in this.activeSubscribers) {
+      let obj = {};
+      obj["Group Name"] = this.activeSubscribers[i]["group_name"]
+      obj["Name"] = this.activeSubscribers[i]["name"]
+      obj["Number"] = this.activeSubscribers[i]["number"]
+      obj["Token"] = this.activeSubscribers[i]["token"]
+      obj["Amount Paid"] = this.activeSubscribers[i]["amount"]
+      obj["Advance Paid"] = this.activeSubscribers[i]["advance"]
+      obj["Pending Amount"] = this.activeSubscribers[i]["pending"]
+      obj["Prized Cycle"] = this.activeSubscribers[i]["prized_cycle"]
+      tempSubscribers.push(obj);
+    }
+    this.exportAsExcelFile(tempSubscribers, this.activeSubscribers[0]["group_name"] + ".xlsx");
+  }
+
+  exportAsExcelFile(json: any[], excelFileName: string): void {
+    const workBook = XLSX.utils.book_new(); // create a new blank book
+    const workSheet = XLSX.utils.json_to_sheet(json);
+
+    XLSX.utils.book_append_sheet(workBook, workSheet, 'data'); // add the worksheet to the book
+    XLSX.writeFile(workBook, excelFileName); // initiate a file download in browser
+    this.loading = false;
   }
 
   substituteSubscriber() {
