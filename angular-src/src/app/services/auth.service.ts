@@ -8,7 +8,8 @@ export class AuthService {
 
   authToken: any;
   user: any;
-  url: string = "http://localhost:3000"
+  // url: string = "http://localhost:3000"
+  url: string = ''
 
   constructor( private http: Http ) { }
 
