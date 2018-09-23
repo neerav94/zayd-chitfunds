@@ -21,6 +21,9 @@
             <div class="color-white special-font">
               <span>&#8377; {{group.amountEveryMonth}}</span> every month</div>
           </div>
+          <div *ngIf="group.startGroup == 0" class="not-started">Not Started</div>
+          <div *ngIf="group.startGroup == 1" class="running">Running</div>
+          <div *ngIf="group.startGroup == 2" class="completed">Completed</div>
         </div>
         <div class="lower-container">
           <div>

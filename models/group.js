@@ -62,6 +62,30 @@ module.exports.createNewGroup = function (newGroup, callback) {
   database.connection.query('INSERT INTO groupinfo SET ?', newGroup, callback)
 }
 
+module.exports.startGroup = function(id) {
+  return new Promise((resolve, reject) => {
+    database.connection.query("UPDATE groupinfo SET startGroup=1 WHERE grp_id=?", [id], function(error, results, fields){
+      if(error) {
+        reject(false);
+      } else {
+        resolve(true);
+      }
+    })
+  })
+}
+
+module.exports.closeGroup = function(id) {
+  return new Promise((resolve, reject) => {
+    database.connection.query("UPDATE groupinfo SET startGroup=2 WHERE grp_id=?", [id], function(error, results, fields){
+      if(error) {
+        reject(false);
+      } else {
+        resolve(true);
+      }
+    })
+  })
+}
+
 module.exports.getAllGroups = function () {
   return new Promise((resolve, reject) => {
     database.connection.query('SELECT * FROM groupinfo', function (error, results, fields) {

@@ -253,6 +253,21 @@ export class FutureGroupViewComponent implements OnInit {
     }
   }
 
+  startGroup() {
+    var confirm = window.confirm("Are you sure you want to start the group?")
+    if(confirm) {
+      this.loading = true;
+      this.groupService.startGroup(this.id).subscribe(data => {
+        if(data.status) {
+          alert(data.message);
+        } else {
+          alert(data.message);
+        }
+        this.loading = false;
+      })
+    }
+  }
+
   selectDate() {
     this.openStartGroup = true;
   }

@@ -84,7 +84,6 @@ export class ActiveGroupViewComponent implements OnInit {
     var value = event.value;
     value = value.split(':')[1].trim();
     value = value.split(' ')[1];
-    console.log(value);
     this.router.navigate(['/v1/erpGroup/' + this.id + '/payments', {num: value}]);
   }
 
@@ -191,6 +190,21 @@ export class ActiveGroupViewComponent implements OnInit {
         }
         this.loading = false;
         this.closeSubstituteSubscriber();
+      })
+    }
+  }
+
+  closeGroup() {
+    var confirm = window.confirm("Are you sure you want to close the group?")
+    if(confirm) {
+      this.loading = true;
+      this.groupService.closeGroup(this.id).subscribe(data => {
+        if(data.status) {
+          alert(data.message);
+        } else {
+          alert(data.message);
+        }
+        this.loading = false;
       })
     }
   }

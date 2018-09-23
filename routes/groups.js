@@ -173,6 +173,40 @@ router.post('/createGroup', passport.authenticate('jwt', {
     });
 })
 
+router.get('/startGroup', passport.authenticate('jwt', {
+  session: false
+}), (req, res, next) => {
+  group.startGroup(req.query.id).then(respose => {
+    res.json({
+      "status": true,
+      "message": "Group successfully started. Please refresh the page once."
+    })
+  })
+  .catch(error => {
+    res.json({
+      "status": false,
+      "message": "Some error occurred. " + error
+    })
+  })
+})
+
+router.get('/closeGroup', passport.authenticate('jwt', {
+  session: false
+}), (req, res, next) => {
+  group.closeGroup(req.query.id).then(respose => {
+    res.json({
+      "status": true,
+      "message": "Group successfully closed."
+    })
+  })
+  .catch(error => {
+    res.json({
+      "status": false,
+      "message": "Some error occurred. " + error
+    })
+  })
+})
+
 router.get('/getAllGroups', passport.authenticate('jwt', {
   session: false
 }), (req, res, next) => {

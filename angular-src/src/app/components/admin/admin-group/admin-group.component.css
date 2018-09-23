@@ -395,3 +395,33 @@ span {
     display: inline-block;
   }
 }
+
+.completed {
+  float: right;
+  color: #fff;
+  background: #007300;
+  padding: 8px;
+  border-radius: 32px;
+  font-size: 15px;
+  margin-right: 8px;
+}
+
+.running {
+  float: right;
+  color: #fff;
+  background: #ff7700;
+  padding: 8px;
+  border-radius: 32px;
+  font-size: 15px;
+  margin-right: 8px;
+}
+
+.not-started {
+  float: right;
+  color: #fff;
+  background: #ce0000;
+  padding: 8px;
+  border-radius: 32px;
+  font-size: 15px;
+  margin-right: 8px;
+}
