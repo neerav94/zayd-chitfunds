@@ -2,7 +2,7 @@ var mysql = require('mysql');
 
 var connection  = mysql.createPool({
   connectionLimit : 50,
-  connectTimeout: 10,
+  connectTimeout: 1000,
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
