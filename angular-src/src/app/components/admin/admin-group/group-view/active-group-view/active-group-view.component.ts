@@ -20,6 +20,7 @@ export class ActiveGroupViewComponent implements OnInit {
 
   id: number;
   paymentCollected: number;
+  totalPaymentCollected: string = '';
 
   numMonths = [];
   numDraws = [];
@@ -59,6 +60,7 @@ export class ActiveGroupViewComponent implements OnInit {
       if (data.status) {
         if(data.message) {
           this.paymentCollected = parseInt(data.message);
+          this.totalPaymentCollected = this.paymentCollected.toLocaleString('en-IN', {useGrouping:true})
         } else {
           this.paymentCollected = 0;
         }

@@ -21,6 +21,9 @@
             <mfDefaultSorter by="name">Amount</mfDefaultSorter>
           </th>
           <th class="links">
+              <mfDefaultSorter by="name">Group</mfDefaultSorter>
+            </th>
+          <th class="links">
             <mfDefaultSorter by="name">Payment Mode</mfDefaultSorter>
           </th>
           <th class="links">
@@ -35,6 +38,7 @@
         <tr *ngFor="let item of mf.data; let i = index;">
           <td class="text">{{i + 1}}</td>
           <td class="text">{{item.amount}}</td>
+          <td class="text">{{item.group_name}}</td>
           <td class="text">{{item.payment_mode}}</td>
           <td class="text">{{item.payment_comment}}</td>
           <td class="text">{{item.payment_date}}</td>

@@ -50,7 +50,6 @@ updatePayments = function(item) {
   json["token"] = item["token"]
   json["active"] = item["active"]
   json["id"] = item["id"]
-  console.log(json);
   return new Promise((resolve, reject) => {
     group.updateUserPayments(json).then(response => {
       resolve(true)

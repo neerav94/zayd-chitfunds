@@ -28,8 +28,8 @@
       </div>
       <div class="pad-top form-div">
         <div style="display: flex; flex-direction: row; justify-content: space-evenly; width: 100%;">
-          <div *ngFor="let option of gender">
-            <input type="checkbox" style="width: 1vw;" name="gender" value="{{option.value}}" [(ngModel)]="option.checked" /> {{option.name}}
+          <div *ngFor="let option of gender; let i=index;">
+            <input type="checkbox" style="width: 1vw;" name="gender" value="{{option.value}}" [checked]="option.checked" (change)="changeGender(i)" /> {{option.name}}
           </div>
         </div>
       </div>
@@ -63,8 +63,8 @@
       </div>
       <div class="pad-top form-div">
         <div style="display: flex; flex-direction: row; justify-content: space-evenly; width: 100%;">
-          <div *ngFor="let option of occupation">
-            <input type="checkbox" style="width: 1vw;" name="occupation" value="{{option.value}}" [(ngModel)]="option.checked" /> {{option.name}}
+          <div *ngFor="let option of occupation; let i=index;">
+            <input type="checkbox" style="width: 1vw;" name="occupation" [checked]="option.checked" value="{{option.value}}" (change)="changeOccupation(i)"/> {{option.name}}
           </div>
         </div>
       </div>

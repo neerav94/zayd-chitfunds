@@ -42,7 +42,11 @@ function setGroupData(results) {
       }
       if (months > -1) {
         if (results[i].status) {
-          results[i]["months"] = months
+          if(months > 0) {
+            results[i]["months"] = months + 1;
+          } else {
+            results[i]["months"] = months
+          }
         } else {
           results[i]["months"] = months + 1
         }

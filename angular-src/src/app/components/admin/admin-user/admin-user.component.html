@@ -13,6 +13,9 @@
     <table class="table text" [mfData]="allUsers" #mf="mfDataTable">
       <thead>
         <tr>
+            <th class="links">
+                <mfDefaultSorter by="name">Sr. No.</mfDefaultSorter>
+              </th>
           <th class="links">
             <mfDefaultSorter by="name">Name</mfDefaultSorter>
           </th>
@@ -31,7 +34,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of mf.data">
+        <tr *ngFor="let item of mf.data; let i = index;">
+          <td class="text">{{i + 1}}</td>
           <td class="text">
             <a [routerLink]="['/v1/erpUser', item.id]">{{item.name}}</a>
           </td>

@@ -18,11 +18,13 @@ export class AdminUserViewComponent implements OnInit {
   occupation;
   name: string = '';
   fatherName: string = '';
+  genderStatus: string = '';
   age: string = '';
   dob: string = '';
   pan: string = '';
   aadhar: string = '';
   number: string = '';
+  occupationStatus: string = '';
   otherNumber: string = '';
   email: string = '';
   dependents: string = '';
@@ -78,6 +80,17 @@ export class AdminUserViewComponent implements OnInit {
         this.income = this.userInfo[0].income
         this.firstReference = this.userInfo[0].first_reference
         this.secondReference = this.userInfo[0].second_reference
+        for(let i in this.occupation) {
+          if(this.occupation[i]["value"] == this.userInfo[0]["occupation"]) {
+            this.occupation[i]["checked"] = true;
+            break;
+          }
+        }
+        for(let i in this.gender) {
+          if(this.gender[i]["value"] == this.userInfo[0]["gender"]) {
+            this.gender[i]["checked"] = true;
+          }
+        }
       } else {
         this.activeView = false;
         alert("Some error occurred. Please try again.")
@@ -89,44 +102,36 @@ export class AdminUserViewComponent implements OnInit {
     })
   }
 
-  submitUserInfo(userInfo) {
-    var gender = this.gender.filter(opt => opt.checked).map(opt => opt.value);
-    var occupation = this.occupation.filter(opt => opt.checked).map(opt => opt.value);
-    var genderStatus = false;
-    var occupationStatus = false;
-    userInfo["id"] = this.id;
-    if(gender.length == 2) {
-      alert("Please select one gender");
-      genderStatus = false;
-    } else if(gender.length == 1) {
-      userInfo["gender"] = gender[0]
-      genderStatus = true;
-    } else if(gender.length == 0) {
-      userInfo["gender"] = ''
-      genderStatus = true;
-    }
+  changeGender(i) {
+    this.genderStatus = this.gender[i].value;
+  }
 
-    if(occupation.length == 0) {
-      userInfo["occupation"] = ''
-      occupationStatus = true;
-    } else if(occupation.length == 1) {
-      userInfo["occupation"] = occupation[0]
-      occupationStatus = true;
-    } else if(occupation.length > 0) {
-      alert("Please select one occupation");
-      occupationStatus = false;
+  changeOccupation(i) {
+    this.occupationStatus = this.occupation[i].value;
+  }
+
+  submitUserInfo(userInfo) {
+    userInfo["id"] = this.id;
+    if(this.genderStatus) {
+      userInfo["gender"] = this.genderStatus;
+    } else {
+      userInfo["gender"] = this.userInfo[0]["gender"];
     }
-    if(genderStatus && occupationStatus) {
-      this.loading = true;
-      this.userService.updateUserInfo(userInfo).subscribe(data => {
-        if(data.status) {
-          alert("User info successfully updated.");
-        } else {
-          alert(data.message);
-        }
-        this.loading = false;
-        this.ngOnInit()
-      })
+    if(this.occupationStatus) {
+      userInfo["occupation"] = this.occupationStatus;
+    } else {
+      userInfo["occupation"] = this.userInfo[0]["occupation"];
     }
+    
+    this.loading = true;
+    this.userService.updateUserInfo(userInfo).subscribe(data => {
+      if(data.status) {
+        alert("User info successfully updated.");
+      } else {
+        alert(data.message);
+      }
+      this.loading = false;
+      this.ngOnInit()
+    })
   }
 }
