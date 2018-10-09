@@ -200,11 +200,11 @@ router.post('/admin/deleteNumber', passport.authenticate('jwt', {
           status: true,
           message: "Success"
         })
-        .catch(err => {
-          return res.json({
-            status: false,
-            message: 'Some error occurred. PLease try again ' + err
-          })
+      })
+      .catch(err => {
+        return res.json({
+          status: false,
+          message: 'Some error occurred. PLease try again ' + err
         })
       })
     } else {
