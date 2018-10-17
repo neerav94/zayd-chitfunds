@@ -278,6 +278,18 @@ export class AdminHomeComponent implements OnInit {
           obj["Months Over"] = tempAllGroups[i]["months"]
           obj["Months Remaining"] = tempAllGroups[i]["num_members"] - tempAllGroups[i]["months"]
           obj["Auction Day"] = tempAllGroups[i]["auction_day"]
+          obj["Amount Collected"] = tempAllGroups[i]["amount"]
+          let totalAmount = tempAllGroups[i]["chit_value"] * tempAllGroups[i]["months"]
+          if(totalAmount == tempAllGroups[i]["amount"]) {
+            obj["Advance Balance"] = 0
+            obj["Balance Due"] = 0
+          } else if(totalAmount < tempAllGroups[i]["amount"]) {
+            obj["Advance Balance"] = tempAllGroups[i]["amount"] - totalAmount
+            obj["Balance Due"] = 0
+          } else {
+            obj["Advance Balance"] = 0
+            obj["Balance Due"] = totalAmount - tempAllGroups[i]["amount"]
+          }
           obj["Start Date and Draw Time"] = tempAllGroups[i]["startDay"]
           groupsReport.push(obj);
         }

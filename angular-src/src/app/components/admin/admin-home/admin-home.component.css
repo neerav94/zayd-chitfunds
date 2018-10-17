@@ -30,6 +30,7 @@ span {
 .button {
   display: inline-block;
   padding: 8px;
+  margin-top: 8px;
   margin-left: 16px;
   border-radius: 32px;
   color: white;

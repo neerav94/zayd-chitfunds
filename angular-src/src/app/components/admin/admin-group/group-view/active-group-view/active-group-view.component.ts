@@ -244,9 +244,9 @@ export class ActiveGroupViewComponent implements OnInit {
       obj["Name"] = this.activeSubscribers[i]["name"]
       obj["Number"] = this.activeSubscribers[i]["number"]
       obj["Token"] = this.activeSubscribers[i]["token"]
-      obj["Amount Paid"] = this.activeSubscribers[i]["amount"]
-      obj["Advance Paid"] = this.activeSubscribers[i]["advance"]
-      obj["Pending Amount"] = this.activeSubscribers[i]["pending"]
+      obj["Amount Paid"] = parseFloat(this.activeSubscribers[i]["amount"].replace(/,/g, ''))
+      obj["Advance Paid"] = parseFloat(this.activeSubscribers[i]["advance"].replace(/,/g, ''))
+      obj["Pending Amount"] = parseFloat(this.activeSubscribers[i]["pending"].replace(/,/g, ''))
       obj["Prized Cycle"] = this.activeSubscribers[i]["prized_cycle"]
       tempSubscribers.push(obj);
     }
