@@ -32,8 +32,8 @@ export class AdminUserTransactionsComponent implements OnInit {
         for(let i=0;i<this.userPaymentDetails.length; i++) {
           this.userPaymentDetails[i].amount = this.userPaymentDetails[i].amount.toLocaleString('en-IN', {useGrouping:true})
           var dateIST = new Date(this.userPaymentDetails[i].payment_date)
-          dateIST.setHours(dateIST.getHours() + 5); 
-          dateIST.setMinutes(dateIST.getMinutes() + 30);
+          // dateIST.setHours(dateIST.getHours() + 5); 
+          // dateIST.setMinutes(dateIST.getMinutes() + 30);
           this.userPaymentDetails[i].payment_date = dateIST.getDate() + "/" + (dateIST.getMonth() + 1) + "/" + dateIST.getFullYear() + " " + dateIST.getHours() + ":" + dateIST.getMinutes()
         }
       } else {

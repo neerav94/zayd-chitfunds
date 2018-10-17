@@ -6,8 +6,8 @@ import { tokenNotExpired } from 'angular2-jwt';
 @Injectable()
 export class UserService {
 
-  // url: string = "http://localhost:3000"
-  url: string = ''
+  url: string = "http://localhost:3000"
+  // url: string = ''
   authToken: any;
 
   constructor(

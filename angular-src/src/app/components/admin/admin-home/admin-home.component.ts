@@ -137,24 +137,26 @@ export class AdminHomeComponent implements OnInit {
   }
 
   aggregatePayment(obj) {
-    return new Promise((resolve, reject) => {
-      this.loading = true;
-      this.groupService.paymentCollected(obj.grp_id).subscribe(data => {
-        if (data.status) {
-          if(data.message) {
-            this.totalChitValue += obj["chit_value"]
-            this.paymentCollected += parseInt(data.message);
-            this.aggregateAmount = this.paymentCollected.toLocaleString('en-IN', {useGrouping:true})
-            this.aggregateChitValue = this.totalChitValue.toLocaleString('en-IN', {useGrouping:true})
-            resolve({status: true});
+    if(obj.startGroup < 2) {
+      return new Promise((resolve, reject) => {
+        this.loading = true;
+        this.groupService.paymentCollected(obj.grp_id).subscribe(data => {
+          if (data.status) {
+            if(data.message) {
+              this.totalChitValue += obj["chit_value"]
+              this.paymentCollected += parseInt(data.message);
+              this.aggregateAmount = this.paymentCollected.toLocaleString('en-IN', {useGrouping:true})
+              this.aggregateChitValue = this.totalChitValue.toLocaleString('en-IN', {useGrouping:true})
+              resolve({status: true});
+            }
+          } else {
+            alert(data.message);
+            reject({status: false});
           }
-        } else {
-          alert(data.message);
-          reject({status: false});
-        }
-        this.loading = false;
+          this.loading = false;
+        })
       })
-    })
+    }
   }
 
   // function called when on start date is selected
@@ -189,8 +191,8 @@ export class AdminHomeComponent implements OnInit {
           obj["Amount"] = tempCollectionData[i]["amount"]
           obj["Payment Mode"] = tempCollectionData[i]["payment_mode"]
           var dateIST = new Date(tempCollectionData[i]["payment_date"])
-          dateIST.setHours(dateIST.getHours() + 5); 
-          dateIST.setMinutes(dateIST.getMinutes() + 30);
+          // dateIST.setHours(dateIST.getHours() + 5); 
+          // dateIST.setMinutes(dateIST.getMinutes() + 30);
           obj["Payment Date"] = dateIST.getDate() + "/" + (dateIST.getMonth() + 1) + "/" + dateIST.getFullYear() + " " + dateIST.getHours() + ":" + dateIST.getMinutes()
           obj["Comment"] = tempCollectionData[i]["payment_comment"]
           collectionData.push(obj);
