@@ -45,6 +45,8 @@ updatePayments = function(item) {
   var today = new Date().getTime();;
   var json = {};
   json["amount"] = parseInt(item["amount"]);
+  json["payment_comment"] = item["payment_comment"]
+  json["payment_mode"] = item["payment_mode"]
   json["payment_date"] = today
   json["group_id"] = item["group_id"]
   json["token"] = item["token"]
@@ -609,7 +611,7 @@ router.put('/updateUserPayments', passport.authenticate('jwt', {
   Promise.all(promises).then(response => {
     res.json({
       "status": true,
-      "message": "Payments Upadted."
+      "message": "Payments Updated."
     })
   })
   .catch(error => {

@@ -309,7 +309,7 @@ module.exports.editActiveStatus = function(id, token, months) {
 
 module.exports.updateUserPayments = function(data) {
   return new Promise((resolve, reject) => {
-    database.connection.query('UPDATE payments SET amount=? WHERE id=?', [[data.amount], [data.id]], function(error, results, fields) {
+    database.connection.query('UPDATE payments SET amount=? WHERE active=? AND group_id=? AND payment_comment=? AND payment_mode=? AND token=?', [[data.amount], [data.active], [data.group_id], [data.payment_comment], [data.payment_mode], [data.token]], function(error, results, fields) {
       if(error) {
         console.log(error);
         reject(false)
