@@ -73,6 +73,13 @@ export class ActiveGroupViewComponent implements OnInit {
     this.groupService.getActiveSubscribers(this.id).subscribe(data => {
       if (data.status) {
         this.activeSubscribers = data.message;
+        this.activeSubscribers.sort(function(a,b) {
+          if ( a.token < b.token )
+              return -1;
+          if ( a.token > b.token )
+              return 1;
+          return 0;
+        });
         for(let i=0;i<this.activeSubscribers.length; i++) {
           this.activeSubscribers[i].amount = this.activeSubscribers[i].amount.toLocaleString('en-IN', {useGrouping:true})
           this.activeSubscribers[i].advance = this.activeSubscribers[i].advance.toLocaleString('en-IN', {useGrouping:true})
@@ -118,6 +125,13 @@ export class ActiveGroupViewComponent implements OnInit {
         this.groupService.getActiveSubscribers(this.id).subscribe(data => {
           if (data.status) {
             this.activeSubscribers = data.message;
+            this.activeSubscribers.sort(function(a,b) {
+              if ( a.token < b.token )
+                  return -1;
+              if ( a.token > b.token )
+                  return 1;
+              return 0;
+            });
             for(let i=0;i<this.activeSubscribers.length; i++) {
               this.activeSubscribers[i].amount = this.activeSubscribers[i].amount.toLocaleString('en-IN', {useGrouping:true})
               this.activeSubscribers[i].advance = this.activeSubscribers[i].advance.toLocaleString('en-IN', {useGrouping:true})
@@ -180,6 +194,13 @@ export class ActiveGroupViewComponent implements OnInit {
           this.groupService.getActiveSubscribers(this.id).subscribe(data => {
             if (data.status) {
               this.activeSubscribers = data.message;
+              this.activeSubscribers.sort(function(a,b) {
+                if ( a.token < b.token )
+                    return -1;
+                if ( a.token > b.token )
+                    return 1;
+                return 0;
+              });
               for(let i=0;i<this.activeSubscribers.length; i++) {
                 this.activeSubscribers[i].amount = this.activeSubscribers[i].amount.toLocaleString('en-IN', {useGrouping:true})
                 this.activeSubscribers[i].advance = this.activeSubscribers[i].advance.toLocaleString('en-IN', {useGrouping:true})
