@@ -83,7 +83,6 @@ subscribeMultipleUsers = function (item) {
     data["group_id"] = item["groupId"]
     data["group_name"] = item["group"]
     group.subscribeUser(data).then(response => {
-      console.log(response);
       resolve(true);
     }).catch(error => {
       reject(error);

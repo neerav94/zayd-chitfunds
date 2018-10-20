@@ -156,6 +156,18 @@ module.exports.checkGroupExist = function (groupName) {
   })
 }
 
+module.exports.deleteGroup = function(groupName) {
+  return new Promise((resolve, reject) => {
+    database.connection.query('DELETE FROM groupinfo WHERE grp_name = ?', [groupName], function(error, results, fields) {
+      if(error) {
+        reject(error)
+      } else {
+        resolve(true)
+      }
+    })
+  })
+}
+
 module.exports.checkTokenExist = function(tokenNumber, groupId) {
   return new Promise((resolve, reject) => {
     database.connection.query('SELECT * FROM subscribers WHERE token = ? AND group_id = ?', [[tokenNumber], [groupId]], function(error, results, fields) {
@@ -191,7 +203,6 @@ module.exports.getAllSubscribers = function(groupId) {
 }
 
 module.exports.checkGroupSubscribers = function(data) {
-  console.log(data);
   return new Promise((resolve, reject) => {
     database.connection.query('SELECT * FROM subscribers WHERE group_id=?', [data[0].groupId], function(error, results, fields) {
       if(error) {
@@ -337,7 +348,6 @@ module.exports.getGroupId = function(groupName, callback) {
 }
 
 module.exports.getDailyCollection = function(startDate, endDate) {
-  console.log(typeof(startDate));
   return new Promise((resolve, reject) => {
     database.connection.query('SELECT SUM(amount) AS amount FROM payments WHERE payment_date >= ? AND payment_date <= ?', [[startDate], [endDate]], function(error, results, fields) {
       if(error) {

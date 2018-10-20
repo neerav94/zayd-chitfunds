@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, group } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { ValidationService } from '../../../services/validation.service';
 import { Router } from '@angular/router';
@@ -36,6 +36,8 @@ export class AdminProfileComponent implements OnInit {
 
   userOldNumber: boolean = false;
   userNewNumber: boolean = false;
+
+  adminGroupName: boolean = false;
 
   constructor(private authService: AuthService, private validationService: ValidationService, private router: Router) { }
 
@@ -202,6 +204,26 @@ export class AdminProfileComponent implements OnInit {
           this.authService.logOut();
           this.router.navigate(['/v1/login'], { replaceUrl: true });
         }
+      })
+    }
+  }
+
+  deleteGroupName(groupObj) {
+    if(this.validationService.isNameEmpty(groupObj["groupName"])) {
+      this.adminGroupName = true;
+    } else {
+      this.adminGroupName = false;
+    }
+
+    if(!this.adminGroupName) {
+      this.loading = true;
+      this.authService.deleteGroupName(groupObj).subscribe(data => {
+        if(data.status) {
+          alert("Group successfully deleted")
+        } else {
+          alert(data.message);
+        }
+        this.loading = false;
       })
     }
   }

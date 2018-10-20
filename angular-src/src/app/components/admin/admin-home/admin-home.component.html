@@ -91,9 +91,16 @@
 
   <div class="date-selection-div" *ngIf="dateModalFlag">
     <div class="main-page-last-title" style="margin-bottom: 16px; display: flex; justify-content: space-between;">
-      <div style="display: inline;">Select date</div>
+      <div style="display: inline;">Select Starting Date</div>
       <div class="close-icon" (click)="closeDateModal()">X</div>
     </div>
-    <dl-date-time-picker on-change="(onCollectionDateSelect($event))"></dl-date-time-picker>
+    <dl-date-time-picker on-change="(onCollectionStartDateSelect($event))"></dl-date-time-picker>
+  </div>
+  <div class="date-selection-div" *ngIf="dateModalFlag2">
+    <div class="main-page-last-title" style="margin-bottom: 16px; display: flex; justify-content: space-between;">
+      <div style="display: inline;">Select Ending Date</div>
+      <div class="close-icon" (click)="closeDateModal()">X</div>
+    </div>
+    <dl-date-time-picker on-change="(onCollectionEndDateSelect($event))"></dl-date-time-picker>
   </div>
 </div>

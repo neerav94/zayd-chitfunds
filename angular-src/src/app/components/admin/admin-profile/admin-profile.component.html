@@ -56,7 +56,21 @@
     </div>
 
     <div *ngIf="isSuperAdmin">
-      <div class="main-page-mid-title color-white pad-top-x">Change Password of Subscribers</div>
+      <div class="main-page-mid-title color-white pad-top-x">Update Mobile Number</div>
+      <form #updateNumber="ngForm" (ngSubmit)="updateMobileNumber(updateNumber.value)">
+        <input type="number" class="text" placeholder="Enter old mobile number" name="oldNumber" ngModel>
+        <br>
+        <div *ngIf="userOldNumber" class="text error-message">Number cannot be empty.</div>
+
+        <input type="number" class="text" placeholder="Enter new mobile number" name="newNumber" ngModel>
+        <br>
+        <div *ngIf="userNewNumber" class="text error-message">Number cannot be empty.</div>
+        <button type="submit" class="text">Update Number</button>
+      </form>
+    </div>
+
+    <div *ngIf="isSuperAdmin">
+      <div class="main-page-mid-title color-white pad-top-x">Update Password of Subscribers</div>
       <form #forgotPassword="ngForm" (ngSubmit)="forgotUserPassword(forgotPassword.value)">
         <input type="number" class="text" placeholder="Enter mobile number of subscriber" name="number" ngModel>
         <br>
@@ -73,20 +87,6 @@
 
   <div class="data-container display-flex">
     <div *ngIf="isSuperAdmin">
-      <div class="main-page-mid-title color-white pad-top-x">Change Mobile Number</div>
-      <form #updateNumber="ngForm" (ngSubmit)="updateMobileNumber(updateNumber.value)">
-        <input type="number" class="text" placeholder="Enter old mobile number" name="oldNumber" ngModel>
-        <br>
-        <div *ngIf="userOldNumber" class="text error-message">Number cannot be empty.</div>
-
-        <input type="number" class="text" placeholder="Enter new mobile number" name="newNumber" ngModel>
-        <br>
-        <div *ngIf="userNewNumber" class="text error-message">Number cannot be empty.</div>
-        <button type="submit" class="text">Update Number</button>
-      </form>
-    </div>
-
-    <div *ngIf="isSuperAdmin">
       <div class="main-page-mid-title color-white pad-top-x">Delete User</div>
       <form #deleteNumber="ngForm" (ngSubmit)="deleteMobileNumber(deleteNumber.value)">
         <input type="number" class="text" placeholder="Enter mobile number" name="mobileNumber" ngModel>
@@ -98,6 +98,16 @@
         <div *ngIf="userMobileNumberConfirm" class="text error-message">Number cannot be empty.</div>
         <div *ngIf="numberMismatch" class="text error-message">Number should be same.</div>
         <button type="submit" class="text">Delete Number</button>
+      </form>
+    </div>
+
+    <div *ngIf="isSuperAdmin">
+      <div class="main-page-mid-title color-white pad-top-x">Delete Group</div>
+      <form #deleteGroup="ngForm" (ngSubmit)="deleteGroupName(deleteGroup.value)">
+        <input type="text" class="text" placeholder="Enter group name" name="groupName" ngModel>
+        <br>
+        <div *ngIf="adminGroupName" class="text error-message">Group name cannot be empty.</div>
+        <button type="submit" class="text">Delete Group</button>
       </form>
     </div>
   </div>

@@ -27,8 +27,10 @@ export class AdminHomeComponent implements OnInit {
   weeklyCollection: string = '';
 
   dateModalFlag: boolean = false;
+  dateModalFlag2: boolean = false;
   date: Date = new Date();
   startDate: any;
+  endDate: any;
 
   constructor(private userService: UserService, private groupService: GroupService) { }
 
@@ -159,10 +161,18 @@ export class AdminHomeComponent implements OnInit {
     }
   }
 
-  // function called when on start date is selected
-  onCollectionDateSelect(startDate) {
+  // function called when start date is selected
+  onCollectionStartDateSelect(startDate) {
     this.startDate = new Date(startDate.value).getTime()
-    this.dateModalFlag = false
+    this.dateModalFlag = false;
+    this.dateModalFlag2 = true;
+    // this.submitDate();
+  }
+
+  // function called when end date is selected
+  onCollectionEndDateSelect(endDate) {
+    this.endDate = new Date(endDate.value).getTime()
+    this.dateModalFlag2 = false;
     this.submitDate();
   }
 
@@ -171,6 +181,9 @@ export class AdminHomeComponent implements OnInit {
     var month = dateObj.getMonth() + 1
     // month = month + 1
     var startDate = dateObj.getFullYear() + '.' + month + '.' + dateObj.getDate() + ' ' + '00:00:00'
+
+    dateObj = new Date(this.endDate);
+    month = dateObj.getMonth() + 1
     var endDate = dateObj.getFullYear() + '.' + month + '.' + dateObj.getDate() + ' ' + '23:59:59'
     var startDateString = new Date(startDate).getTime()
     var endDateString = new Date(endDate).getTime()

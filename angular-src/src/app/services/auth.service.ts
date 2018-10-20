@@ -8,8 +8,8 @@ export class AuthService {
 
   authToken: any;
   user: any;
-  url: string = "http://localhost:3000"
-  // url: string = ''
+  // url: string = "http://localhost:3000"
+  url: string = ''
 
   constructor( private http: Http ) { }
 
@@ -54,6 +54,15 @@ export class AuthService {
     headers.append('Authorization', this.authToken);
     headers.append('Content-Type', 'application/json');
     return this.http.post(this.url + '/v1/login/admin/updatePassword', passwordObj, {headers: headers})
+    .map(res => res.json());
+  }
+
+  deleteGroupName(groupObj) {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(this.url + '/v1/login/admin/deleteGroup', groupObj, {headers: headers})
     .map(res => res.json());
   }
 

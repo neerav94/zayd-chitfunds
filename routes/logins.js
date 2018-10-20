@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt')
 
 const user = require('../models/login')
 const config = require('../config/database')
+const group = require('../models/group')
 
 //Register User; role is set to 0, since user is registering
 router.post('/users/register', (req, res, next) => {
@@ -187,6 +188,41 @@ router.post('/admin/forgotPassword', passport.authenticate('jwt', {
   })
 })
 
+router.post('/admin/deleteGroup', passport.authenticate('jwt', {
+  session: false
+}), (req, res, next) => {
+  let groupName = req.body.groupName
+  group.checkGroupExist(groupName)
+  .then(response => {
+    if (response.status == 1) {
+      group.deleteGroup(groupName)
+      .then(response => {
+        return res.json({
+          status: true,
+          message: "Success"
+        })
+      })
+      .catch(err => {
+        return res.json({
+          status: false,
+          message: "Some error occurred.Please try again later." + err
+        })
+      })
+    } else if (response.status == 0) {
+      return res.json({
+        status: false,
+        message: "Group name doesn't exist."
+      })
+    }
+  })  
+  .catch(err => {
+    return res.json({
+      status: false,
+      message: "Some error occurred.Please try again later." + err
+    })
+  })
+})
+
 router.post('/admin/deleteNumber', passport.authenticate('jwt', {
   session: false
 }), (req, res, next) => {
@@ -204,7 +240,7 @@ router.post('/admin/deleteNumber', passport.authenticate('jwt', {
       .catch(err => {
         return res.json({
           status: false,
-          message: 'Some error occurred. PLease try again ' + err
+          message: 'Some error occurred. Please try again ' + err
         })
       })
     } else {
