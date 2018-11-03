@@ -30,7 +30,7 @@ export const routes: Routes = [
     { path: 'v1/erpUser/transactions/:id', component: AdminUserTransactionsComponent, canActivate: [AuthGuard] },
     { path: 'v1/erpProfile', component: AdminProfileComponent, canActivate: [AuthGuard] },
     { path: 'v1/erpGroup/:id/payments', component: ManagePaymentComponent, canActivate: [AuthGuard] },
-    { path: 'v1/erpGroup/:id1/:id', component: UserPaymentComponent, canActivate: [AuthGuard] },
+    { path: 'v1/erpGroup/:id1/:id/:id2', component: UserPaymentComponent, canActivate: [AuthGuard] },
     { path: 'v1/profile', component: UserProfileComponent, canActivate: [AuthGuard] },
     { path: 'v1/home/:id', component: SelfTransactionsComponent, canActivate: [AuthGuard]},
     { path: '**', component: ErrorComponent}

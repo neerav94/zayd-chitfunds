@@ -13,6 +13,7 @@ export class UserPaymentComponent implements OnInit {
   id: number;
   groupId: number;
   tokenId: number;
+  active: number;
 
   userRole: number;
 
@@ -28,13 +29,14 @@ export class UserPaymentComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.groupId = +params['id']; // (+) converts string 'id' to a number.
       this.tokenId = +params['id1'];
+      this.active = +params['id2'];
     });
 
     const token = JSON.parse(localStorage.getItem('user'))
     this.userRole = token["role"];
 
     this.loading = true;
-    this.groupService.getUserPaymentDetails(this.tokenId, this.groupId).subscribe(data => {
+    this.groupService.getUserPaymentDetails(this.tokenId, this.groupId, this.active).subscribe(data => {
       if(data.status) {
         this.userPaymentDetails = data.message;
         // for(let i=0;i<this.userPaymentDetails.length; i++) {
@@ -52,7 +54,7 @@ export class UserPaymentComponent implements OnInit {
     this.groupService.updateUserPayments(this.userPaymentDetails).subscribe(data => {
       if(data.status) {
         this.loading = true;
-        this.groupService.getUserPaymentDetails(this.tokenId, this.groupId).subscribe(data => {
+        this.groupService.getUserPaymentDetails(this.tokenId, this.groupId, this.active).subscribe(data => {
           if(data.status) {
             this.userPaymentDetails = data.message;
             // for(let i=0;i<this.userPaymentDetails.length; i++) {

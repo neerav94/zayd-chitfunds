@@ -892,7 +892,8 @@ router.get('/getSubscriberPaymentDetails', passport.authenticate('jwt', {
 }), (req, res, next) => {
   var groupId = req.query.groupId;
   var tokenId = req.query.tokenId;
-  group.getSubscriberPaymentDetails(groupId, tokenId)
+  var active = req.query.active;
+  group.getSubscriberPaymentDetails(groupId, tokenId, active)
     .then(response => {
       res.json({
         "status": true,

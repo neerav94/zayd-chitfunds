@@ -192,6 +192,13 @@ export class AdminHomeComponent implements OnInit {
     this.groupService.getCollectionReportData(startDateString, endDateString).subscribe(data => {
       if(data.status) {
         let tempCollectionData = data.message;
+        tempCollectionData.sort(function(a,b) {
+          if ( a.payment_date < b.payment_date )
+              return -1;
+          if ( a.payment_date > b.payment_date )
+              return 1;
+          return 0;
+        });
         let collectionData = []
         for(let i in tempCollectionData) {
           let obj = {};

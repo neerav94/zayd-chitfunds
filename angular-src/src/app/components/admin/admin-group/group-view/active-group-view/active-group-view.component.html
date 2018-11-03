@@ -152,7 +152,7 @@
           <td class="text" style="color: red;">{{item.pending}}</td>
           <td class="text" [class.color-red]="item.active === 0">{{item.prized_cycle}}</td>
           <td class="text">
-            <a [routerLink]="['/v1/erpGroup', item.token, item.group_id]">View</a>
+            <a [routerLink]="['/v1/erpGroup', item.token, item.group_id, item.active]">View</a>
           </td>
         </tr>
       </tbody>
