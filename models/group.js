@@ -63,6 +63,7 @@ function setGroupData(results) {
 }
 
 module.exports.createNewGroup = function (newGroup, callback) {
+  console.log(newGroup)
   database.connection.query('INSERT INTO groupinfo SET ?', newGroup, callback)
 }
 
@@ -92,7 +93,8 @@ module.exports.closeGroup = function(id) {
 
 module.exports.getAllGroups = function () {
   return new Promise((resolve, reject) => {
-    database.connection.query('SELECT *, SUM(amount) as amount FROM payments t1 JOIN groupinfo t2 ON t1.group_id = t2.grp_id GROUP BY t2.grp_id', function (error, results, fields) {
+    database.connection.query('SELECT * FROM groupinfo', function(error, results, fields) {
+    // database.connection.query('SELECT *, SUM(amount) as amount FROM payments t1 JOIN groupinfo t2 ON t1.group_id = t2.grp_id GROUP BY t2.grp_id', function (error, results, fields) {
       if (error) {
         return reject(error)
       } else {

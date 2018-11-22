@@ -140,7 +140,8 @@ router.post('/createGroup', passport.authenticate('jwt', {
     "num_members": req.body.months,
     "chit_value": req.body.chitValue,
     "status": req.body.status,
-    "auction_day": req.body.auctionDate
+    "auction_day": req.body.auctionDate,
+    "start_date": req.body.create_time
   }
   group.checkGroupExist(req.body.name)
     .then(response => {

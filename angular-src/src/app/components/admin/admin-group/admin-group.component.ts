@@ -110,6 +110,7 @@ export class AdminGroupComponent implements OnInit {
       if(groupInfo.status == "") {
         groupInfo.status = false;
       }
+      groupInfo["create_time"] = new Date().getTime();
       this.loading = true;
       this.groupService.createGroup(groupInfo).subscribe(data => {
         if(data.status) {
