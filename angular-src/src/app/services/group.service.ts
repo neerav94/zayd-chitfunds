@@ -40,6 +40,15 @@ export class GroupService {
     .map(res => res.json());
   }
 
+  getAllGroupsReport() {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(this.url + '/v1/group/getAllGroupsReport', {headers: headers})
+    .map(res => res.json());
+  }
+
   // get group by id
   getGroupById(id) {
     let headers = new Headers()

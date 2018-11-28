@@ -226,6 +226,24 @@ router.get('/getAllGroups', passport.authenticate('jwt', {
     })
 })
 
+router.get('/getAllGroupsReport', passport.authenticate('jwt', {
+  session: false
+}), (req, res, next) => {
+  group.getAllGroupsReport()
+    .then(response => {
+      res.json({
+        status: true,
+        message: response
+      })
+    })
+    .catch(error => {
+      res.json({
+        status: false,
+        message: "Some error occurred while fetching all the groups."  + error
+      })
+    })
+})
+
 router.get('/getGroupByNumber', passport.authenticate('jwt', {
   session: false
 }), (req, res, next) => {

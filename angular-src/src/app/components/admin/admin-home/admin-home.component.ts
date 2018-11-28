@@ -19,6 +19,9 @@ export class AdminHomeComponent implements OnInit {
   numUsers: number = 0;
   numGroups: number = 0;
   totalGroups: number = 0;
+  totalGroupsCount: number = 0;
+  totalRunningGroups: number = 0;
+  totalCompletedGroups: number = 0;
   paymentCollected: number = 0;
   totalChitValue: number = 0;
   aggregateAmount: string = '';
@@ -55,8 +58,15 @@ export class AdminHomeComponent implements OnInit {
       if(data.status) {
         let tempGroups = data.message;
         let groupsArray = [];
+        this.totalGroupsCount = tempGroups.length;
+
         for(let i=0; i<tempGroups.length; i++) {
-          let diff = tempGroups[i].num_members - tempGroups[i].months
+          let diff = tempGroups[i].num_members - tempGroups[i].months;
+          if(tempGroups[i]["startGroup"] === 1) {
+            this.totalRunningGroups += 1;
+          } else if(tempGroups[i]["startGroup"] === 2) {
+            this.totalCompletedGroups += 1;
+          }
           if(diff >= 0) {
             groupsArray.push(tempGroups[i]);
           }
@@ -286,7 +296,7 @@ export class AdminHomeComponent implements OnInit {
 
   downloadGroupReport() {
     this.loading = true;
-    this.groupService.getAllGroups().subscribe(data => {
+    this.groupService.getAllGroupsReport().subscribe(data => {
       if(data.status) {
         let tempAllGroups = data.message;
         let groupsReport = [];
